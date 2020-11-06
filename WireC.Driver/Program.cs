@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
 using CommandLine;
 
+using WireC.BackEnd;
 using WireC.Common;
 using WireC.FrontEnd;
 
@@ -43,6 +45,19 @@ namespace WireC.Driver
             var tokens = new Lexer(sourceCode).Tokenize();
             var ast = FrontEnd.Parser.Parse(context, tokens);
             if (context.ErrorCount > 0) TerminateCompilation(context, 1);
+
+            var destinationCode = new CodeGenerator(ast).GenerateCode();
+
+            var cOutputFile = context.Options.OutputFile.EndsWith(".exe") &&
+                RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+                    ? context.Options.OutputFile[..^4] + ".cpp"
+                    : context.Options.OutputFile + ".cpp";
+            File.WriteAllText(cOutputFile, destinationCode);
+
+            Process.Start(
+                context.Options.CCompiler,
+                $"{cOutputFile} -o {context.Options.OutputFile}"
+            );
 
             TerminateCompilation(context, 0);
         }
