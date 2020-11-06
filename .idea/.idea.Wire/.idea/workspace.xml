@@ -13,6 +13,32 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/WireC.Common/Class1.cs" />
+        <option value="$PROJECT_DIR$/WireC.Common/Options.cs" />
+        <option value="$PROJECT_DIR$/WireC.Common/Context.cs" />
+        <option value="$PROJECT_DIR$/WireC.Common/SourceSpan.cs" />
+        <option value="$PROJECT_DIR$/WireC.FrontEnd/Class1.cs" />
+        <option value="$PROJECT_DIR$/WireC.FrontEnd/Token.cs" />
+        <option value="$PROJECT_DIR$/WireC.FrontEnd/TokenKind.cs" />
+        <option value="$PROJECT_DIR$/WireC.AST/Class1.cs" />
+        <option value="$PROJECT_DIR$/WireC.AST/IExpression.cs" />
+        <option value="$PROJECT_DIR$/WireC.AST/IStatement.cs" />
+        <option value="$PROJECT_DIR$/WireC.Common/TokenKind.cs" />
+        <option value="$PROJECT_DIR$/WireC.Common/Token.cs" />
+        <option value="$PROJECT_DIR$/WireC.AST/IExpressionVisitor.cs" />
+        <option value="$PROJECT_DIR$/WireC.AST/Expressions/Identifier.cs" />
+        <option value="$PROJECT_DIR$/WireC.AST/Statements/Block.cs" />
+        <option value="$PROJECT_DIR$/WireC.AST/Block.cs" />
+        <option value="$PROJECT_DIR$/WireC.AST/IStatementVisitor.cs" />
+        <option value="$PROJECT_DIR$/WireC.FrontEnd/ParseException.cs" />
+        <option value="$PROJECT_DIR$/WireC.FrontEnd/ParserState.cs" />
+        <option value="$PROJECT_DIR$/WireC.FrontEnd/Parser.cs" />
+        <option value="$PROJECT_DIR$/WireC.AST/Statements/FunctionDefinition.cs" />
+        <option value="$PROJECT_DIR$/WireC.AST/Statements/ReturnStatement.cs" />
+        <option value="$PROJECT_DIR$/WireC.AST/Expressions/IntegerLiteral.cs" />
+        <option value="$PROJECT_DIR$/WireC.FrontEnd/ExpressionParser.cs" />
+        <option value="$PROJECT_DIR$/WireC.FrontEnd/StatementParser.cs" />
+        <option value="$PROJECT_DIR$/WireC.FrontEnd/Lexer.cs" />
         <option value="$PROJECT_DIR$/WireC.Driver/Program.cs" />
       </list>
     </option>
@@ -24,14 +50,16 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.3501355" />
+    <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.300271" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
   </component>
   <component name="RunManager">
-    <configuration name="WireC.Driver" type="DotNetProject" factoryName=".NET Project">
-      <option name="EXE_PATH" value="" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
+    <configuration name="WireC" type="DotNetProject" factoryName=".NET Project">
+      <option name="EXE_PATH" value="$PROJECT_DIR$/WireC.Driver/bin/Debug/netcoreapp3.1/WireC.Driver.dll" />
+      <option name="PROGRAM_PARAMETERS" value="examples/playground.wire -o out.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="PASS_PARENT_ENVS" value="1" />
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <option name="USE_MONO" value="0" />
@@ -39,9 +67,9 @@
       <option name="PROJECT_PATH" value="$PROJECT_DIR$/WireC.Driver/WireC.Driver.csproj" />
       <option name="PROJECT_EXE_PATH_TRACKING" value="1" />
       <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
-      <option name="PROJECT_WORKING_DIRECTORY_TRACKING" value="1" />
+      <option name="PROJECT_WORKING_DIRECTORY_TRACKING" value="0" />
       <option name="PROJECT_KIND" value="DotNetCore" />
-      <option name="PROJECT_TFM" value="" />
+      <option name="PROJECT_TFM" value=".NETCoreApp,Version=v3.1" />
       <method v="2">
         <option name="Build" />
       </method>
@@ -55,11 +83,113 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1604678298121</updated>
-      <workItem from="1604678307608" duration="21000" />
+      <workItem from="1604678307608" duration="3591000" />
     </task>
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="414" y="195" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1604679780879">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="414" y="195" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604679780879" />
+    <state x="718" y="400" key="ANALYSIS_DLG_com.jetbrains.rider.actions.impl.cleanup.RiderCodeCleanupAction$actionPerformed$dlg$1" timestamp="1604681901872">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="718" y="400" key="ANALYSIS_DLG_com.jetbrains.rider.actions.impl.cleanup.RiderCodeCleanupAction$actionPerformed$dlg$1/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604681901872" />
+    <state width="408" height="464" key="DebuggerActiveHint" timestamp="1604681864494">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="408" height="464" key="DebuggerActiveHint/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604681864494" />
+    <state width="1876" height="391" key="GridCell.Tab.0.bottom" timestamp="1604681834728">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1876" height="391" key="GridCell.Tab.0.bottom/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604681834728" />
+    <state width="1876" height="391" key="GridCell.Tab.0.center" timestamp="1604681834728">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1876" height="391" key="GridCell.Tab.0.center/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604681834728" />
+    <state width="1876" height="391" key="GridCell.Tab.0.left" timestamp="1604681834728">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1876" height="391" key="GridCell.Tab.0.left/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604681834728" />
+    <state width="1876" height="391" key="GridCell.Tab.0.right" timestamp="1604681834728">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1876" height="391" key="GridCell.Tab.0.right/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604681834728" />
+    <state width="1876" height="391" key="GridCell.Tab.1.bottom" timestamp="1604681835515">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1876" height="391" key="GridCell.Tab.1.bottom/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604681835515" />
+    <state width="1876" height="391" key="GridCell.Tab.1.center" timestamp="1604681835515">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1876" height="391" key="GridCell.Tab.1.center/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604681835515" />
+    <state width="1876" height="391" key="GridCell.Tab.1.left" timestamp="1604681835515">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1876" height="391" key="GridCell.Tab.1.left/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604681835515" />
+    <state width="1876" height="391" key="GridCell.Tab.1.right" timestamp="1604681835515">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1876" height="391" key="GridCell.Tab.1.right/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604681835515" />
+    <state width="1876" height="391" key="GridCell.Tab.2.bottom" timestamp="1604681834519">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1876" height="391" key="GridCell.Tab.2.bottom/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604681834519" />
+    <state width="1876" height="391" key="GridCell.Tab.2.center" timestamp="1604681834518">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1876" height="391" key="GridCell.Tab.2.center/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604681834518" />
+    <state width="1876" height="391" key="GridCell.Tab.2.left" timestamp="1604681834518">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1876" height="391" key="GridCell.Tab.2.left/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604681834518" />
+    <state width="1876" height="391" key="GridCell.Tab.2.right" timestamp="1604681834519">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1876" height="391" key="GridCell.Tab.2.right/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604681834519" />
+    <state width="1876" height="391" key="GridCell.Tab.3.bottom" timestamp="1604681834519">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1876" height="391" key="GridCell.Tab.3.bottom/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604681834519" />
+    <state width="1876" height="391" key="GridCell.Tab.3.center" timestamp="1604681834519">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1876" height="391" key="GridCell.Tab.3.center/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604681834519" />
+    <state width="1876" height="391" key="GridCell.Tab.3.left" timestamp="1604681834519">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1876" height="391" key="GridCell.Tab.3.left/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604681834519" />
+    <state width="1876" height="391" key="GridCell.Tab.3.right" timestamp="1604681834519">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1876" height="391" key="GridCell.Tab.3.right/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604681834519" />
+    <state width="1876" height="391" key="GridCell.Tab.4.bottom" timestamp="1604681834519">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1876" height="391" key="GridCell.Tab.4.bottom/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604681834519" />
+    <state width="1876" height="391" key="GridCell.Tab.4.center" timestamp="1604681834519">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1876" height="391" key="GridCell.Tab.4.center/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604681834519" />
+    <state width="1876" height="391" key="GridCell.Tab.4.left" timestamp="1604681834519">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1876" height="391" key="GridCell.Tab.4.left/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604681834519" />
+    <state width="1876" height="391" key="GridCell.Tab.4.right" timestamp="1604681834519">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1876" height="391" key="GridCell.Tab.4.right/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604681834519" />
+    <state x="552" y="272" key="Rider.ProjectTemplateDialog.Size" timestamp="1604679929612">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="552" y="272" key="Rider.ProjectTemplateDialog.Size/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604679929612" />
+    <state x="670" y="218" key="RiderGenerateDialog" timestamp="1604681366688">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="670" y="218" key="RiderGenerateDialog/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604681366688" />
   </component>
 </project>

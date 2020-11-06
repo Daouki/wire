@@ -4,6 +4,46 @@
     <e p="C:\Code\Wire" t="IncludeFlat">
       <e p="packages" t="ExcludeRecursive" />
       <e p="Wire.sln" t="IncludeFlat" />
+      <e p="WireC.AST" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Block.cs" t="Include" />
+        <e p="Expressions" t="Include">
+          <e p="Identifier.cs" t="Include" />
+          <e p="IntegerLiteral.cs" t="Include" />
+        </e>
+        <e p="IExpression.cs" t="Include" />
+        <e p="IExpressionVisitor.cs" t="Include" />
+        <e p="IStatement.cs" t="Include" />
+        <e p="IStatementVisitor.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.1" t="Include">
+              <e p="WireC.AST.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Statements" t="Include">
+          <e p="FunctionDefinition.cs" t="Include" />
+          <e p="ReturnStatement.cs" t="Include" />
+        </e>
+        <e p="WireC.AST.csproj" t="IncludeRecursive" />
+      </e>
+      <e p="WireC.Common" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Context.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.1" t="Include">
+              <e p="WireC.Common.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Options.cs" t="Include" />
+        <e p="SourceSpan.cs" t="Include" />
+        <e p="Token.cs" t="Include" />
+        <e p="TokenKind.cs" t="Include" />
+        <e p="WireC.Common.csproj" t="IncludeRecursive" />
+      </e>
       <e p="WireC.Driver" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
         <e p="obj" t="ExcludeRecursive">
@@ -15,6 +55,23 @@
         </e>
         <e p="Program.cs" t="Include" />
         <e p="WireC.Driver.csproj" t="IncludeRecursive" />
+      </e>
+      <e p="WireC.FrontEnd" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="ExpressionParser.cs" t="Include" />
+        <e p="Lexer.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.1" t="Include">
+              <e p="WireC.FrontEnd.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="ParseException.cs" t="Include" />
+        <e p="Parser.cs" t="Include" />
+        <e p="ParserState.cs" t="Include" />
+        <e p="StatementParser.cs" t="Include" />
+        <e p="WireC.FrontEnd.csproj" t="IncludeRecursive" />
       </e>
     </e>
     <e p="C:\Users\Damian\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />

@@ -1,17 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <OutputType>Exe</OutputType>
         <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="CommandLineParser" Version="2.8.0" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\WireC.Common\WireC.Common.csproj" />
-      <ProjectReference Include="..\WireC.FrontEnd\WireC.FrontEnd.csproj" />
     </ItemGroup>
 
 </Project>
