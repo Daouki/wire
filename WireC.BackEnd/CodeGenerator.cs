@@ -33,7 +33,7 @@ namespace WireC.BackEnd
         public string GenerateCode()
         {
             foreach (var statement in _abstractSyntaxTree) GenerateStatementCode(statement);
-            return _prelude + _generatedCode.ToString();
+            return _prelude + _generatedCode;
         }
 
         private void GenerateStatementCode(IStatement statement) => statement.Accept(this);

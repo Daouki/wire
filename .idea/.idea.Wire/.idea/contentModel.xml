@@ -8,6 +8,7 @@
         <e p="bin" t="ExcludeRecursive" />
         <e p="Block.cs" t="Include" />
         <e p="Expressions" t="Include">
+          <e p="FunctionCall.cs" t="Include" />
           <e p="Identifier.cs" t="Include" />
           <e p="IntegerLiteral.cs" t="Include" />
         </e>
@@ -15,6 +16,8 @@
         <e p="IExpressionVisitor.cs" t="Include" />
         <e p="IStatement.cs" t="Include" />
         <e p="IStatementVisitor.cs" t="Include" />
+        <e p="IType.cs" t="Include" />
+        <e p="ITypeVisitor.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netcoreapp3.1" t="Include">
@@ -25,6 +28,10 @@
         <e p="Statements" t="Include">
           <e p="FunctionDefinition.cs" t="Include" />
           <e p="ReturnStatement.cs" t="Include" />
+        </e>
+        <e p="Types" t="Include">
+          <e p="FunctionType.cs" t="Include" />
+          <e p="IntegerType.cs" t="Include" />
         </e>
         <e p="WireC.AST.csproj" t="IncludeRecursive" />
       </e>
@@ -97,7 +104,10 @@
             </e>
           </e>
         </e>
+        <e p="Scope.cs" t="Include" />
         <e p="SemanticAnalyzer.cs" t="Include" />
+        <e p="Symbol.cs" t="Include" />
+        <e p="Typer.cs" t="Include" />
         <e p="WireC.MiddleEnd.csproj" t="IncludeRecursive" />
       </e>
     </e>

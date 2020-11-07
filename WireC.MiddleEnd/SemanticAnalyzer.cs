@@ -2,6 +2,7 @@
 
 using WireC.AST;
 using WireC.AST.Statements;
+using WireC.AST.Types;
 using WireC.Common;
 
 namespace WireC.MiddleEnd
@@ -11,6 +12,7 @@ namespace WireC.MiddleEnd
         private readonly Context _context;
         private readonly List<IStatement> _abstractSyntaxTree;
 
+        private Scope _currentScope;
         private FunctionDefinition _functionContext;
 
         public SemanticAnalyzer(Context context, List<IStatement> abstractSyntaxTree)
@@ -21,6 +23,7 @@ namespace WireC.MiddleEnd
 
         public void Analyze()
         {
+            _currentScope = new Scope(); // Create the global scope.
             foreach (var statement in _abstractSyntaxTree) Analyze(statement);
         }
 
@@ -33,10 +36,18 @@ namespace WireC.MiddleEnd
 
         public void VisitFunctionDefinition(FunctionDefinition functionDefinition)
         {
+            var functionType = new FunctionType(new IntegerType());
+            var wasRedefined = !_currentScope.DefineSymbol(functionDefinition, functionType);
+            if (wasRedefined)
+            {
+                _context.Error(
+                    functionDefinition.Name.Span,
+                    $"redefinition of function \"{functionDefinition.Name}\""
+                );
+            }
+
             _functionContext = functionDefinition;
-
             AnalyzeBlock(functionDefinition.Body);
-
             _functionContext = null;
         }
 
@@ -45,7 +56,11 @@ namespace WireC.MiddleEnd
             if (_functionContext == null)
                 _context.Error(returnStatement.Span, "return statement outside of a function");
 
-            ExpressionAnalyzer.IsExpressionValid(_context, returnStatement.Expression);
+            ExpressionAnalyzer.IsExpressionValid(
+                _context,
+                _currentScope,
+                returnStatement.Expression
+            );
         }
     }
 }

@@ -1,5 +1,7 @@
-fn main(): i64 {
+fn other(): i64 {
     return 42;
 }
 
-return 7;
+fn main(): i64 {
+    return other();
+}
