@@ -20,6 +20,8 @@ namespace WireC.FrontEnd
                 {":", TokenKind.Colon},
                 {"{", TokenKind.LeftBrace},
                 {"(", TokenKind.LeftParenthesis},
+                {"-", TokenKind.Minus},
+                {"+", TokenKind.Plus},
                 {"}", TokenKind.RightBrace},
                 {")", TokenKind.RightParenthesis},
                 {";", TokenKind.Semicolon},

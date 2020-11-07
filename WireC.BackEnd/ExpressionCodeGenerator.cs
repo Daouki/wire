@@ -1,4 +1,6 @@
-﻿using WireC.AST;
+﻿using System;
+
+using WireC.AST;
 using WireC.AST.Expressions;
 
 namespace WireC.BackEnd
@@ -24,6 +26,21 @@ namespace WireC.BackEnd
             var callee = GenerateExpression(functionCall.Callee);
             return $"{callee}()";
         }
+
+        public string VisitPrefixOperation(PrefixOperation prefixOperation)
+        {
+            var @operator = GeneratePrefixOperator(prefixOperation.Operator);
+            var operand = GenerateExpression(prefixOperation.Operand);
+            return $"{@operator}{operand}";
+        }
+
+        private static string GeneratePrefixOperator(PrefixOperator @operator) =>
+            @operator.Kind switch
+            {
+                PrefixOperatorKind.Identity => "+",
+                PrefixOperatorKind.Negate => "-",
+                _ => throw new ArgumentException(nameof(@operator)),
+            };
 
         private string GenerateExpression(IExpression expression) => $"({expression.Accept(this)})";
     }

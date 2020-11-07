@@ -7,5 +7,6 @@ namespace WireC.AST
         T VisitIdentifier(Identifier identifier);
         T VisitIntegerLiteral(IntegerLiteral integer);
         T VisitFunctionCall(FunctionCall functionCall);
+        T VisitPrefixOperation(PrefixOperation prefixOperation);
     }
 }

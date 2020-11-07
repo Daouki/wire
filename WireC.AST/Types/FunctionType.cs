@@ -1,4 +1,6 @@
-﻿namespace WireC.AST.Types
+﻿using WireC.AST.Expressions;
+
+namespace WireC.AST.Types
 {
     public class FunctionType : IType
     {
@@ -8,6 +10,8 @@
         }
 
         public IType ReturnType { get; }
+
+        public IType GetPrefixOperationResultType(PrefixOperatorKind operationKind) => null;
 
         public bool IsSame(IType other)
         {

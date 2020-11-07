@@ -11,6 +11,7 @@
           <e p="FunctionCall.cs" t="Include" />
           <e p="Identifier.cs" t="Include" />
           <e p="IntegerLiteral.cs" t="Include" />
+          <e p="PrefixOperation.cs" t="Include" />
         </e>
         <e p="IExpression.cs" t="Include" />
         <e p="IExpressionVisitor.cs" t="Include" />

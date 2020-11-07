@@ -11,6 +11,8 @@
         Colon,
         LeftBrace,
         LeftParenthesis,
+        Minus,
+        Plus,
         RightBrace,
         RightParenthesis,
         Semicolon,

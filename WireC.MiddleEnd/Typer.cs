@@ -52,5 +52,11 @@ namespace WireC.MiddleEnd
             );
             return null;
         }
+
+        public IType VisitPrefixOperation(PrefixOperation prefixOperation)
+        {
+            return GetExpressionType(prefixOperation.Operand)
+                .GetPrefixOperationResultType(prefixOperation.Operator.Kind);
+        }
     }
 }

@@ -24,6 +24,8 @@ namespace WireC.MiddleEnd
             return expression.Accept(self);
         }
 
+        private bool IsExpressionValid(IExpression expression) => expression.Accept(this);
+
         public bool VisitIdentifier(Identifier identifier) => true;
 
         public bool VisitIntegerLiteral(IntegerLiteral integer) => true;
@@ -33,5 +35,8 @@ namespace WireC.MiddleEnd
             var calleeType = Typer.GetExpressionType(_context, _environment, functionCall.Callee);
             return calleeType != null;
         }
+
+        public bool VisitPrefixOperation(PrefixOperation prefixOperation) =>
+            IsExpressionValid(prefixOperation.Operand);
     }
 }
