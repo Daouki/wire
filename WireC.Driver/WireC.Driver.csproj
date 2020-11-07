@@ -13,6 +13,7 @@
       <ProjectReference Include="..\WireC.BackEnd\WireC.BackEnd.csproj" />
       <ProjectReference Include="..\WireC.Common\WireC.Common.csproj" />
       <ProjectReference Include="..\WireC.FrontEnd\WireC.FrontEnd.csproj" />
+      <ProjectReference Include="..\WireC.MiddleEnd\WireC.MiddleEnd.csproj" />
     </ItemGroup>
 
 </Project>

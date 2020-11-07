@@ -87,6 +87,19 @@
         <e p="StatementParser.cs" t="Include" />
         <e p="WireC.FrontEnd.csproj" t="IncludeRecursive" />
       </e>
+      <e p="WireC.MiddleEnd" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="ExpressionAnalyzer.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.1" t="Include">
+              <e p="WireC.MiddleEnd.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="SemanticAnalyzer.cs" t="Include" />
+        <e p="WireC.MiddleEnd.csproj" t="IncludeRecursive" />
+      </e>
     </e>
     <e p="C:\Users\Damian\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />
     <e p="C:\Users\Damian\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_Wire.-1144929370.00" t="ExcludeRecursive" />

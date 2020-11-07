@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WireC.AST", "WireC.AST\Wire
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WireC.BackEnd", "WireC.BackEnd\WireC.BackEnd.csproj", "{984153E2-A896-4B7B-8B08-27A571BCFA48}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WireC.MiddleEnd", "WireC.MiddleEnd\WireC.MiddleEnd.csproj", "{7BCB0F5A-7A90-4CCA-81EF-4BF9FB66DDF9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{984153E2-A896-4B7B-8B08-27A571BCFA48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{984153E2-A896-4B7B-8B08-27A571BCFA48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{984153E2-A896-4B7B-8B08-27A571BCFA48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BCB0F5A-7A90-4CCA-81EF-4BF9FB66DDF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BCB0F5A-7A90-4CCA-81EF-4BF9FB66DDF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BCB0F5A-7A90-4CCA-81EF-4BF9FB66DDF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BCB0F5A-7A90-4CCA-81EF-4BF9FB66DDF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

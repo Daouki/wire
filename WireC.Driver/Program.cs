@@ -9,6 +9,7 @@ using CommandLine;
 using WireC.BackEnd;
 using WireC.Common;
 using WireC.FrontEnd;
+using WireC.MiddleEnd;
 
 using Parser = CommandLine.Parser;
 
@@ -43,10 +44,13 @@ namespace WireC.Driver
         private static void CompileString(Context context, string sourceCode)
         {
             var tokens = new Lexer(sourceCode).Tokenize();
-            var ast = FrontEnd.Parser.Parse(context, tokens);
+            var abstractSyntaxTree = FrontEnd.Parser.Parse(context, tokens);
             if (context.ErrorCount > 0) TerminateCompilation(context, 1);
 
-            var destinationCode = new CodeGenerator(ast).GenerateCode();
+            new SemanticAnalyzer(context, abstractSyntaxTree).Analyze();
+            if (context.ErrorCount > 0) TerminateCompilation(context, 1);
+
+            var destinationCode = new CodeGenerator(abstractSyntaxTree).GenerateCode();
 
             var cOutputFile = context.Options.OutputFile.EndsWith(".exe") &&
                 RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
