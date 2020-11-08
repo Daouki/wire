@@ -57,11 +57,11 @@ namespace WireC.FrontEnd
             state.ConsumeOrError(TokenKind.LeftParenthesis);
             state.ConsumeOrError(TokenKind.RightParenthesis);
             state.ConsumeOrError(TokenKind.Colon);
-            state.ConsumeOrError(TokenKind.Identifier);
+            var returnTypeSignature = TypeSignatureParser.ParseTypeSignature(state);
             var body = ParseBlock(context, state);
             var endSpan = state.Previous().Span;
             var span = SourceSpan.Merge(startSpan, endSpan);
-            return new FunctionDefinition(span, name, body);
+            return new FunctionDefinition(span, name, body, returnTypeSignature);
         }
 
         private static IStatement ParseReturnStatement(Context context, ParserState state)

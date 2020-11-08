@@ -14,20 +14,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a41d91dc-380c-4200-b10b-333865771752" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/WireC.AST/Expressions/PrefixOperation.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WireC.AST/ITypeSignatureVisitor.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WireC.AST/TypeSignatures/TypeName.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WireC.BackEnd/TypeSignatureGenerator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WireC.FrontEnd/TypeSignatureParser.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WireC.MiddleEnd/TypeSignatureParser.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Wire/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Wire/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Wire/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Wire/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WireC.AST/IExpressionVisitor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WireC.AST/IExpressionVisitor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WireC.AST/IType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WireC.AST/IType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WireC.AST/Types/FunctionType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WireC.AST/Types/FunctionType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WireC.AST/Types/IntegerType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WireC.AST/Types/IntegerType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WireC.BackEnd/ExpressionCodeGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WireC.BackEnd/ExpressionCodeGenerator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WireC.Common/TokenKind.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WireC.Common/TokenKind.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WireC.FrontEnd/ExpressionParser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WireC.FrontEnd/ExpressionParser.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WireC.FrontEnd/Lexer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WireC.FrontEnd/Lexer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WireC.MiddleEnd/ExpressionAnalyzer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WireC.MiddleEnd/ExpressionAnalyzer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WireC.MiddleEnd/Typer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WireC.MiddleEnd/Typer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/playground.wire" beforeDir="false" afterPath="$PROJECT_DIR$/examples/playground.wire" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WireC.AST/Statements/FunctionDefinition.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WireC.AST/Statements/FunctionDefinition.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WireC.BackEnd/CodeGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WireC.BackEnd/CodeGenerator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WireC.FrontEnd/StatementParser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WireC.FrontEnd/StatementParser.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WireC.MiddleEnd/SemanticAnalyzer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WireC.MiddleEnd/SemanticAnalyzer.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +37,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/WireC.Common/Class1.cs" />
         <option value="$PROJECT_DIR$/WireC.Common/Options.cs" />
         <option value="$PROJECT_DIR$/WireC.Common/Context.cs" />
         <option value="$PROJECT_DIR$/WireC.Common/SourceSpan.cs" />
@@ -58,21 +54,17 @@
         <option value="$PROJECT_DIR$/WireC.FrontEnd/ParseException.cs" />
         <option value="$PROJECT_DIR$/WireC.FrontEnd/ParserState.cs" />
         <option value="$PROJECT_DIR$/WireC.FrontEnd/Parser.cs" />
-        <option value="$PROJECT_DIR$/WireC.AST/Statements/FunctionDefinition.cs" />
         <option value="$PROJECT_DIR$/WireC.AST/Statements/ReturnStatement.cs" />
         <option value="$PROJECT_DIR$/WireC.AST/Expressions/IntegerLiteral.cs" />
-        <option value="$PROJECT_DIR$/WireC.FrontEnd/StatementParser.cs" />
         <option value="$PROJECT_DIR$/WireC.BackEnd/Class1.cs" />
         <option value="$PROJECT_DIR$/WireC.BackEnd/Resources.resx" />
         <option value="$PROJECT_DIR$/WireC.MiddleEnd/Class1.cs" />
         <option value="$PROJECT_DIR$/WireC.MiddleEnd/StatementAnalyzer.cs" />
         <option value="$PROJECT_DIR$/WireC.Driver/Program.cs" />
         <option value="$PROJECT_DIR$/WireC.AST/Expressions/FunctionCall.cs" />
-        <option value="$PROJECT_DIR$/WireC.BackEnd/CodeGenerator.cs" />
         <option value="$PROJECT_DIR$/WireC.AST/ITypeVisitor.cs" />
         <option value="$PROJECT_DIR$/WireC.MiddleEnd/Symbol.cs" />
         <option value="$PROJECT_DIR$/WireC.MiddleEnd/Scope.cs" />
-        <option value="$PROJECT_DIR$/WireC.MiddleEnd/SemanticAnalyzer.cs" />
         <option value="$PROJECT_DIR$/WireC.AST/IExpressionVisitor.cs" />
         <option value="$PROJECT_DIR$/WireC.Common/TokenKind.cs" />
         <option value="$PROJECT_DIR$/WireC.AST/Expressions/PrefixOperation.cs" />
@@ -84,6 +76,18 @@
         <option value="$PROJECT_DIR$/WireC.BackEnd/ExpressionCodeGenerator.cs" />
         <option value="$PROJECT_DIR$/WireC.FrontEnd/Lexer.cs" />
         <option value="$PROJECT_DIR$/WireC.FrontEnd/ExpressionParser.cs" />
+        <option value="$PROJECT_DIR$/WireC.AST/ITypeSignature.cs" />
+        <option value="$PROJECT_DIR$/WireC.AST/TypeSignature/TypeName.cs" />
+        <option value="$PROJECT_DIR$/WireC.BackEnd/TypeSignatureParser.cs" />
+        <option value="$PROJECT_DIR$/WireC.AST/TypeSignatures/TypeName.cs" />
+        <option value="$PROJECT_DIR$/WireC.AST/ITypeSignatureVisitor.cs" />
+        <option value="$PROJECT_DIR$/WireC.FrontEnd/StatementParser.cs" />
+        <option value="$PROJECT_DIR$/WireC.FrontEnd/TypeSignatureParser.cs" />
+        <option value="$PROJECT_DIR$/WireC.AST/Statements/FunctionDefinition.cs" />
+        <option value="$PROJECT_DIR$/WireC.MiddleEnd/TypeSignatureParser.cs" />
+        <option value="$PROJECT_DIR$/WireC.MiddleEnd/SemanticAnalyzer.cs" />
+        <option value="$PROJECT_DIR$/WireC.BackEnd/TypeSignatureGenerator.cs" />
+        <option value="$PROJECT_DIR$/WireC.BackEnd/CodeGenerator.cs" />
       </list>
     </option>
   </component>
@@ -129,7 +133,8 @@
       <option name="presentableId" value="Default" />
       <updated>1604678298121</updated>
       <workItem from="1604678307608" duration="14045000" />
-      <workItem from="1604746094378" duration="3067000" />
+      <workItem from="1604746094378" duration="3702000" />
+      <workItem from="1604754989326" duration="3174000" />
     </task>
     <servers />
   </component>
@@ -143,6 +148,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
@@ -160,22 +166,26 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="414" height="464" key="DebuggerActiveHint/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604696441157" />
-    <state width="1876" height="391" key="GridCell.Tab.0.bottom" timestamp="1604711675695">
+    <state width="1876" height="295" key="GridCell.Tab.0.bottom" timestamp="1604833234366">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1876" height="391" key="GridCell.Tab.0.bottom/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604711675695" />
-    <state width="1876" height="391" key="GridCell.Tab.0.center" timestamp="1604711675695">
+    <state width="1876" height="295" key="GridCell.Tab.0.bottom/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604833234366" />
+    <state width="1876" height="295" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1604750289585" />
+    <state width="1876" height="295" key="GridCell.Tab.0.center" timestamp="1604833234366">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1876" height="391" key="GridCell.Tab.0.center/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604711675695" />
-    <state width="1876" height="391" key="GridCell.Tab.0.left" timestamp="1604711675695">
+    <state width="1876" height="295" key="GridCell.Tab.0.center/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604833234366" />
+    <state width="1876" height="295" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1604750289585" />
+    <state width="1876" height="295" key="GridCell.Tab.0.left" timestamp="1604833234366">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1876" height="391" key="GridCell.Tab.0.left/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604711675695" />
-    <state width="1876" height="391" key="GridCell.Tab.0.right" timestamp="1604711675695">
+    <state width="1876" height="295" key="GridCell.Tab.0.left/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604833234366" />
+    <state width="1876" height="295" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1604750289585" />
+    <state width="1876" height="295" key="GridCell.Tab.0.right" timestamp="1604833234366">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1876" height="391" key="GridCell.Tab.0.right/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604711675695" />
+    <state width="1876" height="295" key="GridCell.Tab.0.right/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604833234366" />
+    <state width="1876" height="295" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1604750289585" />
     <state width="1876" height="391" key="GridCell.Tab.1.bottom" timestamp="1604711675695">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -244,10 +254,10 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="552" y="272" key="Rider.ProjectTemplateDialog.Size/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604703855313" />
-    <state x="670" y="218" key="RiderGenerateDialog" timestamp="1604746877952">
+    <state x="670" y="218" key="RiderGenerateDialog" timestamp="1604757360627">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="670" y="218" key="RiderGenerateDialog/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604746877952" />
+    <state x="670" y="218" key="RiderGenerateDialog/0.0.1920.1080/1920.0.1366.768@0.0.1920.1080" timestamp="1604757360627" />
     <state x="461" y="185" key="SettingsEditor" timestamp="1604703640537">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>

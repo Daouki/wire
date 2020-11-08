@@ -36,7 +36,12 @@ namespace WireC.MiddleEnd
 
         public void VisitFunctionDefinition(FunctionDefinition functionDefinition)
         {
-            var functionType = new FunctionType(new IntegerType());
+            functionDefinition.ReturnType = TypeSignatureParser.ParseTypeSignature(
+                _context,
+                functionDefinition.ReturnTypeSignature
+            );
+
+            var functionType = new FunctionType(functionDefinition.ReturnType);
             var wasRedefined = !_currentScope.DefineSymbol(functionDefinition, functionType);
             if (wasRedefined)
             {

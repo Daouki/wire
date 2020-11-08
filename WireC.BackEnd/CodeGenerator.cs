@@ -48,7 +48,14 @@ namespace WireC.BackEnd
         public void VisitFunctionDefinition(FunctionDefinition functionDefinition)
         {
             _generatedCode
-                .Append(functionDefinition.Name.Lexeme == "main" ? "int " : "int64_t ")
+                .Append(
+                    functionDefinition.Name.Lexeme == "main"
+                        ? "int"
+                        : TypeSignatureGenerator.GenerateTypeSignature(
+                            functionDefinition.ReturnType
+                        )
+                )
+                .Append(' ')
                 .Append(functionDefinition.Name)
                 .Append("() ");
             GenerateBlockCode(functionDefinition.Body);

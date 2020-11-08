@@ -18,6 +18,8 @@
         <e p="IStatement.cs" t="Include" />
         <e p="IStatementVisitor.cs" t="Include" />
         <e p="IType.cs" t="Include" />
+        <e p="ITypeSignature.cs" t="Include" />
+        <e p="ITypeSignatureVisitor.cs" t="Include" />
         <e p="ITypeVisitor.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
@@ -34,6 +36,9 @@
           <e p="FunctionType.cs" t="Include" />
           <e p="IntegerType.cs" t="Include" />
         </e>
+        <e p="TypeSignatures" t="Include">
+          <e p="TypeName.cs" t="Include" />
+        </e>
         <e p="WireC.AST.csproj" t="IncludeRecursive" />
       </e>
       <e p="WireC.BackEnd" t="IncludeRecursive">
@@ -48,6 +53,7 @@
           </e>
         </e>
         <e p="Resources" t="Include" />
+        <e p="TypeSignatureGenerator.cs" t="Include" />
         <e p="WireC.BackEnd.csproj" t="IncludeRecursive" />
       </e>
       <e p="WireC.Common" t="IncludeRecursive">
@@ -93,6 +99,7 @@
         <e p="Parser.cs" t="Include" />
         <e p="ParserState.cs" t="Include" />
         <e p="StatementParser.cs" t="Include" />
+        <e p="TypeSignatureParser.cs" t="Include" />
         <e p="WireC.FrontEnd.csproj" t="IncludeRecursive" />
       </e>
       <e p="WireC.MiddleEnd" t="IncludeRecursive">
@@ -109,6 +116,7 @@
         <e p="SemanticAnalyzer.cs" t="Include" />
         <e p="Symbol.cs" t="Include" />
         <e p="Typer.cs" t="Include" />
+        <e p="TypeSignatureParser.cs" t="Include" />
         <e p="WireC.MiddleEnd.csproj" t="IncludeRecursive" />
       </e>
     </e>
