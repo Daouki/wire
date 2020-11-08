@@ -27,20 +27,24 @@ namespace WireC.FrontEnd
             if (!state.Consume(_prefixOperators)) return ParsePrimaryExpression(state);
             var @operator = PrefixOperator.FromToken(state.Previous());
             var operand = ParsePrefixOperation(state);
-            return new PrefixOperation(@operator, operand);
+            return new PrefixOperation(state.NodeIdGenerator.GetNextId(), @operator, operand);
         }
 
         private static IExpression ParseFunctionCall(ParserState state, IExpression callee)
         {
             state.ConsumeOrError(TokenKind.RightParenthesis);
             var span = SourceSpan.Merge(callee.Span, state.Previous().Span);
-            return new FunctionCall(span, callee);
+            return new FunctionCall(state.NodeIdGenerator.GetNextId(), span, callee);
         }
 
         private static IExpression ParsePrimaryExpression(ParserState state)
         {
-            if (state.Consume(TokenKind.Identifier)) return new Identifier(state.Previous());
-            if (state.Consume(TokenKind.Integer)) return new IntegerLiteral(state.Previous());
+            if (state.Consume(TokenKind.Identifier))
+                return new Identifier(state.NodeIdGenerator.GetNextId(), state.Previous());
+
+            if (state.Consume(TokenKind.Integer))
+                return new IntegerLiteral(state.NodeIdGenerator.GetNextId(), state.Previous());
+
             throw new ParseException(
                 state.Current().Span,
                 $"expected primary expression, but found \"{state.Current().Lexeme}\""

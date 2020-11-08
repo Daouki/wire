@@ -2,7 +2,7 @@
 
 namespace WireC.AST
 {
-    public interface IExpression
+    public interface IExpression : INode
     {
         public SourceSpan Span { get; }
 

@@ -4,12 +4,15 @@ namespace WireC.AST.Expressions
 {
     public class Identifier : IExpression
     {
-        public Identifier(Token token)
+        public Identifier(int nodeId, Token token)
         {
+            NodeId = nodeId;
             Span = token.Span;
             Token = token;
             Name = token.Lexeme;
         }
+
+        public int NodeId { get; }
 
         public Token Token { get; }
 

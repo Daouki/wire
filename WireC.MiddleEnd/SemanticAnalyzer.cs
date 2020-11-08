@@ -11,14 +11,19 @@ namespace WireC.MiddleEnd
     {
         private readonly Context _context;
         private readonly List<IStatement> _abstractSyntaxTree;
+        private readonly ASTContext _astContext;
 
         private Scope _currentScope;
         private FunctionDefinition _functionContext;
 
-        public SemanticAnalyzer(Context context, List<IStatement> abstractSyntaxTree)
+        public SemanticAnalyzer(
+            Context context,
+            List<IStatement> abstractSyntaxTree,
+            ASTContext astContext)
         {
             _context = context;
             _abstractSyntaxTree = abstractSyntaxTree;
+            _astContext = astContext;
         }
 
         public void Analyze()
@@ -36,19 +41,25 @@ namespace WireC.MiddleEnd
 
         public void VisitFunctionDefinition(FunctionDefinition functionDefinition)
         {
-            functionDefinition.ReturnType = TypeSignatureParser.ParseTypeSignature(
+            if (functionDefinition.Name.Lexeme == "main")
+                _astContext.AddMangledName(functionDefinition.NodeId, "wiz_main__");
+
+            var returnType = TypeSignatureParser.ParseTypeSignature(
                 _context,
                 functionDefinition.ReturnTypeSignature
             );
-
-            var functionType = new FunctionType(functionDefinition.ReturnType);
-            var wasRedefined = !_currentScope.DefineSymbol(functionDefinition, functionType);
-            if (wasRedefined)
+            if (returnType != null)
             {
-                _context.Error(
-                    functionDefinition.Name.Span,
-                    $"redefinition of function \"{functionDefinition.Name}\""
-                );
+                var functionType = new FunctionType(returnType);
+                _astContext.AddNodeType(functionDefinition.NodeId, functionType);
+                var wasRedefined = !_currentScope.DefineSymbol(functionDefinition, functionType);
+                if (wasRedefined)
+                {
+                    _context.Error(
+                        functionDefinition.Name.Span,
+                        $"redefinition of function \"{functionDefinition.Name}\""
+                    );
+                }
             }
 
             _functionContext = functionDefinition;

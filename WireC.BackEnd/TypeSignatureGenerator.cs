@@ -1,4 +1,6 @@
-﻿using WireC.AST;
+﻿using System;
+
+using WireC.AST;
 using WireC.AST.Types;
 
 namespace WireC.BackEnd
@@ -17,6 +19,7 @@ namespace WireC.BackEnd
 
         public string VisitIntegerType(IntegerType integer) => "int64_t";
 
-        public string VisitFunctionType(FunctionType functionType) => $"{functionType.ReturnType}";
+        public string VisitFunctionType(FunctionType functionType) =>
+            throw new NotImplementedException();
     }
 }

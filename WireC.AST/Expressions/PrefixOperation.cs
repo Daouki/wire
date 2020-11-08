@@ -6,12 +6,15 @@ namespace WireC.AST.Expressions
 {
     public class PrefixOperation : IExpression
     {
-        public PrefixOperation(PrefixOperator @operator, IExpression operand)
+        public PrefixOperation(int nodeId, PrefixOperator @operator, IExpression operand)
         {
+            NodeId = nodeId;
             Operator = @operator;
             Operand = operand;
             Span = SourceSpan.Merge(Operator.Span, Operand.Span);
         }
+
+        public int NodeId { get; }
 
         /// <summary>
         /// Prefix unary operation operator.

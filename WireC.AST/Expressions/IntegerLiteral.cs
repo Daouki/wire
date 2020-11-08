@@ -4,11 +4,14 @@ namespace WireC.AST.Expressions
 {
     public class IntegerLiteral : IExpression
     {
-        public IntegerLiteral(Token token)
+        public IntegerLiteral(int nodeId, Token token)
         {
+            NodeId = nodeId;
             Span = token.Span;
             Token = token;
         }
+
+        public int NodeId { get; }
 
         public Token Token { get; }
 

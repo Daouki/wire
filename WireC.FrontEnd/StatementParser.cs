@@ -61,18 +61,24 @@ namespace WireC.FrontEnd
             var body = ParseBlock(context, state);
             var endSpan = state.Previous().Span;
             var span = SourceSpan.Merge(startSpan, endSpan);
-            return new FunctionDefinition(span, name, body, returnTypeSignature);
+            return new FunctionDefinition(
+                state.NodeIdGenerator.GetNextId(),
+                span,
+                name,
+                body,
+                returnTypeSignature
+            );
         }
 
         private static IStatement ParseReturnStatement(Context context, ParserState state)
         {
             var startSpan = state.Previous().Span;
             if (state.Current().Kind == TokenKind.Semicolon)
-                return new ReturnStatement(startSpan, null);
+                return new ReturnStatement(state.NodeIdGenerator.GetNextId(), startSpan, null);
             var expression = ExpressionParser.ParseExpression(state);
             var endSpan = state.Previous().Span;
             var span = SourceSpan.Merge(startSpan, endSpan);
-            return new ReturnStatement(span, expression);
+            return new ReturnStatement(state.NodeIdGenerator.GetNextId(), span, expression);
         }
 
         private static Block ParseBlock(Context context, ParserState state)

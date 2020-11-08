@@ -2,7 +2,7 @@
 
 namespace WireC.AST
 {
-    public interface IStatement
+    public interface IStatement : INode
     {
         SourceSpan Span { get; }
 

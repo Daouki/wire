@@ -5,6 +5,7 @@
       <e p="packages" t="ExcludeRecursive" />
       <e p="Wire.sln" t="IncludeFlat" />
       <e p="WireC.AST" t="IncludeRecursive">
+        <e p="ASTContext.cs" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="Block.cs" t="Include" />
         <e p="Expressions" t="Include">
@@ -15,6 +16,7 @@
         </e>
         <e p="IExpression.cs" t="Include" />
         <e p="IExpressionVisitor.cs" t="Include" />
+        <e p="INode.cs" t="Include" />
         <e p="IStatement.cs" t="Include" />
         <e p="IStatementVisitor.cs" t="Include" />
         <e p="IType.cs" t="Include" />
@@ -88,6 +90,7 @@
         <e p="bin" t="ExcludeRecursive" />
         <e p="ExpressionParser.cs" t="Include" />
         <e p="Lexer.cs" t="Include" />
+        <e p="NodeIdGenerator.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netcoreapp3.1" t="Include">

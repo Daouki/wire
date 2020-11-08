@@ -3,6 +3,7 @@ using System.Text;
 
 using WireC.AST;
 using WireC.AST.Statements;
+using WireC.AST.Types;
 
 namespace WireC.BackEnd
 {
@@ -13,11 +14,22 @@ namespace WireC.BackEnd
         /// </summary>
         private List<IStatement> _abstractSyntaxTree;
 
-        /// <summary>
-        /// Prelude is always included at the beginning of the generated program.
-        /// </summary>
-        private const string _prelude = @"#include<cstdint>
+        private ASTContext _astContext;
 
+        /// <summary>
+        /// Prologue is always included at the beginning of the generated program.
+        /// </summary>
+        private const string _prologue = @"#include<cstdint>
+
+";
+
+        /// <summary>
+        /// Epilogue is always included at the end of the generated program.
+        /// </summary>
+        private const string _epilogue = @"
+int main() {
+return (int)wiz_main__();
+}
 ";
 
         /// <summary>
@@ -25,15 +37,16 @@ namespace WireC.BackEnd
         /// </summary>
         private StringBuilder _generatedCode = new StringBuilder();
 
-        public CodeGenerator(List<IStatement> abstractSyntaxTree)
+        public CodeGenerator(List<IStatement> abstractSyntaxTree, ASTContext astContext)
         {
             _abstractSyntaxTree = abstractSyntaxTree;
+            _astContext = astContext;
         }
 
         public string GenerateCode()
         {
             foreach (var statement in _abstractSyntaxTree) GenerateStatementCode(statement);
-            return _prelude + _generatedCode;
+            return _prologue + _generatedCode + _epilogue;
         }
 
         private void GenerateStatementCode(IStatement statement) => statement.Accept(this);
@@ -47,16 +60,16 @@ namespace WireC.BackEnd
 
         public void VisitFunctionDefinition(FunctionDefinition functionDefinition)
         {
+            var nodeId = functionDefinition.NodeId;
+
             _generatedCode
                 .Append(
-                    functionDefinition.Name.Lexeme == "main"
-                        ? "int"
-                        : TypeSignatureGenerator.GenerateTypeSignature(
-                            functionDefinition.ReturnType
-                        )
+                    TypeSignatureGenerator.GenerateTypeSignature(
+                        ((FunctionType) _astContext.GetNodeType(nodeId)).ReturnType
+                    )
                 )
                 .Append(' ')
-                .Append(functionDefinition.Name)
+                .Append(_astContext.GetNodeMangledName(nodeId) ?? functionDefinition.Name.Lexeme)
                 .Append("() ");
             GenerateBlockCode(functionDefinition.Body);
         }

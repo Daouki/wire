@@ -6,6 +6,7 @@ using System.Text;
 
 using CommandLine;
 
+using WireC.AST;
 using WireC.BackEnd;
 using WireC.Common;
 using WireC.FrontEnd;
@@ -47,10 +48,12 @@ namespace WireC.Driver
             var abstractSyntaxTree = FrontEnd.Parser.Parse(context, tokens);
             if (context.ErrorCount > 0) TerminateCompilation(context, 1);
 
-            new SemanticAnalyzer(context, abstractSyntaxTree).Analyze();
+            var abstractSyntaxTreeContext = new ASTContext();
+
+            new SemanticAnalyzer(context, abstractSyntaxTree, abstractSyntaxTreeContext).Analyze();
             if (context.ErrorCount > 0) TerminateCompilation(context, 1);
 
-            var destinationCode = new CodeGenerator(abstractSyntaxTree).GenerateCode();
+            var destinationCode = new CodeGenerator(abstractSyntaxTree, abstractSyntaxTreeContext).GenerateCode();
 
             var cOutputFile = context.Options.OutputFile.EndsWith(".exe") &&
                 RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
