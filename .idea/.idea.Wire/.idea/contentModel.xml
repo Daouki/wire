@@ -105,6 +105,18 @@
         <e p="TypeSignatureParser.cs" t="Include" />
         <e p="WireC.FrontEnd.csproj" t="IncludeRecursive" />
       </e>
+      <e p="WireC.FrontEnd.Tests" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="LexerTests.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.1" t="Include">
+              <e p="WireC.FrontEnd.Tests.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="WireC.FrontEnd.Tests.csproj" t="IncludeRecursive" />
+      </e>
       <e p="WireC.MiddleEnd" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
         <e p="ExpressionAnalyzer.cs" t="Include" />
@@ -123,6 +135,14 @@
         <e p="WireC.MiddleEnd.csproj" t="IncludeRecursive" />
       </e>
     </e>
+    <e p="C:\Users\Damian\.nuget\packages\microsoft.net.test.sdk\16.5.0\build\netcoreapp2.1" t="Include">
+      <e p="Microsoft.NET.Test.Sdk.Program.cs" t="Include" />
+    </e>
+    <e p="C:\Users\Damian\.nuget\packages\microsoft.testplatform.testhost\16.5.0\build\netcoreapp2.1\x64\testhost.dll" t="Include" />
+    <e p="C:\Users\Damian\.nuget\packages\microsoft.testplatform.testhost\16.5.0\build\netcoreapp2.1\x64\testhost.exe" t="Include" />
+    <e p="C:\Users\Damian\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\netcoreapp1.0\xunit.runner.reporters.netcoreapp10.dll" t="Include" />
+    <e p="C:\Users\Damian\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\netcoreapp1.0\xunit.runner.utility.netcoreapp10.dll" t="Include" />
+    <e p="C:\Users\Damian\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\netcoreapp1.0\xunit.runner.visualstudio.dotnetcore.testadapter.dll" t="Include" />
     <e p="C:\Users\Damian\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />
     <e p="C:\Users\Damian\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_Wire.-1144929370.00" t="ExcludeRecursive" />
     <e p="C:\Users\Damian\AppData\Roaming\JetBrains\Rider2020.2\scratches" t="IncludeRecursive" />
