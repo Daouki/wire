@@ -38,5 +38,9 @@ namespace WireC.MiddleEnd
 
         public bool VisitPrefixOperation(PrefixOperation prefixOperation) =>
             IsExpressionValid(prefixOperation.Operand);
+
+        public bool VisitInfixOperation(InfixOperation infixOperation) =>
+            IsExpressionValid(infixOperation.LeftOperand) &&
+            IsExpressionValid(infixOperation.RightOperand);
     }
 }

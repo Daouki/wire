@@ -17,6 +17,7 @@ namespace WireC.FrontEnd
         private static readonly Dictionary<string, TokenKind> _shortOperators =
             new Dictionary<string, TokenKind>
             {
+                {"*", TokenKind.Asterisk},
                 {":", TokenKind.Colon},
                 {"{", TokenKind.LeftBrace},
                 {"(", TokenKind.LeftParenthesis},
@@ -25,6 +26,7 @@ namespace WireC.FrontEnd
                 {"}", TokenKind.RightBrace},
                 {")", TokenKind.RightParenthesis},
                 {";", TokenKind.Semicolon},
+                {"/", TokenKind.Slash},
             };
 
         private static readonly Regex _commentRegex = new Regex(

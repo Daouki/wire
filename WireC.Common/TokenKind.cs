@@ -8,6 +8,7 @@
         Fn,
         Return,
 
+        Asterisk,
         Colon,
         LeftBrace,
         LeftParenthesis,
@@ -16,6 +17,7 @@
         RightBrace,
         RightParenthesis,
         Semicolon,
+        Slash,
 
         Invalid,
         EndOfFile,

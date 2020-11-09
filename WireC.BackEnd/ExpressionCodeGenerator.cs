@@ -34,11 +34,29 @@ namespace WireC.BackEnd
             return $"{@operator}{operand}";
         }
 
+        public string VisitInfixOperation(InfixOperation infixOperation)
+        {
+            var leftOperandCode = GenerateExpression(infixOperation.LeftOperand);
+            var operatorCode = GenerateInfixOperator(infixOperation.Operator);
+            var rightOperandCode = GenerateExpression(infixOperation.RightOperand);
+            return $"{leftOperandCode}{operatorCode}{rightOperandCode}";
+        }
+
         private static string GeneratePrefixOperator(PrefixOperator @operator) =>
             @operator.Kind switch
             {
                 PrefixOperatorKind.Identity => "+",
                 PrefixOperatorKind.Negate => "-",
+                _ => throw new ArgumentException(nameof(@operator)),
+            };
+
+        private static string GenerateInfixOperator(InfixOperator @operator) =>
+            @operator.Kind switch
+            {
+                InfixOperatorKind.Add => "+",
+                InfixOperatorKind.Divide => "/",
+                InfixOperatorKind.Multiply => "*",
+                InfixOperatorKind.Subtract => "-",
                 _ => throw new ArgumentException(nameof(@operator)),
             };
 

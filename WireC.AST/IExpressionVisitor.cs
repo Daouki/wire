@@ -8,5 +8,6 @@ namespace WireC.AST
         T VisitIntegerLiteral(IntegerLiteral integer);
         T VisitFunctionCall(FunctionCall functionCall);
         T VisitPrefixOperation(PrefixOperation prefixOperation);
+        T VisitInfixOperation(InfixOperation infixOperation);
     }
 }

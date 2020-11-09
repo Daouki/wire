@@ -58,5 +58,14 @@ namespace WireC.MiddleEnd
             return GetExpressionType(prefixOperation.Operand)
                 .GetPrefixOperationResultType(prefixOperation.Operator.Kind);
         }
+
+        public IType VisitInfixOperation(InfixOperation infixOperation)
+        {
+            var leftOperandType = GetExpressionType(infixOperation.LeftOperand);
+            var rightOperandType = GetExpressionType(infixOperation.RightOperand);
+            if (leftOperandType != null && leftOperandType.IsSame(rightOperandType))
+                return leftOperandType;
+            return null;
+        }
     }
 }

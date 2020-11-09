@@ -4,7 +4,7 @@ using WireC.Common;
 
 namespace WireC.FrontEnd
 {
-    public class ExpressionParser
+    public static class ExpressionParser
     {
         private static readonly TokenKind[] _prefixOperators =
         {
@@ -12,8 +12,34 @@ namespace WireC.FrontEnd
             TokenKind.Plus,
         };
 
+        private static readonly TokenKind[] _infixOperators =
+        {
+            TokenKind.Asterisk,
+            TokenKind.Minus,
+            TokenKind.Plus,
+            TokenKind.Slash,
+        };
+
         public static IExpression ParseExpression(ParserState state) =>
-            ParsePostfixOperation(state);
+            ParseInfixOperation(state);
+
+        private static IExpression ParseInfixOperation(ParserState state)
+        {
+            var expression = ParsePostfixOperation(state);
+            while (!state.IsAtEnd() && state.Consume(_infixOperators))
+            {
+                var @operator = InfixOperator.FromToken(state.Previous());
+                var rightOperand = ParsePostfixOperation(state);
+                expression = new InfixOperation(
+                    state.NodeIdGenerator.GetNextId(),
+                    @operator,
+                    expression,
+                    rightOperand
+                );
+            }
+
+            return expression;
+        }
 
         private static IExpression ParsePostfixOperation(ParserState state)
         {
