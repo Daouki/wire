@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 
 using WireC.AST;
 using WireC.AST.Statements;
@@ -81,13 +82,7 @@ namespace WireC.MiddleEnd
 
         public void VisitVariableDefinition(VariableDefinition variableDefinition)
         {
-            ExpressionAnalyzer.IsExpressionValid(
-                _context,
-                _currentScope,
-                variableDefinition.Initializer
-            );
-
-            if (variableDefinition.TypeSignature != null)
+            if (variableDefinition.TypeSignature != null && variableDefinition.Initializer != null)
             {
                 var variableType = TypeSignatureParser.ParseTypeSignature(
                     _context,
@@ -102,6 +97,9 @@ namespace WireC.MiddleEnd
 
                 if (!variableType.IsSame(initializerType))
                 {
+                    // We made sure in the StatementParser that a definition without both initializer
+                    // and type signature is not a valid AST item and discarded it with an error.
+                    Debug.Assert(variableDefinition.Initializer != null);
                     _context.Error(
                         variableDefinition.Initializer.Span,
                         $"expected type \"{variableType}\", but found \"{initializerType}\""
@@ -110,7 +108,17 @@ namespace WireC.MiddleEnd
 
                 _astContext.AddNodeType(variableDefinition.NodeId, variableType);
             }
-            else
+            else if (variableDefinition.TypeSignature != null &&
+                variableDefinition.Initializer == null)
+            {
+                var variableType =
+                    TypeSignatureParser.ParseTypeSignature(
+                        _context,
+                        variableDefinition.TypeSignature
+                    );
+                _astContext.AddNodeType(variableDefinition.NodeId, variableType);
+            }
+            else // variableDefinition.TypeSignature == null && variableDefinition.Initializer != null
             {
                 var initializerType = Typer.GetExpressionType(
                     _context,

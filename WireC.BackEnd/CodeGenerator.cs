@@ -101,9 +101,10 @@ return (int)wiz_main__();
                         ExpressionCodeGenerator.GenerateExpressionCode(
                             variableDefinition.Initializer
                         )
-                    )
-                    .Append(";\n");
+                    );
             }
+
+            _generatedCode.Append(";\n");
         }
     }
 }
