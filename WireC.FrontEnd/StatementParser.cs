@@ -29,7 +29,54 @@ namespace WireC.FrontEnd
                         EndsWithSemicolon = true,
                     }
                 },
+                {
+                    TokenKind.Var,
+                    new StatementParseRule()
+                    {
+                        ParserFunction = ParseVariableDefinition,
+                        EndsWithSemicolon = true,
+                    }
+                },
             };
+
+        private static IStatement ParseVariableDefinition(Context context, ParserState state)
+        {
+            var startSpan = state.Previous().Span;
+            var identifier = state.ConsumeOrError(TokenKind.Identifier);
+            var typeSignature = state.Consume(TokenKind.Colon)
+                ? TypeSignatureParser.ParseTypeSignature(state)
+                : null;
+
+            SourceSpan endSpan;
+            SourceSpan span;
+
+            if (state.Consume(TokenKind.Equal))
+            {
+                var initializer = ExpressionParser.ParseExpression(state);
+                endSpan = state.Previous().Span;
+                span = SourceSpan.Merge(startSpan, endSpan);
+                return new VariableDefinition(
+                    state.NodeIdGenerator.GetNextId(),
+                    span,
+                    identifier,
+                    typeSignature,
+                    initializer
+                );
+            }
+
+            if (typeSignature == null)
+                throw new ParseException(identifier.Span, "type signature needed");
+
+            endSpan = state.Previous().Span;
+            span = SourceSpan.Merge(startSpan, endSpan);
+            return new VariableDefinition(
+                state.NodeIdGenerator.GetNextId(),
+                span,
+                identifier,
+                typeSignature,
+                null
+            );
+        }
 
         private static readonly IEnumerable<TokenKind> _synchronizationPoints = _parseRules.Keys;
 

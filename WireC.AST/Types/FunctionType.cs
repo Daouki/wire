@@ -21,5 +21,7 @@ namespace WireC.AST.Types
         }
 
         public T Accept<T>(ITypeVisitor<T> visitor) => visitor.VisitFunctionType(this);
+
+        public override string ToString() => $"fn(): {ReturnType}";
     }
 }

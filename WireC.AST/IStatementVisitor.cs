@@ -6,5 +6,6 @@ namespace WireC.AST
     {
         void VisitFunctionDefinition(FunctionDefinition functionDefinition);
         void VisitReturnStatement(ReturnStatement returnStatement);
+        void VisitVariableDefinition(VariableDefinition variableDefinition);
     }
 }

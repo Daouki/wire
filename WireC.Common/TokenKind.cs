@@ -7,9 +7,11 @@
 
         Fn,
         Return,
+        Var,
 
         Asterisk,
         Colon,
+        Equal,
         LeftBrace,
         LeftParenthesis,
         Minus,

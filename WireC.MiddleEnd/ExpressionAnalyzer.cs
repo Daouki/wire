@@ -26,7 +26,19 @@ namespace WireC.MiddleEnd
 
         private bool IsExpressionValid(IExpression expression) => expression.Accept(this);
 
-        public bool VisitIdentifier(Identifier identifier) => true;
+        public bool VisitIdentifier(Identifier identifier)
+        {
+            if (!_environment.IsSymbolDefined(identifier.Name))
+            {
+                _context.Error(
+                    identifier.Span,
+                    $"symbol \"{identifier.Name}\" was not defined in the current scope"
+                );
+                return false;
+            }
+
+            return true;
+        }
 
         public bool VisitIntegerLiteral(IntegerLiteral integer) => true;
 
@@ -39,8 +51,33 @@ namespace WireC.MiddleEnd
         public bool VisitPrefixOperation(PrefixOperation prefixOperation) =>
             IsExpressionValid(prefixOperation.Operand);
 
-        public bool VisitInfixOperation(InfixOperation infixOperation) =>
-            IsExpressionValid(infixOperation.LeftOperand) &&
-            IsExpressionValid(infixOperation.RightOperand);
+        public bool VisitInfixOperation(InfixOperation infixOperation)
+        {
+            if (!(IsExpressionValid(infixOperation.LeftOperand) &&
+                IsExpressionValid(infixOperation.RightOperand)))
+            {
+                return false;
+            }
+
+            var leftOperandType = Typer.GetExpressionType(
+                _context,
+                _environment,
+                infixOperation.LeftOperand
+            );
+            var rightOperandType = Typer.GetExpressionType(
+                _context,
+                _environment,
+                infixOperation.RightOperand
+            );
+
+            if (leftOperandType != null && leftOperandType.IsSame(rightOperandType)) return true;
+
+            _context.Error(
+                infixOperation.Operator.Span,
+                "type mismatch between operands of a infix expression; " +
+                $"left is \"{leftOperandType}\", but right is \"{rightOperandType}\""
+            );
+            return false;
+        }
     }
 }

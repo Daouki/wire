@@ -46,6 +46,25 @@ namespace WireC.MiddleEnd
             return true;
         }
 
+        /// <summary>
+        /// Define a new symbol created from a variable definition.
+        /// </summary>
+        /// <param name="variable">Variable to be defined as a symbol</param>
+        /// <param name="variableType">Type of that variable.</param>
+        /// <returns>True if function was defined successfully; false if it wasn't.</returns>
+        public bool DefineSymbol(VariableDefinition variable, IType variableType)
+        {
+            if (IsSymbolDefinedLocally(variable.Identifier.Lexeme)) return false;
+            _symbols.Add(
+                new Symbol
+                {
+                    Name = variable.Identifier,
+                    Type = variableType,
+                }
+            );
+            return true;
+        }
+
         public bool IsSymbolDefined(string name)
         {
             if (IsSymbolDefinedLocally(name)) return true;

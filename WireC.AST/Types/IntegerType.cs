@@ -17,5 +17,7 @@ namespace WireC.AST.Types
         public bool IsSame(IType other) => other is IntegerType;
 
         public T Accept<T>(ITypeVisitor<T> visitor) => visitor.VisitIntegerType(this);
+
+        public override string ToString() => "i64";
     }
 }

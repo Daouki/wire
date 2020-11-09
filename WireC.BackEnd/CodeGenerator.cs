@@ -81,5 +81,29 @@ return (int)wiz_main__();
                 .Append(ExpressionCodeGenerator.GenerateExpressionCode(returnStatement.Expression))
                 .Append(";\n");
         }
+
+        public void VisitVariableDefinition(VariableDefinition variableDefinition)
+        {
+            _generatedCode
+                .Append(
+                    TypeSignatureGenerator.GenerateTypeSignature(
+                        _astContext.GetNodeType(variableDefinition.NodeId)
+                    )
+                )
+                .Append(' ')
+                .Append(variableDefinition.Identifier);
+
+            if (variableDefinition.Initializer != null)
+            {
+                _generatedCode
+                    .Append(" = ")
+                    .Append(
+                        ExpressionCodeGenerator.GenerateExpressionCode(
+                            variableDefinition.Initializer
+                        )
+                    )
+                    .Append(";\n");
+            }
+        }
     }
 }

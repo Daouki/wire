@@ -78,5 +78,59 @@ namespace WireC.MiddleEnd
                 returnStatement.Expression
             );
         }
+
+        public void VisitVariableDefinition(VariableDefinition variableDefinition)
+        {
+            ExpressionAnalyzer.IsExpressionValid(
+                _context,
+                _currentScope,
+                variableDefinition.Initializer
+            );
+
+            if (variableDefinition.TypeSignature != null)
+            {
+                var variableType = TypeSignatureParser.ParseTypeSignature(
+                    _context,
+                    variableDefinition.TypeSignature
+                );
+
+                var initializerType = Typer.GetExpressionType(
+                    _context,
+                    _currentScope,
+                    variableDefinition.Initializer
+                );
+
+                if (!variableType.IsSame(initializerType))
+                {
+                    _context.Error(
+                        variableDefinition.Initializer.Span,
+                        $"expected type \"{variableType}\", but found \"{initializerType}\""
+                    );
+                }
+
+                _astContext.AddNodeType(variableDefinition.NodeId, variableType);
+            }
+            else
+            {
+                var initializerType = Typer.GetExpressionType(
+                    _context,
+                    _currentScope,
+                    variableDefinition.Initializer
+                );
+
+                _astContext.AddNodeType(variableDefinition.NodeId, initializerType);
+            }
+
+            if (!_currentScope.DefineSymbol(
+                variableDefinition,
+                _astContext.GetNodeType(variableDefinition.NodeId)
+            ))
+            {
+                _context.Error(
+                    variableDefinition.Span,
+                    $"redefined previously defined symbol \"{variableDefinition.Identifier}\""
+                );
+            }
+        }
     }
 }

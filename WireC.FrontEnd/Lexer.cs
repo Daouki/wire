@@ -12,6 +12,7 @@ namespace WireC.FrontEnd
             {
                 {"fn", TokenKind.Fn},
                 {"return", TokenKind.Return},
+                {"var", TokenKind.Var},
             };
 
         private static readonly Dictionary<string, TokenKind> _shortOperators =
@@ -19,6 +20,7 @@ namespace WireC.FrontEnd
             {
                 {"*", TokenKind.Asterisk},
                 {":", TokenKind.Colon},
+                {"=", TokenKind.Equal},
                 {"{", TokenKind.LeftBrace},
                 {"(", TokenKind.LeftParenthesis},
                 {"-", TokenKind.Minus},
