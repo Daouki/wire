@@ -47,6 +47,7 @@ namespace WireC.FrontEnd
             state.Advance();
             var statement = parseRule.ParserFunction.Invoke(context, state);
             if (parseRule.EndsWithSemicolon) state.ConsumeOrError(TokenKind.Semicolon);
+            ConsumeUnnecessarySemicolons(context, state);
             return statement;
         }
 
@@ -89,7 +90,9 @@ namespace WireC.FrontEnd
             return new Block(openingBrace, closingBrace, statements);
         }
 
-        public static List<IStatement> ParseStatementsUntil(Context context, ParserState state,
+        public static List<IStatement> ParseStatementsUntil(
+            Context context,
+            ParserState state,
             TokenKind kind)
         {
             var statements = new List<IStatement>();
@@ -107,6 +110,21 @@ namespace WireC.FrontEnd
             }
 
             return statements;
+        }
+
+        private static void ConsumeUnnecessarySemicolons(Context context, ParserState state)
+        {
+            while (!state.IsAtEnd() && state.Consume(TokenKind.Semicolon))
+            {
+                var firstSemicolon = state.Previous();
+                var lastSemicolon = firstSemicolon;
+                while (state.Consume(TokenKind.Semicolon)) lastSemicolon = state.Previous();
+                var semicolonsSpan = SourceSpan.Merge(firstSemicolon.Span, lastSemicolon.Span);
+                var message = firstSemicolon.Span.Start == lastSemicolon.Span.Start
+                    ? "unnecessary trailing semicolon"
+                    : "unnecessary trailing semicolons";
+                context.Warning(semicolonsSpan, message);
+            }
         }
 
         private static void Synchronize(ParserState state)

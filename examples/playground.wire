@@ -1,7 +1,7 @@
 fn other(): i64 {
-    return -42 + 7 * 3;
+    return -42 + 7 * 3;;
 }
 
 fn main(): i64 {
-    return other();
+    return other();;;;;
 }
