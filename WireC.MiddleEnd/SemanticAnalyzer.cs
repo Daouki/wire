@@ -45,10 +45,12 @@ namespace WireC.MiddleEnd
             if (functionDefinition.Name.Lexeme == "main")
                 _astContext.AddMangledName(functionDefinition.NodeId, "wiz_main__");
 
-            var returnType = TypeSignatureParser.ParseTypeSignature(
-                _context,
-                functionDefinition.ReturnTypeSignature
-            );
+            var returnType = functionDefinition.ReturnTypeSignature != null
+                ? TypeSignatureParser.ParseTypeSignature(
+                    _context,
+                    functionDefinition.ReturnTypeSignature
+                )
+                : new VoidType();
             if (returnType != null)
             {
                 var functionType = new FunctionType(returnType);
@@ -95,7 +97,7 @@ namespace WireC.MiddleEnd
                     variableDefinition.Initializer
                 );
 
-                if (!variableType.IsSame(initializerType))
+                if (variableType != null && !variableType.IsSame(initializerType))
                 {
                     // We made sure in the StatementParser that a definition without both initializer
                     // and type signature is not a valid AST item and discarded it with an error.
@@ -116,6 +118,7 @@ namespace WireC.MiddleEnd
                         _context,
                         variableDefinition.TypeSignature
                     );
+
                 _astContext.AddNodeType(variableDefinition.NodeId, variableType);
             }
             else // variableDefinition.TypeSignature == null && variableDefinition.Initializer != null
@@ -125,6 +128,16 @@ namespace WireC.MiddleEnd
                     _currentScope,
                     variableDefinition.Initializer
                 );
+                if (initializerType is VoidType)
+                {
+                    // Again, the linter is overly sensitive. There's no way for the Initializer
+                    // field to be null at this point.
+                    Debug.Assert(variableDefinition.Initializer != null);
+                    _context.Error(
+                        variableDefinition.Initializer.Span,
+                        $"type \"void\" cannot be assigned to a variable"
+                    );
+                }
 
                 _astContext.AddNodeType(variableDefinition.NodeId, initializerType);
             }

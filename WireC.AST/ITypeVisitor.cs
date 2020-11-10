@@ -6,5 +6,6 @@ namespace WireC.AST
     {
         T VisitIntegerType(IntegerType integer);
         T VisitFunctionType(FunctionType functionType);
+        T VisitVoidType(VoidType voidType);
     }
 }

@@ -21,5 +21,7 @@ namespace WireC.BackEnd
 
         public string VisitFunctionType(FunctionType functionType) =>
             throw new NotImplementedException();
+
+        public string VisitVoidType(VoidType voidType) => "void";
     }
 }

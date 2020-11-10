@@ -104,8 +104,9 @@ namespace WireC.FrontEnd
             var name = state.ConsumeOrError(TokenKind.Identifier);
             state.ConsumeOrError(TokenKind.LeftParenthesis);
             state.ConsumeOrError(TokenKind.RightParenthesis);
-            state.ConsumeOrError(TokenKind.Colon);
-            var returnTypeSignature = TypeSignatureParser.ParseTypeSignature(state);
+            var returnTypeSignature = state.Consume(TokenKind.Colon)
+                ? TypeSignatureParser.ParseTypeSignature(state)
+                : null;
             var body = ParseBlock(context, state);
             var endSpan = state.Previous().Span;
             var span = SourceSpan.Merge(startSpan, endSpan);
