@@ -6,6 +6,8 @@ namespace WireC.AST.Types
     {
         public IType GetPrefixOperationResultType(PrefixOperatorKind operationKind) => null;
 
+        public IType GetInfixOperationResultType(InfixOperatorKind @operator) => null;
+
         public bool IsSame(IType other) => other is VoidType;
 
         public T Accept<T>(ITypeVisitor<T> visitor) => visitor.VisitVoidType(this);

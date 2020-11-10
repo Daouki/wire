@@ -51,7 +51,12 @@ namespace WireC.MiddleEnd
             var leftOperandType = GetExpressionType(infixOperation.LeftOperand);
             var rightOperandType = GetExpressionType(infixOperation.RightOperand);
             if (leftOperandType != null && leftOperandType.IsSame(rightOperandType))
-                return leftOperandType;
+                return leftOperandType.GetInfixOperationResultType(infixOperation.Operator.Kind);
+            _context.Error(
+                infixOperation.Operator.Span,
+                "type mismatch between operands of infix operation; " +
+                $"left is \"{leftOperandType}\", but right is \"{rightOperandType}\""
+            );
             return null;
         }
 

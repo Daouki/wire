@@ -1,6 +1,7 @@
 fn returnless() {}
 
 fn other(): i64 {
+    var w = 7 + returnless();
     var y: i64;
     var x = 7 * 3;
     var z: i64 = 53;

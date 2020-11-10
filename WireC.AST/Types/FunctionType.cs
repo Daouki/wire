@@ -13,6 +13,8 @@ namespace WireC.AST.Types
 
         public IType GetPrefixOperationResultType(PrefixOperatorKind operationKind) => null;
 
+        public IType GetInfixOperationResultType(InfixOperatorKind @operator) => null;
+
         public bool IsSame(IType other)
         {
             if (other is not FunctionType) return false;

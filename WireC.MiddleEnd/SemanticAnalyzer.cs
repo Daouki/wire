@@ -115,18 +115,23 @@ namespace WireC.MiddleEnd
                     _currentScope,
                     variableDefinition.Initializer
                 );
-                if (initializerType is VoidType)
+                switch (initializerType)
                 {
-                    // Again, the linter is overly sensitive. There's no way for the Initializer
-                    // field to be null at this point.
-                    Debug.Assert(variableDefinition.Initializer != null);
-                    _context.Error(
-                        variableDefinition.Initializer.Span,
-                        "type \"void\" cannot be assigned to a variable"
-                    );
+                    case VoidType _:
+                        // Again, the linter is overly sensitive. There's no way for the Initializer
+                        // field to be null at this point.
+                        Debug.Assert(variableDefinition.Initializer != null);
+                        _context.Error(
+                            variableDefinition.Initializer.Span,
+                            "type \"void\" cannot be assigned to a variable"
+                        );
+                        break;
+                    case null:
+                        return;
+                    default:
+                        _astContext.AddNodeType(variableDefinition.NodeId, initializerType);
+                        break;
                 }
-
-                _astContext.AddNodeType(variableDefinition.NodeId, initializerType);
             }
 
             if (!_currentScope.DefineSymbol(

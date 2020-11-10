@@ -4,7 +4,8 @@ namespace WireC.AST
 {
     public interface IType
     {
-        public IType GetPrefixOperationResultType(PrefixOperatorKind operationKind);
+        public IType GetPrefixOperationResultType(PrefixOperatorKind @operator);
+        public IType GetInfixOperationResultType(InfixOperatorKind @operator);
 
         bool IsSame(IType other);
 
