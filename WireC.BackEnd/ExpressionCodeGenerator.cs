@@ -36,6 +36,13 @@ namespace WireC.BackEnd
             return $"{leftOperandCode}{operatorCode}{rightOperandCode}";
         }
 
+        public string VisitBooleanLiteral(BooleanLiteral booleanLiteral) =>
+            booleanLiteral.Value switch
+            {
+                true => "true",
+                false => "false",
+            };
+
         public static string GenerateExpressionCode(IExpression expression)
         {
             var self = new ExpressionCodeGenerator();

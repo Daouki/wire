@@ -67,6 +67,8 @@ namespace WireC.MiddleEnd
             return false;
         }
 
+        public bool VisitBooleanLiteral(BooleanLiteral booleanLiteral) => true;
+
         public static bool IsExpressionValid(
             Context context,
             Scope environment,

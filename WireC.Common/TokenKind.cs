@@ -5,8 +5,10 @@
         Identifier,
         Integer,
 
+        False,
         Fn,
         Return,
+        True,
         Var,
 
         Asterisk,

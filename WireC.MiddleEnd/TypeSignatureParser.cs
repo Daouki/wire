@@ -12,6 +12,7 @@ namespace WireC.MiddleEnd
         private static readonly Dictionary<string, IType> _primitiveTypes =
             new Dictionary<string, IType>
             {
+                {"bool", new BooleanType()},
                 {"i64", new IntegerType()},
             };
 

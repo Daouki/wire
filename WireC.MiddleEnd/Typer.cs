@@ -60,6 +60,8 @@ namespace WireC.MiddleEnd
             return null;
         }
 
+        public IType VisitBooleanLiteral(BooleanLiteral booleanLiteral) => new BooleanType();
+
         public static IType GetExpressionType(
             Context context,
             Scope environment,

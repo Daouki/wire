@@ -17,6 +17,7 @@ namespace WireC.BackEnd
             throw new NotImplementedException();
 
         public string VisitVoidType(VoidType voidType) => "void";
+        public string VisitBooleanType(BooleanType booleanType) => "bool";
 
         public static string GenerateTypeSignature(IType type)
         {

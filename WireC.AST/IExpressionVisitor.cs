@@ -9,5 +9,6 @@ namespace WireC.AST
         T VisitFunctionCall(FunctionCall functionCall);
         T VisitPrefixOperation(PrefixOperation prefixOperation);
         T VisitInfixOperation(InfixOperation infixOperation);
+        T VisitBooleanLiteral(BooleanLiteral booleanLiteral);
     }
 }

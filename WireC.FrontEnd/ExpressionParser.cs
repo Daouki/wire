@@ -65,11 +65,29 @@ namespace WireC.FrontEnd
 
         private static IExpression ParsePrimaryExpression(ParserState state)
         {
+            if (state.Consume(TokenKind.False))
+            {
+                return new BooleanLiteral(
+                    state.NodeIdGenerator.GetNextId(),
+                    state.Previous().Span,
+                    false
+                );
+            }
+
             if (state.Consume(TokenKind.Identifier))
                 return new Identifier(state.NodeIdGenerator.GetNextId(), state.Previous());
 
             if (state.Consume(TokenKind.Integer))
                 return new IntegerLiteral(state.NodeIdGenerator.GetNextId(), state.Previous());
+
+            if (state.Consume(TokenKind.True))
+            {
+                return new BooleanLiteral(
+                    state.NodeIdGenerator.GetNextId(),
+                    state.Previous().Span,
+                    true
+                );
+            }
 
             throw new ParseException(
                 state.Current().Span,
