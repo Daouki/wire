@@ -7,10 +7,7 @@ namespace WireC.FrontEnd
     // TODO: Find a better name for this class.
     public static class TypeSignatureParser
     {
-        public static ITypeSignature ParseTypeSignature(ParserState state)
-        {
-            return ParseTypeName(state);
-        }
+        public static ITypeSignature ParseTypeSignature(ParserState state) => ParseTypeName(state);
 
         private static ITypeSignature ParseTypeName(ParserState state)
         {

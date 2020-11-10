@@ -22,12 +22,6 @@ namespace WireC.MiddleEnd
             _context = context;
         }
 
-        public static IType ParseTypeSignature(Context context, ITypeSignature typeSignature)
-        {
-            var self = new TypeSignatureParser(context);
-            return typeSignature.Accept(self);
-        }
-
         public IType VisitTypeName(TypeName typeName)
         {
             if (_primitiveTypes.TryGetValue(typeName.Name, out var primitiveType))
@@ -37,6 +31,12 @@ namespace WireC.MiddleEnd
                 $"type \"{typeName.Name}\" was not defined in the current scope"
             );
             return null;
+        }
+
+        public static IType ParseTypeSignature(Context context, ITypeSignature typeSignature)
+        {
+            var self = new TypeSignatureParser(context);
+            return typeSignature.Accept(self);
         }
     }
 }

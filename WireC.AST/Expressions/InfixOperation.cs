@@ -22,11 +22,12 @@ namespace WireC.AST.Expressions
             RightOperand = rightOperand;
         }
 
-        public int NodeId { get; }
-        public SourceSpan Span { get; }
         public InfixOperator Operator { get; }
         public IExpression LeftOperand { get; }
         public IExpression RightOperand { get; }
+
+        public int NodeId { get; }
+        public SourceSpan Span { get; }
 
         public T Accept<T>(IExpressionVisitor<T> visitor) => visitor.VisitInfixOperation(this);
     }
@@ -38,6 +39,9 @@ namespace WireC.AST.Expressions
             Kind = kind;
             Span = span;
         }
+
+        public InfixOperatorKind Kind { get; }
+        public SourceSpan Span { get; }
 
         public static InfixOperator FromToken(Token token)
         {
@@ -53,9 +57,6 @@ namespace WireC.AST.Expressions
                 token.Span
             );
         }
-
-        public InfixOperatorKind Kind { get; }
-        public SourceSpan Span { get; }
     }
 
     public enum InfixOperatorKind

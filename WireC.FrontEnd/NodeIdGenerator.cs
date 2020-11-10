@@ -2,7 +2,7 @@
 {
     public class NodeIdGenerator
     {
-        private static int _nextId;
+        private int _nextId;
 
         public int GetNextId() => _nextId++;
     }

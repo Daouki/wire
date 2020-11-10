@@ -12,17 +12,17 @@ namespace WireC.AST.TypeSignatures
             Span = span;
         }
 
-        public static TypeName FromToken(Token token)
-        {
-            Debug.Assert(token.Kind == TokenKind.Identifier);
-            return new TypeName(token.Lexeme, token.Span);
-        }
-
         public string Name { get; }
 
         public SourceSpan Span { get; }
 
         public T Accept<T>(ITypeSignatureVisitor<T> visitor) => visitor.VisitTypeName(this);
+
+        public static TypeName FromToken(Token token)
+        {
+            Debug.Assert(token.Kind == TokenKind.Identifier);
+            return new TypeName(token.Lexeme, token.Span);
+        }
 
         public override string ToString() => Name;
     }

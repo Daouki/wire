@@ -10,9 +10,9 @@ namespace WireC.MiddleEnd
 {
     public class SemanticAnalyzer : IStatementVisitor
     {
-        private readonly Context _context;
         private readonly List<IStatement> _abstractSyntaxTree;
         private readonly ASTContext _astContext;
+        private readonly Context _context;
 
         private Scope _currentScope;
         private FunctionDefinition _functionContext;
@@ -25,19 +25,6 @@ namespace WireC.MiddleEnd
             _context = context;
             _abstractSyntaxTree = abstractSyntaxTree;
             _astContext = astContext;
-        }
-
-        public void Analyze()
-        {
-            _currentScope = new Scope(); // Create the global scope.
-            foreach (var statement in _abstractSyntaxTree) Analyze(statement);
-        }
-
-        private void Analyze(IStatement statement) => statement.Accept(this);
-
-        private void AnalyzeBlock(Block block)
-        {
-            foreach (var statement in block.Statements) Analyze(statement);
         }
 
         public void VisitFunctionDefinition(FunctionDefinition functionDefinition)
@@ -135,7 +122,7 @@ namespace WireC.MiddleEnd
                     Debug.Assert(variableDefinition.Initializer != null);
                     _context.Error(
                         variableDefinition.Initializer.Span,
-                        $"type \"void\" cannot be assigned to a variable"
+                        "type \"void\" cannot be assigned to a variable"
                     );
                 }
 
@@ -152,6 +139,19 @@ namespace WireC.MiddleEnd
                     $"redefined previously defined symbol \"{variableDefinition.Identifier}\""
                 );
             }
+        }
+
+        public void Analyze()
+        {
+            _currentScope = new Scope(); // Create the global scope.
+            foreach (var statement in _abstractSyntaxTree) Analyze(statement);
+        }
+
+        private void Analyze(IStatement statement) => statement.Accept(this);
+
+        private void AnalyzeBlock(Block block)
+        {
+            foreach (var statement in block.Statements) Analyze(statement);
         }
     }
 }

@@ -12,11 +12,11 @@ namespace WireC.AST.Expressions
             Name = token.Lexeme;
         }
 
-        public int NodeId { get; }
-
         public Token Token { get; }
 
         public string Name { get; }
+
+        public int NodeId { get; }
 
         public SourceSpan Span { get; }
 

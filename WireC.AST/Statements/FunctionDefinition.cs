@@ -18,10 +18,11 @@ namespace WireC.AST.Statements
             Body = body;
         }
 
-        public int NodeId { get; }
         public Token Name { get; }
         public ITypeSignature ReturnTypeSignature { get; }
         public Block Body { get; }
+
+        public int NodeId { get; }
         public SourceSpan Span { get; }
 
         public void Accept(IStatementVisitor visitor) => visitor.VisitFunctionDefinition(this);

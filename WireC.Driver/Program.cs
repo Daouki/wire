@@ -53,7 +53,8 @@ namespace WireC.Driver
             new SemanticAnalyzer(context, abstractSyntaxTree, abstractSyntaxTreeContext).Analyze();
             if (context.ErrorCount > 0) TerminateCompilation(context, 1);
 
-            var destinationCode = new CodeGenerator(abstractSyntaxTree, abstractSyntaxTreeContext).GenerateCode();
+            var destinationCode = new CodeGenerator(abstractSyntaxTree, abstractSyntaxTreeContext)
+                .GenerateCode();
 
             var cOutputFile = context.Options.OutputFile.EndsWith(".exe") &&
                 RuntimeInformation.IsOSPlatform(OSPlatform.Windows)

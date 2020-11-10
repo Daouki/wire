@@ -31,13 +31,15 @@ namespace WireC.FrontEnd
                 },
                 {
                     TokenKind.Var,
-                    new StatementParseRule()
+                    new StatementParseRule
                     {
                         ParserFunction = ParseVariableDefinition,
                         EndsWithSemicolon = true,
                     }
                 },
             };
+
+        private static readonly IEnumerable<TokenKind> _synchronizationPoints = _parseRules.Keys;
 
         private static IStatement ParseVariableDefinition(Context context, ParserState state)
         {
@@ -77,8 +79,6 @@ namespace WireC.FrontEnd
                 null
             );
         }
-
-        private static readonly IEnumerable<TokenKind> _synchronizationPoints = _parseRules.Keys;
 
         private static IStatement ParseStatement(Context context, ParserState state)
         {

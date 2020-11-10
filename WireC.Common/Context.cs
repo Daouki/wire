@@ -45,7 +45,10 @@ namespace WireC.Common
             Report(span, "warning", ConsoleColor.Yellow, message);
         }
 
-        private void Report(SourceSpan span, string header, ConsoleColor accentColor,
+        private void Report(
+            SourceSpan span,
+            string header,
+            ConsoleColor accentColor,
             string message)
         {
             Console.Error.WriteLine($"{Options.InputFile}:{span.Line}:{span.Column}");

@@ -9,24 +9,13 @@ namespace WireC.MiddleEnd
     {
         private readonly Context _context;
 
+        private readonly Scope _environment;
+
         private Typer(Context context, Scope environment)
         {
             _context = context;
             _environment = environment;
         }
-
-        private readonly Scope _environment;
-
-        public static IType GetExpressionType(
-            Context context,
-            Scope environment,
-            IExpression expression)
-        {
-            var self = new Typer(context, environment);
-            return expression.Accept(self);
-        }
-
-        private IType GetExpressionType(IExpression expression) => expression.Accept(this);
 
         public IType VisitIdentifier(Identifier identifier)
         {
@@ -53,11 +42,9 @@ namespace WireC.MiddleEnd
             return null;
         }
 
-        public IType VisitPrefixOperation(PrefixOperation prefixOperation)
-        {
-            return GetExpressionType(prefixOperation.Operand)
+        public IType VisitPrefixOperation(PrefixOperation prefixOperation) =>
+            GetExpressionType(prefixOperation.Operand)
                 .GetPrefixOperationResultType(prefixOperation.Operator.Kind);
-        }
 
         public IType VisitInfixOperation(InfixOperation infixOperation)
         {
@@ -67,5 +54,16 @@ namespace WireC.MiddleEnd
                 return leftOperandType;
             return null;
         }
+
+        public static IType GetExpressionType(
+            Context context,
+            Scope environment,
+            IExpression expression)
+        {
+            var self = new Typer(context, environment);
+            return expression.Accept(self);
+        }
+
+        private IType GetExpressionType(IExpression expression) => expression.Accept(this);
     }
 }

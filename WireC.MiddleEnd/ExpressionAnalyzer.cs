@@ -6,25 +6,14 @@ namespace WireC.MiddleEnd
 {
     public class ExpressionAnalyzer : IExpressionVisitor<bool>
     {
-        private Context _context;
-        private Scope _environment;
+        private readonly Context _context;
+        private readonly Scope _environment;
 
         private ExpressionAnalyzer(Context context, Scope environment)
         {
             _context = context;
             _environment = environment;
         }
-
-        public static bool IsExpressionValid(
-            Context context,
-            Scope environment,
-            IExpression expression)
-        {
-            var self = new ExpressionAnalyzer(context, environment);
-            return expression.Accept(self);
-        }
-
-        private bool IsExpressionValid(IExpression expression) => expression.Accept(this);
 
         public bool VisitIdentifier(Identifier identifier)
         {
@@ -55,9 +44,7 @@ namespace WireC.MiddleEnd
         {
             if (!(IsExpressionValid(infixOperation.LeftOperand) &&
                 IsExpressionValid(infixOperation.RightOperand)))
-            {
                 return false;
-            }
 
             var leftOperandType = Typer.GetExpressionType(
                 _context,
@@ -79,5 +66,16 @@ namespace WireC.MiddleEnd
             );
             return false;
         }
+
+        public static bool IsExpressionValid(
+            Context context,
+            Scope environment,
+            IExpression expression)
+        {
+            var self = new ExpressionAnalyzer(context, environment);
+            return expression.Accept(self);
+        }
+
+        private bool IsExpressionValid(IExpression expression) => expression.Accept(this);
     }
 }

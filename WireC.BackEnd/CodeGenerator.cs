@@ -10,13 +10,6 @@ namespace WireC.BackEnd
     public class CodeGenerator : IStatementVisitor
     {
         /// <summary>
-        /// The abstract syntax tree to be generated.
-        /// </summary>
-        private List<IStatement> _abstractSyntaxTree;
-
-        private ASTContext _astContext;
-
-        /// <summary>
         /// Prologue is always included at the beginning of the generated program.
         /// </summary>
         private const string _prologue = @"#include<cstdint>
@@ -33,29 +26,21 @@ return (int)wiz_main__();
 ";
 
         /// <summary>
+        /// The abstract syntax tree to be generated.
+        /// </summary>
+        private readonly List<IStatement> _abstractSyntaxTree;
+
+        private readonly ASTContext _astContext;
+
+        /// <summary>
         /// The destination code generated so far.
         /// </summary>
-        private StringBuilder _generatedCode = new StringBuilder();
+        private readonly StringBuilder _generatedCode = new StringBuilder();
 
         public CodeGenerator(List<IStatement> abstractSyntaxTree, ASTContext astContext)
         {
             _abstractSyntaxTree = abstractSyntaxTree;
             _astContext = astContext;
-        }
-
-        public string GenerateCode()
-        {
-            foreach (var statement in _abstractSyntaxTree) GenerateStatementCode(statement);
-            return _prologue + _generatedCode + _epilogue;
-        }
-
-        private void GenerateStatementCode(IStatement statement) => statement.Accept(this);
-
-        private void GenerateBlockCode(Block block)
-        {
-            _generatedCode.Append("{\n");
-            foreach (var statement in block.Statements) GenerateStatementCode(statement);
-            _generatedCode.Append("}\n");
         }
 
         public void VisitFunctionDefinition(FunctionDefinition functionDefinition)
@@ -105,6 +90,21 @@ return (int)wiz_main__();
             }
 
             _generatedCode.Append(";\n");
+        }
+
+        public string GenerateCode()
+        {
+            foreach (var statement in _abstractSyntaxTree) GenerateStatementCode(statement);
+            return _prologue + _generatedCode + _epilogue;
+        }
+
+        private void GenerateStatementCode(IStatement statement) => statement.Accept(this);
+
+        private void GenerateBlockCode(Block block)
+        {
+            _generatedCode.Append("{\n");
+            foreach (var statement in block.Statements) GenerateStatementCode(statement);
+            _generatedCode.Append("}\n");
         }
     }
 }

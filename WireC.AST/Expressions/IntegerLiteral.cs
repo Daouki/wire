@@ -11,9 +11,9 @@ namespace WireC.AST.Expressions
             Token = token;
         }
 
-        public int NodeId { get; }
-
         public Token Token { get; }
+
+        public int NodeId { get; }
 
         public SourceSpan Span { get; }
 

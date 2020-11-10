@@ -8,8 +8,6 @@ namespace WireC.FrontEnd
 {
     public class ParserState
     {
-        public NodeIdGenerator NodeIdGenerator { get; } = new NodeIdGenerator();
-
         /// <summary>
         /// The collection of tokens to be parsed into abstract syntax tree.
         /// </summary>
@@ -24,6 +22,8 @@ namespace WireC.FrontEnd
         {
             _tokens = tokens;
         }
+
+        public NodeIdGenerator NodeIdGenerator { get; } = new NodeIdGenerator();
 
         /// <summary>
         /// Checks if there are any tokens left to be parsed.

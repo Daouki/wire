@@ -6,6 +6,16 @@ namespace WireC.AST.Expressions
 {
     public class PrefixOperation : IExpression
     {
+        /// <summary>
+        /// Operand of the prefix unary operation.
+        /// </summary>
+        public IExpression Operand;
+
+        /// <summary>
+        /// Prefix unary operation operator.
+        /// </summary>
+        public PrefixOperator Operator;
+
         public PrefixOperation(int nodeId, PrefixOperator @operator, IExpression operand)
         {
             NodeId = nodeId;
@@ -15,16 +25,6 @@ namespace WireC.AST.Expressions
         }
 
         public int NodeId { get; }
-
-        /// <summary>
-        /// Prefix unary operation operator.
-        /// </summary>
-        public PrefixOperator Operator;
-
-        /// <summary>
-        /// Operand of the prefix unary operation.
-        /// </summary>
-        public IExpression Operand;
 
         public SourceSpan Span { get; }
 
@@ -39,6 +39,9 @@ namespace WireC.AST.Expressions
             Span = span;
         }
 
+        public PrefixOperatorKind Kind { get; }
+        public SourceSpan Span { get; }
+
         public static PrefixOperator FromToken(Token token)
         {
             return new PrefixOperator(
@@ -51,9 +54,6 @@ namespace WireC.AST.Expressions
                 token.Span
             );
         }
-
-        public PrefixOperatorKind Kind { get; }
-        public SourceSpan Span { get; }
     }
 
     public enum PrefixOperatorKind

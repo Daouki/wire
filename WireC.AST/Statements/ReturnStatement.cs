@@ -11,8 +11,9 @@ namespace WireC.AST.Statements
             Expression = expression;
         }
 
-        public int NodeId { get; }
         public IExpression Expression { get; }
+
+        public int NodeId { get; }
         public SourceSpan Span { get; }
 
         public void Accept(IStatementVisitor visitor) => visitor.VisitReturnStatement(this);
