@@ -75,7 +75,7 @@ namespace WireC.FrontEnd
             }
 
             if (state.Consume(TokenKind.Identifier))
-                return new Identifier(state.NodeIdGenerator.GetNextId(), state.Previous());
+                return new IdentifierLiteral(state.NodeIdGenerator.GetNextId(), state.Previous());
 
             if (state.Consume(TokenKind.Integer))
                 return new IntegerLiteral(state.NodeIdGenerator.GetNextId(), state.Previous());

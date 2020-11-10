@@ -4,7 +4,7 @@ namespace WireC.AST
 {
     public interface IExpressionVisitor<out T>
     {
-        T VisitIdentifier(Identifier identifier);
+        T VisitIdentifier(IdentifierLiteral identifierLiteral);
         T VisitIntegerLiteral(IntegerLiteral integer);
         T VisitFunctionCall(FunctionCall functionCall);
         T VisitPrefixOperation(PrefixOperation prefixOperation);

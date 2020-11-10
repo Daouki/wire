@@ -11,9 +11,10 @@ namespace WireC.BackEnd
         {
         }
 
-        public string VisitIdentifier(Identifier identifier) => identifier.Name;
+        public string VisitIdentifier(IdentifierLiteral identifierLiteral) =>
+            identifierLiteral.Name;
 
-        public string VisitIntegerLiteral(IntegerLiteral integer) => integer.Token.Lexeme;
+        public string VisitIntegerLiteral(IntegerLiteral integer) => integer.Value.ToString();
 
         public string VisitFunctionCall(FunctionCall functionCall)
         {

@@ -15,13 +15,13 @@ namespace WireC.MiddleEnd
             _environment = environment;
         }
 
-        public bool VisitIdentifier(Identifier identifier)
+        public bool VisitIdentifier(IdentifierLiteral identifierLiteral)
         {
-            if (!_environment.IsSymbolDefined(identifier.Name))
+            if (!_environment.IsSymbolDefined(identifierLiteral.Name))
             {
                 _context.Error(
-                    identifier.Span,
-                    $"symbol \"{identifier.Name}\" was not defined in the current scope"
+                    identifierLiteral.Span,
+                    $"symbol \"{identifierLiteral.Name}\" was not defined in the current scope"
                 );
                 return false;
             }

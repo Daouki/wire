@@ -17,13 +17,13 @@ namespace WireC.MiddleEnd
             _environment = environment;
         }
 
-        public IType VisitIdentifier(Identifier identifier)
+        public IType VisitIdentifier(IdentifierLiteral identifierLiteral)
         {
-            var symbol = _environment.GetSymbol(identifier.Name);
+            var symbol = _environment.GetSymbol(identifierLiteral.Name);
             if (symbol != null) return symbol.Type;
             _context.Error(
-                identifier.Span,
-                $"symbol \"{identifier.Name}\" was not declared in the current scope"
+                identifierLiteral.Span,
+                $"symbol \"{identifierLiteral.Name}\" was not declared in the current scope"
             );
             return null;
         }

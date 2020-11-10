@@ -8,14 +8,12 @@ namespace WireC.AST.Expressions
         {
             NodeId = nodeId;
             Span = token.Span;
-            Token = token;
+            Value = long.Parse(token.Lexeme);
         }
 
-        public Token Token { get; }
-
         public int NodeId { get; }
-
         public SourceSpan Span { get; }
+        public long Value { get; }
 
         public T Accept<T>(IExpressionVisitor<T> visitor) => visitor.VisitIntegerLiteral(this);
     }
