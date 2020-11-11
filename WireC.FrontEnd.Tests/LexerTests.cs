@@ -28,10 +28,22 @@ namespace WireC.FrontEnd.Tests
                 Assert.NotEqual(TokenKind.Identifier, result.Kind);
         }
 
-        [Theory]
-        [InlineData(":", TokenKind.Colon)]
-        public void TokenizesOperators(string input, TokenKind expected)
+        [Fact]
+        public void TokenizesShortOperator()
         {
+            const TokenKind expected = TokenKind.Colon;
+            const string input = ":";
+            var tokens = new Lexer(input).Tokenize();
+            var result = tokens[0];
+
+            Assert.Equal(expected, result.Kind);
+        }
+
+        [Fact]
+        public void TokenizesLongOperator()
+        {
+            const TokenKind expected = TokenKind.EqualEqual;
+            const string input = "==";
             var tokens = new Lexer(input).Tokenize();
             var result = tokens[0];
 

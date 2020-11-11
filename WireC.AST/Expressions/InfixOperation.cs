@@ -49,10 +49,19 @@ namespace WireC.AST.Expressions
                 token.Kind switch
                 {
                     TokenKind.Asterisk => InfixOperatorKind.Multiply,
+                    TokenKind.Equal => InfixOperatorKind.Equal,
+                    TokenKind.EqualEqual => InfixOperatorKind.Equal,
+                    TokenKind.Greater => InfixOperatorKind.Greater,
+                    TokenKind.GreaterEqual => InfixOperatorKind.GreaterOrEqual,
+                    TokenKind.Less => InfixOperatorKind.Less,
+                    TokenKind.LessEqual => InfixOperatorKind.LessOrEqual,
+                    TokenKind.LessGreater => InfixOperatorKind.NotEqual,
                     TokenKind.Minus => InfixOperatorKind.Subtract,
                     TokenKind.Plus => InfixOperatorKind.Add,
                     TokenKind.Slash => InfixOperatorKind.Divide,
-                    _ => throw new ArgumentException(nameof(token)),
+                    _ => throw new ArgumentException(
+                        $"Cannot create an infix operator from a token {token.Kind}"
+                    ),
                 },
                 token.Span
             );
@@ -63,7 +72,13 @@ namespace WireC.AST.Expressions
     {
         Add,
         Divide,
+        Equal,
+        Greater,
+        GreaterOrEqual,
+        Less,
+        LessOrEqual,
         Multiply,
+        NotEqual,
         Subtract,
     }
 }

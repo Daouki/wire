@@ -15,7 +15,13 @@ namespace WireC.AST.Types
         {
             InfixOperatorKind.Add => new IntegerType(),
             InfixOperatorKind.Divide => new IntegerType(),
+            InfixOperatorKind.Equal => new BooleanType(),
+            InfixOperatorKind.Greater => new BooleanType(),
+            InfixOperatorKind.GreaterOrEqual => new BooleanType(),
+            InfixOperatorKind.Less => new BooleanType(),
+            InfixOperatorKind.LessOrEqual => new BooleanType(),
             InfixOperatorKind.Multiply => new IntegerType(),
+            InfixOperatorKind.NotEqual => new BooleanType(),
             InfixOperatorKind.Subtract => new IntegerType(),
             _ => null,
         };

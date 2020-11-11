@@ -21,16 +21,28 @@ namespace WireC.FrontEnd
             new Dictionary<string, TokenKind>
             {
                 {"*", TokenKind.Asterisk},
+                {"!", TokenKind.Bang},
                 {":", TokenKind.Colon},
                 {"=", TokenKind.Equal},
+                {">", TokenKind.Greater},
                 {"{", TokenKind.LeftBrace},
                 {"(", TokenKind.LeftParenthesis},
                 {"-", TokenKind.Minus},
                 {"+", TokenKind.Plus},
                 {"}", TokenKind.RightBrace},
                 {")", TokenKind.RightParenthesis},
+                {"<", TokenKind.Less},
                 {";", TokenKind.Semicolon},
                 {"/", TokenKind.Slash},
+            };
+
+        private static readonly Dictionary<string, TokenKind> _longOperators =
+            new Dictionary<string, TokenKind>
+            {
+                {"==", TokenKind.EqualEqual},
+                {">=", TokenKind.GreaterEqual},
+                {"<=", TokenKind.LessEqual},
+                {"<>", TokenKind.LessGreater},
             };
 
         private static readonly Regex _commentRegex = new Regex(
@@ -104,18 +116,39 @@ namespace WireC.FrontEnd
 
                 if (TryTokenizeInteger()) continue;
 
-                var maybeShortOperator = _sourceCode.Substring(_startPosition, 1);
-                if (_shortOperators.TryGetValue(maybeShortOperator, out var shortOp))
-                {
-                    AddToken(shortOp);
-                    continue;
-                }
+                if (TryAddLongOperator()) continue;
+
+                if (TryParseShortOperator()) continue;
 
                 AddToken(TokenKind.Invalid);
             }
 
             AddEndOfFileToken();
             return _tokens;
+        }
+
+        private bool TryParseShortOperator()
+        {
+            var maybeShortOperator = _sourceCode.Substring(_startPosition, 1);
+            if (!_shortOperators.TryGetValue(maybeShortOperator, out var shortOp)) return false;
+            AddToken(shortOp);
+            return true;
+        }
+
+        private bool TryAddLongOperator()
+        {
+            if (_sourceCode.Length - _startPosition >= 2)
+            {
+                var maybeLongOperator = _sourceCode.Substring(_startPosition, 2);
+                if (_longOperators.TryGetValue(maybeLongOperator, out var longOp))
+                {
+                    Advance();
+                    AddToken(longOp);
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private void TokenizeIdentifierOrKeyword()

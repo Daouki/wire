@@ -78,6 +78,15 @@ namespace WireC.MiddleEnd
                     variableDefinition.TypeSignature
                 );
 
+                if (!ExpressionAnalyzer.IsExpressionValid(
+                    _context,
+                    _currentScope,
+                    variableDefinition.Initializer
+                ))
+                {
+                    return;
+                }
+
                 var initializerType = Typer.GetExpressionType(
                     _context,
                     _currentScope,
@@ -110,6 +119,15 @@ namespace WireC.MiddleEnd
             }
             else // variableDefinition.TypeSignature == null && variableDefinition.Initializer != null
             {
+                if (!ExpressionAnalyzer.IsExpressionValid(
+                    _context,
+                    _currentScope,
+                    variableDefinition.Initializer
+                ))
+                {
+                    return;
+                }
+
                 var initializerType = Typer.GetExpressionType(
                     _context,
                     _currentScope,

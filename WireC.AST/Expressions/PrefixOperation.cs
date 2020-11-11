@@ -47,6 +47,7 @@ namespace WireC.AST.Expressions
             return new PrefixOperator(
                 token.Kind switch
                 {
+                    TokenKind.Bang => PrefixOperatorKind.Not,
                     TokenKind.Plus => PrefixOperatorKind.Identity,
                     TokenKind.Minus => PrefixOperatorKind.Negate,
                     _ => throw new ArgumentException(nameof(token)),
@@ -58,7 +59,8 @@ namespace WireC.AST.Expressions
 
     public enum PrefixOperatorKind
     {
-        Identity,
-        Negate,
+        Identity, // The "+" operator that does nothing.
+        Negate, // The "-" operator for negation.
+        Not, // The "!" operator for logical inversion.
     }
 }

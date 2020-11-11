@@ -53,6 +53,7 @@ namespace WireC.BackEnd
         private static string GeneratePrefixOperator(PrefixOperator @operator) =>
             @operator.Kind switch
             {
+                PrefixOperatorKind.Not => "!",
                 PrefixOperatorKind.Identity => "+",
                 PrefixOperatorKind.Negate => "-",
                 _ => throw new ArgumentException(nameof(@operator)),
@@ -63,7 +64,13 @@ namespace WireC.BackEnd
             {
                 InfixOperatorKind.Add => "+",
                 InfixOperatorKind.Divide => "/",
+                InfixOperatorKind.Equal => "==",
+                InfixOperatorKind.Greater => "==",
+                InfixOperatorKind.GreaterOrEqual => ">=",
+                InfixOperatorKind.Less => "<",
+                InfixOperatorKind.LessOrEqual => "<=",
                 InfixOperatorKind.Multiply => "*",
+                InfixOperatorKind.NotEqual => "!=",
                 InfixOperatorKind.Subtract => "-",
                 _ => throw new ArgumentException(nameof(@operator)),
             };

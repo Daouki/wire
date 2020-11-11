@@ -57,6 +57,17 @@ namespace WireC.MiddleEnd
                 infixOperation.RightOperand
             );
 
+            if (leftOperandType != null &&
+                leftOperandType.GetInfixOperationResultType(infixOperation.Operator.Kind) == null)
+            {
+                _context.Error(
+                    infixOperation.Operator.Span,
+                    $"infix operation \"{infixOperation.Operator.Kind}\" " +
+                    $"is not defined for types \"{leftOperandType}\" and \"{rightOperandType}\""
+                );
+                return false;
+            }
+
             if (leftOperandType != null && leftOperandType.IsSame(rightOperandType)) return true;
 
             _context.Error(

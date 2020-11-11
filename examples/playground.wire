@@ -1,9 +1,9 @@
 fn returnless() {}
 
 fn other(): i64 {
-    var x: bool;
-    var y = false;
-    var z: bool = true;
+    var x = !true;
+    var y: bool = 7 <> 42;
+    var z = true == false;
     return 0;
 }
 

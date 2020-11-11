@@ -8,6 +8,7 @@ namespace WireC.FrontEnd
     {
         private static readonly TokenKind[] _prefixOperators =
         {
+            TokenKind.Bang,
             TokenKind.Minus,
             TokenKind.Plus,
         };
@@ -15,6 +16,12 @@ namespace WireC.FrontEnd
         private static readonly TokenKind[] _infixOperators =
         {
             TokenKind.Asterisk,
+            TokenKind.EqualEqual,
+            TokenKind.Greater,
+            TokenKind.GreaterEqual,
+            TokenKind.Less,
+            TokenKind.LessEqual,
+            TokenKind.LessGreater,
             TokenKind.Minus,
             TokenKind.Plus,
             TokenKind.Slash,
