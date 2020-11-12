@@ -1,0 +1,4 @@
+fn main(): i64 {
+    -- Comment.
+    return 0;
+}

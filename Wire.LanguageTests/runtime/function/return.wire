@@ -1,0 +1,6 @@
+fn x(): i64 { return 42; }
+
+fn main(): i64 {
+    assert(x() == 42);
+    return 0;
+}
