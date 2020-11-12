@@ -8,5 +8,6 @@ namespace WireC.AST
         void VisitReturnStatement(ReturnStatement returnStatement);
         void VisitVariableDefinition(VariableDefinition variableDefinition);
         void VisitAssertStatement(AssertStatement assertStatement);
+        void VisitIfStatement(IfStatement ifStatement);
     }
 }

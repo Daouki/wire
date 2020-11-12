@@ -122,6 +122,19 @@ return (int)wiz_main__();
                 .Append("\");\n");
         }
 
+        public void VisitIfStatement(IfStatement ifStatement)
+        {
+            _generatedCode
+                .Append("if (")
+                .Append(ExpressionCodeGenerator.GenerateExpressionCode(ifStatement.Condition))
+                .Append(") ");
+            GenerateBlockCode(ifStatement.ThenBody);
+
+            if (ifStatement.ElseBody == null) return;
+            _generatedCode.Append("else ");
+            GenerateBlockCode(ifStatement.ElseBody);
+        }
+
         public string GenerateCode()
         {
             foreach (var statement in _abstractSyntaxTree) GenerateStatementCode(statement);

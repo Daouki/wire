@@ -13,11 +13,17 @@ namespace WireC.Common
         [Description("\"assert\"")]
         Assert,
 
+        [Description("\"else\"")]
+        Else,
+
         [Description("\"false\"")]
         False,
 
         [Description("\"fn\"")]
         Fn,
+
+        [Description("\"if\"")]
+        If,
 
         [Description("\"return\"")]
         Return,

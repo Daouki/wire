@@ -183,6 +183,34 @@ namespace WireC.MiddleEnd
             }
         }
 
+        public void VisitIfStatement(IfStatement ifStatement)
+        {
+            if (!ExpressionAnalyzer.IsExpressionValid(
+                _context,
+                _currentScope,
+                ifStatement.Condition
+            ))
+            {
+                return;
+            }
+
+            var conditionType = Typer.GetExpressionType(
+                _context,
+                _currentScope,
+                ifStatement.Condition
+            );
+            if (conditionType != null && conditionType is not BooleanType)
+            {
+                _context.Error(
+                    ifStatement.Condition.Span,
+                    $"condition does not evaluate to \"bool\" type"
+                );
+            }
+
+            AnalyzeBlock(ifStatement.ThenBody);
+            AnalyzeBlock(ifStatement.ElseBody);
+        }
+
         public void Analyze()
         {
             _currentScope = new Scope(); // Create the global scope.

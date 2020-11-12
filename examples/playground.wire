@@ -1,8 +1,14 @@
 fn truthy(): bool { return true; }
 
 fn main(): i64 {
+    var x = 20;
+    if x <> 70 {
+        assert(false);
+    } else {
+        assert(false);
+    }
+
     assert((42 + 7) == 49);
-    assert(42 + 7 == 49);
     assert(truthy());
     return 0;
 }

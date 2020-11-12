@@ -30,6 +30,14 @@ namespace WireC.FrontEnd
                     }
                 },
                 {
+                    TokenKind.If,
+                    new StatementParseRule
+                    {
+                        ParserFunction = ParseIfStatement,
+                        EndsWithSemicolon = false,
+                    }
+                },
+                {
                     TokenKind.Return,
                     new StatementParseRule
                     {
@@ -48,6 +56,21 @@ namespace WireC.FrontEnd
             };
 
         private static readonly IEnumerable<TokenKind> _synchronizationPoints = _parseRules.Keys;
+
+        private static IStatement ParseIfStatement(Context context, ParserState state)
+        {
+            var startSpan = state.Previous().Span;
+            var condition = ExpressionParser.ParseExpression(state);
+            var thenBlock = ParseBlock(context, state);
+            var elseBlock = state.Consume(TokenKind.Else) ? ParseBlock(context, state) : null;
+            return new IfStatement(
+                state.NodeIdGenerator.GetNextId(),
+                SourceSpan.Merge(startSpan, elseBlock != null ? elseBlock.Span : thenBlock.Span),
+                condition,
+                thenBlock,
+                elseBlock
+            );
+        }
 
         private static IStatement ParseAssertStatement(Context context, ParserState state)
         {
