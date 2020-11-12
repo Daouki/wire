@@ -64,6 +64,15 @@ namespace WireC.MiddleEnd
                 IsExpressionValid(infixOperation.RightOperand)))
                 return false;
 
+            if (infixOperation.LeftOperand is InfixOperation child &&
+                infixOperation.Operator.Node != child.Operator.Node)
+            {
+                _context.Error(
+                    infixOperation.Operator.Span,
+                    "operator precedence is not supported; parentheses required"
+                );
+            }
+
             var leftOperandType = Typer.GetExpressionType(
                 _context,
                 _environment,
