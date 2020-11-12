@@ -52,7 +52,8 @@ namespace WireC.MiddleEnd
 
             _context.Error(
                 prefixOperation.Span,
-                $"cannot apply unary operator \"{prefixOperation.Operator}\" to type \"{operandType}\""
+                "cannot apply unary operator " +
+                $"{prefixOperation.Operator.Node.GetDescription()} to type \"{operandType}\""
             );
             return false;
         }

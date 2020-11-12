@@ -40,13 +40,6 @@ namespace WireC.FrontEnd
             if (!IsAtEnd()) _position++;
         }
 
-        public void StepBack()
-        {
-            if (_position > 0) _position--;
-        }
-
-        public bool Check(TokenKind kind) => _tokens[_position].Kind == kind;
-
         /// <summary>
         /// Takes a left-most unparsed token and if it matches the given kind, advances to the next token.
         /// </summary>
@@ -74,12 +67,6 @@ namespace WireC.FrontEnd
             return true;
         }
 
-        public void ConsumeOrError(TokenKind kind, SourceSpan span, string message)
-        {
-            if (Consume(kind)) return;
-            throw new ParseException(span, message);
-        }
-
         public Token ConsumeOrError(TokenKind kind, string expectedLexeme = null)
         {
             if (Consume(kind)) return Previous();
@@ -87,16 +74,6 @@ namespace WireC.FrontEnd
             throw new ParseException(
                 current.Span,
                 $"expected {expectedLexeme ?? GetTokenKindName(kind)}, but found \"{current}\""
-            );
-        }
-
-        public Token ConsumeOrError(TokenKind[] kinds)
-        {
-            if (Consume(kinds)) return Previous();
-            var current = Current();
-            throw new ParseException(
-                current.Span,
-                $"expected any of: {GetTokenKindNames(kinds)}, but found \"{current}\""
             );
         }
 
@@ -110,10 +87,5 @@ namespace WireC.FrontEnd
                 ? ((DescriptionAttribute) attrs[0]).Description
                 : kind.ToString();
         }
-
-        private static string GetTokenKindNames(IEnumerable<TokenKind> kinds) => string.Join(
-            ", ",
-            kinds.Select(GetTokenKindName).ToList()
-        );
     }
 }

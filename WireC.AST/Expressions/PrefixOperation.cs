@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 
 using WireC.Common;
 
@@ -42,8 +43,27 @@ namespace WireC.AST.Expressions
 
     public enum PrefixOperator
     {
+        [Description("\"+\"")]
         Identity, // The "+" operator that does nothing.
+
+        [Description("\"-\"")]
         Negate, // The "-" operator for negation.
+
+        [Description("\"!\"")]
         Not, // The "!" operator for logical inversion.
+    }
+
+    public static class PrefixOperatorExtensions
+    {
+        public static string GetDescription(this PrefixOperator op)
+        {
+            var type = op.GetType();
+            var memberInfo = type.GetMember(op.ToString());
+            if (memberInfo.Length <= 0) return op.ToString();
+            var attrs = memberInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
+            return attrs.Length > 0
+                ? ((DescriptionAttribute) attrs[0]).Description
+                : op.ToString();
+        }
     }
 }
