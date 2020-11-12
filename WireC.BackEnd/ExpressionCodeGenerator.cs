@@ -24,7 +24,7 @@ namespace WireC.BackEnd
 
         public string VisitPrefixOperation(PrefixOperation prefixOperation)
         {
-            var @operator = GeneratePrefixOperator(prefixOperation.Operator);
+            var @operator = GeneratePrefixOperator(prefixOperation.Operator.Node);
             var operand = GenerateExpression(prefixOperation.Operand);
             return $"{@operator}{operand}";
         }
@@ -32,7 +32,7 @@ namespace WireC.BackEnd
         public string VisitInfixOperation(InfixOperation infixOperation)
         {
             var leftOperandCode = GenerateExpression(infixOperation.LeftOperand);
-            var operatorCode = GenerateInfixOperator(infixOperation.Operator);
+            var operatorCode = GenerateInfixOperator(infixOperation.Operator.Node);
             var rightOperandCode = GenerateExpression(infixOperation.RightOperand);
             return $"{leftOperandCode}{operatorCode}{rightOperandCode}";
         }
@@ -55,27 +55,27 @@ namespace WireC.BackEnd
         }
 
         private static string GeneratePrefixOperator(PrefixOperator @operator) =>
-            @operator.Kind switch
+            @operator switch
             {
-                PrefixOperatorKind.Not => "!",
-                PrefixOperatorKind.Identity => "+",
-                PrefixOperatorKind.Negate => "-",
+                PrefixOperator.Not => "!",
+                PrefixOperator.Identity => "+",
+                PrefixOperator.Negate => "-",
                 _ => throw new ArgumentException(nameof(@operator)),
             };
 
         private static string GenerateInfixOperator(InfixOperator @operator) =>
-            @operator.Kind switch
+            @operator switch
             {
-                InfixOperatorKind.Add => "+",
-                InfixOperatorKind.Divide => "/",
-                InfixOperatorKind.Equal => "==",
-                InfixOperatorKind.Greater => "==",
-                InfixOperatorKind.GreaterOrEqual => ">=",
-                InfixOperatorKind.Less => "<",
-                InfixOperatorKind.LessOrEqual => "<=",
-                InfixOperatorKind.Multiply => "*",
-                InfixOperatorKind.NotEqual => "!=",
-                InfixOperatorKind.Subtract => "-",
+                InfixOperator.Add => "+",
+                InfixOperator.Divide => "/",
+                InfixOperator.Equal => "==",
+                InfixOperator.Greater => "==",
+                InfixOperator.GreaterOrEqual => ">=",
+                InfixOperator.Less => "<",
+                InfixOperator.LessOrEqual => "<=",
+                InfixOperator.Multiply => "*",
+                InfixOperator.NotEqual => "!=",
+                InfixOperator.Subtract => "-",
                 _ => throw new ArgumentException(nameof(@operator)),
             };
 

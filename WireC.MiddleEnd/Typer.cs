@@ -44,14 +44,14 @@ namespace WireC.MiddleEnd
 
         public IType VisitPrefixOperation(PrefixOperation prefixOperation) =>
             GetExpressionType(prefixOperation.Operand)
-                .GetPrefixOperationResultType(prefixOperation.Operator.Kind);
+                .GetPrefixOperationResultType(prefixOperation.Operator.Node);
 
         public IType VisitInfixOperation(InfixOperation infixOperation)
         {
             var leftOperandType = GetExpressionType(infixOperation.LeftOperand);
             var rightOperandType = GetExpressionType(infixOperation.RightOperand);
             if (leftOperandType != null && leftOperandType.IsSame(rightOperandType))
-                return leftOperandType.GetInfixOperationResultType(infixOperation.Operator.Kind);
+                return leftOperandType.GetInfixOperationResultType(infixOperation.Operator.Node);
             _context.Error(
                 infixOperation.Operator.Span,
                 "type mismatch between operands of infix operation; " +

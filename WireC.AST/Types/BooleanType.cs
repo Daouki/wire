@@ -4,16 +4,16 @@ namespace WireC.AST.Types
 {
     public class BooleanType : IType
     {
-        public IType GetPrefixOperationResultType(PrefixOperatorKind @operator) => @operator switch
+        public IType GetPrefixOperationResultType(PrefixOperator @operator) => @operator switch
         {
-            PrefixOperatorKind.Not => new BooleanType(),
+            PrefixOperator.Not => new BooleanType(),
             _ => null,
         };
 
-        public IType GetInfixOperationResultType(InfixOperatorKind @operator) => @operator switch
+        public IType GetInfixOperationResultType(InfixOperator @operator) => @operator switch
         {
-            InfixOperatorKind.Equal => new BooleanType(),
-            InfixOperatorKind.NotEqual => new BooleanType(),
+            InfixOperator.Equal => new BooleanType(),
+            InfixOperator.NotEqual => new BooleanType(),
             _ => null,
         };
 

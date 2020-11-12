@@ -35,7 +35,7 @@ namespace WireC.FrontEnd
             var expression = ParsePostfixOperation(state);
             while (!state.IsAtEnd() && state.Consume(_infixOperators))
             {
-                var @operator = InfixOperator.FromToken(state.Previous());
+                var @operator = state.Previous();
                 var rightOperand = ParsePostfixOperation(state);
                 expression = new InfixOperation(
                     state.NodeIdGenerator.GetNextId(),
@@ -58,7 +58,7 @@ namespace WireC.FrontEnd
         private static IExpression ParsePrefixOperation(ParserState state)
         {
             if (!state.Consume(_prefixOperators)) return ParsePrimaryExpression(state);
-            var @operator = PrefixOperator.FromToken(state.Previous());
+            var @operator = state.Previous();
             var operand = ParsePrefixOperation(state);
             return new PrefixOperation(state.NodeIdGenerator.GetNextId(), @operator, operand);
         }

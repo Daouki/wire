@@ -37,8 +37,25 @@ namespace WireC.MiddleEnd
             return calleeType != null;
         }
 
-        public bool VisitPrefixOperation(PrefixOperation prefixOperation) =>
-            IsExpressionValid(prefixOperation.Operand);
+        public bool VisitPrefixOperation(PrefixOperation prefixOperation)
+        {
+            if (!IsExpressionValid(prefixOperation.Operand)) return false;
+
+            var operandType = Typer.GetExpressionType(
+                _context,
+                _environment,
+                prefixOperation.Operand
+            );
+            if (operandType == null ||
+                operandType.GetPrefixOperationResultType(prefixOperation.Operator.Node) != null)
+                return true;
+
+            _context.Error(
+                prefixOperation.Span,
+                $"cannot apply unary operator \"{prefixOperation.Operator}\" to type \"{operandType}\""
+            );
+            return false;
+        }
 
         public bool VisitInfixOperation(InfixOperation infixOperation)
         {
@@ -58,11 +75,11 @@ namespace WireC.MiddleEnd
             );
 
             if (leftOperandType != null &&
-                leftOperandType.GetInfixOperationResultType(infixOperation.Operator.Kind) == null)
+                leftOperandType.GetInfixOperationResultType(infixOperation.Operator.Node) == null)
             {
                 _context.Error(
                     infixOperation.Operator.Span,
-                    $"infix operation \"{infixOperation.Operator.Kind}\" " +
+                    $"infix operation \"{infixOperation.Operator.Node}\" " +
                     $"is not defined for types \"{leftOperandType}\" and \"{rightOperandType}\""
                 );
                 return false;

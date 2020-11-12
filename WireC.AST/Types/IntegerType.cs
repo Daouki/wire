@@ -4,25 +4,25 @@ namespace WireC.AST.Types
 {
     public class IntegerType : IType
     {
-        public IType GetPrefixOperationResultType(PrefixOperatorKind @operator) => @operator switch
+        public IType GetPrefixOperationResultType(PrefixOperator @operator) => @operator switch
         {
-            PrefixOperatorKind.Identity => new IntegerType(),
-            PrefixOperatorKind.Negate => new IntegerType(),
+            PrefixOperator.Identity => new IntegerType(),
+            PrefixOperator.Negate => new IntegerType(),
             _ => null,
         };
 
-        public IType GetInfixOperationResultType(InfixOperatorKind @operator) => @operator switch
+        public IType GetInfixOperationResultType(InfixOperator @operator) => @operator switch
         {
-            InfixOperatorKind.Add => new IntegerType(),
-            InfixOperatorKind.Divide => new IntegerType(),
-            InfixOperatorKind.Equal => new BooleanType(),
-            InfixOperatorKind.Greater => new BooleanType(),
-            InfixOperatorKind.GreaterOrEqual => new BooleanType(),
-            InfixOperatorKind.Less => new BooleanType(),
-            InfixOperatorKind.LessOrEqual => new BooleanType(),
-            InfixOperatorKind.Multiply => new IntegerType(),
-            InfixOperatorKind.NotEqual => new BooleanType(),
-            InfixOperatorKind.Subtract => new IntegerType(),
+            InfixOperator.Add => new IntegerType(),
+            InfixOperator.Divide => new IntegerType(),
+            InfixOperator.Equal => new BooleanType(),
+            InfixOperator.Greater => new BooleanType(),
+            InfixOperator.GreaterOrEqual => new BooleanType(),
+            InfixOperator.Less => new BooleanType(),
+            InfixOperator.LessOrEqual => new BooleanType(),
+            InfixOperator.Multiply => new IntegerType(),
+            InfixOperator.NotEqual => new BooleanType(),
+            InfixOperator.Subtract => new IntegerType(),
             _ => null,
         };
 

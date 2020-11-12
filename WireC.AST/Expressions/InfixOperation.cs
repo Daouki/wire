@@ -11,18 +11,37 @@ namespace WireC.AST.Expressions
     {
         public InfixOperation(
             int nodeId,
-            InfixOperator @operator,
+            Token @operator,
             IExpression leftOperand,
             IExpression rightOperand)
         {
             NodeId = nodeId;
             Span = SourceSpan.Merge(leftOperand.Span, rightOperand.Span);
-            Operator = @operator;
+            Operator = new Spanned<InfixOperator>(
+                @operator.Kind switch
+                {
+                    TokenKind.Asterisk => InfixOperator.Multiply,
+                    TokenKind.Equal => InfixOperator.Equal,
+                    TokenKind.EqualEqual => InfixOperator.Equal,
+                    TokenKind.Greater => InfixOperator.Greater,
+                    TokenKind.GreaterEqual => InfixOperator.GreaterOrEqual,
+                    TokenKind.Less => InfixOperator.Less,
+                    TokenKind.LessEqual => InfixOperator.LessOrEqual,
+                    TokenKind.LessGreater => InfixOperator.NotEqual,
+                    TokenKind.Minus => InfixOperator.Subtract,
+                    TokenKind.Plus => InfixOperator.Add,
+                    TokenKind.Slash => InfixOperator.Divide,
+                    _ => throw new ArgumentException(
+                        $"Cannot create an infix operator from a token {@operator.Kind}"
+                    ),
+                },
+                @operator.Span
+            );
             LeftOperand = leftOperand;
             RightOperand = rightOperand;
         }
 
-        public InfixOperator Operator { get; }
+        public Spanned<InfixOperator> Operator { get; }
         public IExpression LeftOperand { get; }
         public IExpression RightOperand { get; }
 
@@ -32,43 +51,7 @@ namespace WireC.AST.Expressions
         public T Accept<T>(IExpressionVisitor<T> visitor) => visitor.VisitInfixOperation(this);
     }
 
-    public class InfixOperator
-    {
-        public InfixOperator(InfixOperatorKind kind, SourceSpan span)
-        {
-            Kind = kind;
-            Span = span;
-        }
-
-        public InfixOperatorKind Kind { get; }
-        public SourceSpan Span { get; }
-
-        public static InfixOperator FromToken(Token token)
-        {
-            return new InfixOperator(
-                token.Kind switch
-                {
-                    TokenKind.Asterisk => InfixOperatorKind.Multiply,
-                    TokenKind.Equal => InfixOperatorKind.Equal,
-                    TokenKind.EqualEqual => InfixOperatorKind.Equal,
-                    TokenKind.Greater => InfixOperatorKind.Greater,
-                    TokenKind.GreaterEqual => InfixOperatorKind.GreaterOrEqual,
-                    TokenKind.Less => InfixOperatorKind.Less,
-                    TokenKind.LessEqual => InfixOperatorKind.LessOrEqual,
-                    TokenKind.LessGreater => InfixOperatorKind.NotEqual,
-                    TokenKind.Minus => InfixOperatorKind.Subtract,
-                    TokenKind.Plus => InfixOperatorKind.Add,
-                    TokenKind.Slash => InfixOperatorKind.Divide,
-                    _ => throw new ArgumentException(
-                        $"Cannot create an infix operator from a token {token.Kind}"
-                    ),
-                },
-                token.Span
-            );
-        }
-    }
-
-    public enum InfixOperatorKind
+    public enum InfixOperator
     {
         Add,
         Divide,

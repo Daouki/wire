@@ -4,9 +4,9 @@ namespace WireC.AST.Types
 {
     public class VoidType : IType
     {
-        public IType GetPrefixOperationResultType(PrefixOperatorKind operationKind) => null;
+        public IType GetPrefixOperationResultType(PrefixOperator operationKind) => null;
 
-        public IType GetInfixOperationResultType(InfixOperatorKind @operator) => null;
+        public IType GetInfixOperationResultType(InfixOperator @operator) => null;
 
         public bool IsSame(IType other) => other is VoidType;
 
