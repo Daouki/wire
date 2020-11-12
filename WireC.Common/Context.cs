@@ -14,7 +14,10 @@ namespace WireC.Common
 
         public Options Options { get; set; }
 
-        public string SourceCode { get; set; }
+        /// <summary>
+        /// The currently compiled source file.
+        /// </summary>
+        public SourceFile SourceFile { get; set; }
 
         /// <summary>
         /// Number of reported errors.
@@ -59,43 +62,19 @@ namespace WireC.Common
             Console.ForegroundColor = originalForegroundColor;
             Console.Error.WriteLine($"{message}");
 
-            var linesInSpan = GetLinesInSpan(span);
+            var linesInSpan = SourceFile.GetLineCountInSpan(span);
             if (linesInSpan == 1) WriteLineWithUnderline(span, accentColor);
             else WriteLinesWithUnderline(span);
 
             Console.Write(Environment.NewLine);
         }
 
-        private int GetLinesInSpan(SourceSpan span)
-        {
-            var lines = 1;
-            for (var i = span.Start; i < span.End && i < SourceCode.Length; i++)
-            {
-                if (SourceCode[i] == '\n')
-                    lines++;
-            }
-
-            return lines;
-        }
-
-        private (int, int) GetLineBounds(int position)
-        {
-            var start = position;
-            while (start > 0 && SourceCode[start] != '\n') start--;
-            if (start != 0) start++;
-
-            var end = position;
-            while (end < SourceCode.Length && SourceCode[end] != '\n') end++;
-
-            return (start, end);
-        }
-
         private void WriteLineWithUnderline(SourceSpan underlineSpan, ConsoleColor underlineColor)
         {
             if (underlineSpan == null) throw new ArgumentException(nameof(underlineSpan));
 
-            var (lineStart, lineEnd) = GetLineBounds(underlineSpan.Start);
-            var line = SourceCode[lineStart..lineEnd];
+            var (lineStart, lineEnd) = SourceFile.GetLineBounds(underlineSpan.Start);
+            var line = SourceFile.ReadSpan(lineStart, lineEnd);
             var underlineOffset = GetIntLength(underlineSpan.Line) + _pipe.Length +
                 (underlineSpan.Start - lineStart);
 

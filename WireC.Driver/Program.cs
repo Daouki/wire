@@ -38,7 +38,7 @@ namespace WireC.Driver
         private static void CompileFile(Context context)
         {
             var sourceCode = File.ReadAllText(context.Options.InputFile, Encoding.UTF8);
-            context.SourceCode = sourceCode;
+            context.SourceFile = new SourceFile(context.Options.InputFile, sourceCode);
             CompileString(context, sourceCode);
         }
 

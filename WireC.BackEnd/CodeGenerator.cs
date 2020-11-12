@@ -108,20 +108,17 @@ return (int)wiz_main__();
 
         public void VisitAssertStatement(AssertStatement assertStatement)
         {
-            var conditionStart = assertStatement.Condition.Span.Start;
-            var conditionEnd = assertStatement.Condition.Span.End;
-
             _generatedCode
-                .Append("WIRE_ASSERT__(")
-                .Append("\"<TBI>\"")
-                .Append(", ")
+                .Append("WIRE_ASSERT__(\"")
+                .Append(_context.SourceFile.FilePath)
+                .Append("\", ")
                 .Append(assertStatement.Span.Line)
                 .Append(", ")
                 .Append(assertStatement.Span.Column)
                 .Append(", ")
                 .Append(ExpressionCodeGenerator.GenerateExpressionCode(assertStatement.Condition))
                 .Append(", \"")
-                .Append(_context.SourceCode[conditionStart..conditionEnd])
+                .Append(_context.SourceFile.ReadSpan(assertStatement.Condition.Span))
                 .Append("\");\n");
         }
 
