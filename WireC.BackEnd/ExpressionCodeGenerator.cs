@@ -44,6 +44,10 @@ namespace WireC.BackEnd
                 false => "false",
             };
 
+        public string VisitParenthesizedExpression(
+            ParenthesizedExpression parenthesizedExpression
+        ) => GenerateExpression(parenthesizedExpression.Expression);
+
         public static string GenerateExpressionCode(IExpression expression)
         {
             var self = new ExpressionCodeGenerator();

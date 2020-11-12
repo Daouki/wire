@@ -96,9 +96,25 @@ namespace WireC.FrontEnd
                 );
             }
 
+            if (state.Consume(TokenKind.LeftParenthesis))
+                return ParseParenthesizedExpression(state);
+
             throw new ParseException(
                 state.Current().Span,
                 $"expected primary expression, but found \"{state.Current().Lexeme}\""
+            );
+        }
+
+        private static IExpression ParseParenthesizedExpression(ParserState state)
+        {
+            var startSpan = state.Previous().Span;
+            var expression = ParseExpression(state);
+            state.ConsumeOrError(TokenKind.RightParenthesis);
+            var endSpan = state.Previous().Span;
+            return new ParenthesizedExpression(
+                state.NodeIdGenerator.GetNextId(),
+                SourceSpan.Merge(startSpan, endSpan),
+                expression
             );
         }
     }

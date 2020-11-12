@@ -80,6 +80,9 @@ namespace WireC.MiddleEnd
 
         public bool VisitBooleanLiteral(BooleanLiteral booleanLiteral) => true;
 
+        public bool VisitParenthesizedExpression(ParenthesizedExpression parenthesizedExpression) =>
+            IsExpressionValid(parenthesizedExpression.Expression);
+
         public static bool IsExpressionValid(
             Context context,
             Scope environment,

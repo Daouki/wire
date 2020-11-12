@@ -10,5 +10,6 @@ namespace WireC.AST
         T VisitPrefixOperation(PrefixOperation prefixOperation);
         T VisitInfixOperation(InfixOperation infixOperation);
         T VisitBooleanLiteral(BooleanLiteral booleanLiteral);
+        T VisitParenthesizedExpression(ParenthesizedExpression parenthesizedExpression);
     }
 }

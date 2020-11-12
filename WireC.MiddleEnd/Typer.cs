@@ -62,6 +62,10 @@ namespace WireC.MiddleEnd
 
         public IType VisitBooleanLiteral(BooleanLiteral booleanLiteral) => new BooleanType();
 
+        public IType VisitParenthesizedExpression(
+            ParenthesizedExpression parenthesizedExpression) =>
+            GetExpressionType(parenthesizedExpression.Expression);
+
         public static IType GetExpressionType(
             Context context,
             Scope environment,
