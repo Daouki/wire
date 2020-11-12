@@ -4,6 +4,7 @@ using System.Text;
 using WireC.AST;
 using WireC.AST.Statements;
 using WireC.AST.Types;
+using WireC.Common;
 
 namespace WireC.BackEnd
 {
@@ -12,7 +13,14 @@ namespace WireC.BackEnd
         /// <summary>
         /// Prologue is always included at the beginning of the generated program.
         /// </summary>
-        private const string _prologue = @"#include<cstdint>
+        private const string _prologue = @"#include <cstdio>
+#include <cstdlib>
+#include <cstdint>
+
+#define WIRE_ASSERT__(File, Line, Column, CCond, WCond) do { if (!(CCond)) { \
+        std::fprintf(stderr, ""%s:%d:%d\nassertion failed: %s\n"", File, Line, Column, WCond); \
+        std::abort(); \
+    }} while (false)
 
 ";
 
@@ -32,13 +40,19 @@ return (int)wiz_main__();
 
         private readonly ASTContext _astContext;
 
+        private readonly Context _context;
+
         /// <summary>
         /// The destination code generated so far.
         /// </summary>
         private readonly StringBuilder _generatedCode = new StringBuilder();
 
-        public CodeGenerator(List<IStatement> abstractSyntaxTree, ASTContext astContext)
+        public CodeGenerator(
+            Context context,
+            List<IStatement> abstractSyntaxTree,
+            ASTContext astContext)
         {
+            _context = context;
             _abstractSyntaxTree = abstractSyntaxTree;
             _astContext = astContext;
         }
@@ -90,6 +104,25 @@ return (int)wiz_main__();
             }
 
             _generatedCode.Append(";\n");
+        }
+
+        public void VisitAssertStatement(AssertStatement assertStatement)
+        {
+            var conditionStart = assertStatement.Condition.Span.Start;
+            var conditionEnd = assertStatement.Condition.Span.End;
+
+            _generatedCode
+                .Append("WIRE_ASSERT__(")
+                .Append("\"<TBI>\"")
+                .Append(", ")
+                .Append(assertStatement.Span.Line)
+                .Append(", ")
+                .Append(assertStatement.Span.Column)
+                .Append(", ")
+                .Append(ExpressionCodeGenerator.GenerateExpressionCode(assertStatement.Condition))
+                .Append(", \"")
+                .Append(_context.SourceCode[conditionStart..conditionEnd])
+                .Append("\");\n");
         }
 
         public string GenerateCode()

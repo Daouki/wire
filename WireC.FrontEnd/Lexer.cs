@@ -10,6 +10,7 @@ namespace WireC.FrontEnd
         private static readonly Dictionary<string, TokenKind> _keywords =
             new Dictionary<string, TokenKind>
             {
+                {"assert", TokenKind.Assert},
                 {"false", TokenKind.False},
                 {"fn", TokenKind.Fn},
                 {"return", TokenKind.Return},

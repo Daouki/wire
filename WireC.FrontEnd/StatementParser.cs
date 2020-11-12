@@ -14,6 +14,14 @@ namespace WireC.FrontEnd
             new Dictionary<TokenKind, StatementParseRule>
             {
                 {
+                    TokenKind.Assert,
+                    new StatementParseRule
+                    {
+                        ParserFunction = ParseAssertStatement,
+                        EndsWithSemicolon = true,
+                    }
+                },
+                {
                     TokenKind.Fn,
                     new StatementParseRule
                     {
@@ -40,6 +48,20 @@ namespace WireC.FrontEnd
             };
 
         private static readonly IEnumerable<TokenKind> _synchronizationPoints = _parseRules.Keys;
+
+        private static IStatement ParseAssertStatement(Context context, ParserState state)
+        {
+            var startSpan = state.Previous().Span;
+            state.ConsumeOrError(TokenKind.LeftParenthesis);
+            var condition = ExpressionParser.ParseExpression(state);
+            state.ConsumeOrError(TokenKind.RightParenthesis);
+            var endSpan = state.Previous().Span;
+            return new AssertStatement(
+                state.NodeIdGenerator.GetNextId(),
+                SourceSpan.Merge(startSpan, endSpan),
+                condition
+            );
+        }
 
         private static IStatement ParseVariableDefinition(Context context, ParserState state)
         {

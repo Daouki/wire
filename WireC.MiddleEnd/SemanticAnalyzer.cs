@@ -83,9 +83,7 @@ namespace WireC.MiddleEnd
                     _currentScope,
                     variableDefinition.Initializer
                 ))
-                {
                     return;
-                }
 
                 var initializerType = Typer.GetExpressionType(
                     _context,
@@ -124,9 +122,7 @@ namespace WireC.MiddleEnd
                     _currentScope,
                     variableDefinition.Initializer
                 ))
-                {
                     return;
-                }
 
                 var initializerType = Typer.GetExpressionType(
                     _context,
@@ -160,6 +156,29 @@ namespace WireC.MiddleEnd
                 _context.Error(
                     variableDefinition.Span,
                     $"redefined previously defined symbol \"{variableDefinition.Identifier}\""
+                );
+            }
+        }
+
+        public void VisitAssertStatement(AssertStatement assertStatement)
+        {
+            if (!ExpressionAnalyzer.IsExpressionValid(
+                _context,
+                _currentScope,
+                assertStatement.Condition
+            ))
+                return;
+
+            var conditionType = Typer.GetExpressionType(
+                _context,
+                _currentScope,
+                assertStatement.Condition
+            );
+            if (conditionType != null && conditionType is not BooleanType)
+            {
+                _context.Error(
+                    assertStatement.Condition.Span,
+                    $"type mismatch; expected \"bool\", but found \"{conditionType}\""
                 );
             }
         }

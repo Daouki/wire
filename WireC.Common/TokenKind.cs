@@ -5,6 +5,7 @@
         Identifier,
         Integer,
 
+        Assert,
         False,
         Fn,
         Return,
