@@ -26,6 +26,7 @@ namespace WireC.FrontEnd
                 {"*", TokenKind.Asterisk},
                 {"!", TokenKind.Bang},
                 {":", TokenKind.Colon},
+                {",", TokenKind.Comma},
                 {"=", TokenKind.Equal},
                 {">", TokenKind.Greater},
                 {"{", TokenKind.LeftBrace},
@@ -50,13 +51,11 @@ namespace WireC.FrontEnd
 
         private static readonly Regex _commentRegex = new Regex(
             @"(?:--[^\n]*)",
-            RegexOptions.Compiled
-        );
+            RegexOptions.Compiled);
 
         private static readonly Regex _integerRegex = new Regex(
             @"\G[-+]?[0-9]+",
-            RegexOptions.Compiled
-        );
+            RegexOptions.Compiled);
 
         /// <summary>
         /// The source code to be tokenized.
@@ -160,11 +159,9 @@ namespace WireC.FrontEnd
             AddToken(
                 _keywords.TryGetValue(
                     _sourceCode[_startPosition.._currentPosition],
-                    out var keyword
-                )
+                    out var keyword)
                     ? keyword
-                    : TokenKind.Identifier
-            );
+                    : TokenKind.Identifier);
         }
 
         private bool TryMatchRegex(Regex regex)
@@ -217,8 +214,7 @@ namespace WireC.FrontEnd
                         Line = _currentLine,
                         Column = _startPosition - _lastNewLine + 1,
                     },
-                }
-            );
+                });
         }
 
         private void AddEndOfFileToken()
@@ -235,8 +231,7 @@ namespace WireC.FrontEnd
                         Line = _currentLine,
                         Column = _startPosition - _lastNewLine + 1,
                     },
-                }
-            );
+                });
         }
 
         private static bool IsAsciiDigit(char c) => c >= '0' && c <= '9';

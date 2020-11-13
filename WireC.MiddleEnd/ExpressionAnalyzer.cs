@@ -1,5 +1,8 @@
-﻿using WireC.AST;
+﻿using System;
+
+using WireC.AST;
 using WireC.AST.Expressions;
+using WireC.AST.Types;
 using WireC.Common;
 
 namespace WireC.MiddleEnd
@@ -21,8 +24,7 @@ namespace WireC.MiddleEnd
             {
                 _context.Error(
                     identifierLiteral.Span,
-                    $"symbol \"{identifierLiteral.Name}\" was not defined in the current scope"
-                );
+                    $"symbol \"{identifierLiteral.Name}\" was not defined in the current scope");
                 return false;
             }
 
@@ -34,7 +36,42 @@ namespace WireC.MiddleEnd
         public bool VisitFunctionCall(FunctionCall functionCall)
         {
             var calleeType = Typer.GetExpressionType(_context, _environment, functionCall.Callee);
-            return calleeType != null;
+            if (calleeType == null) return false;
+            if (calleeType is not FunctionType)
+            {
+                _context.Error(
+                    functionCall.Span,
+                    $"tried to call a non-callable type \"{calleeType}\"");
+                return false;
+            }
+
+            var calleeFunctionType = (FunctionType) calleeType;
+            if (functionCall.Arity != calleeFunctionType.Arity)
+            {
+                var s = calleeFunctionType.Arity == 1 ? "" : "s";
+                var wasOrWere = functionCall.Arity == 1 ? "was" : "were";
+                _context.Error(
+                    functionCall.Callee.Span,
+                    $"expected {calleeFunctionType.Arity} argument{s}, " +
+                    $"but {functionCall.Arity} {wasOrWere} given");
+            }
+
+            var argumentsToCheck = Math.Min(functionCall.Arity, calleeFunctionType.Arity);
+            var allArgumentsHaveCorrectType = true;
+            for (var i = 0; i < argumentsToCheck; i++)
+            {
+                var argument = functionCall.Arguments[i];
+                var argumentType = Typer.GetExpressionType(_context, _environment, argument);
+                var parameterType = calleeFunctionType.ParameterTypes[i];
+                if (parameterType.IsSame(argumentType)) continue;
+                _context.Error(
+                    argument.Span,
+                    "type mismatch between argument and parameter; " +
+                    $"expected \"{parameterType}\", but found \"{argumentType}\"");
+                allArgumentsHaveCorrectType = false;
+            }
+
+            return allArgumentsHaveCorrectType;
         }
 
         public bool VisitPrefixOperation(PrefixOperation prefixOperation)
@@ -44,8 +81,7 @@ namespace WireC.MiddleEnd
             var operandType = Typer.GetExpressionType(
                 _context,
                 _environment,
-                prefixOperation.Operand
-            );
+                prefixOperation.Operand);
             if (operandType == null ||
                 operandType.GetPrefixOperationResultType(prefixOperation.Operator.Node) != null)
                 return true;
@@ -53,8 +89,7 @@ namespace WireC.MiddleEnd
             _context.Error(
                 prefixOperation.Span,
                 "cannot apply unary operator " +
-                $"{prefixOperation.Operator.Node.GetDescription()} to type \"{operandType}\""
-            );
+                $"{prefixOperation.Operator.Node.GetDescription()} to type \"{operandType}\"");
             return false;
         }
 
@@ -69,20 +104,17 @@ namespace WireC.MiddleEnd
             {
                 _context.Error(
                     infixOperation.Operator.Span,
-                    "operator precedence is not supported; parentheses required"
-                );
+                    "operator precedence is not supported; parentheses required");
             }
 
             var leftOperandType = Typer.GetExpressionType(
                 _context,
                 _environment,
-                infixOperation.LeftOperand
-            );
+                infixOperation.LeftOperand);
             var rightOperandType = Typer.GetExpressionType(
                 _context,
                 _environment,
-                infixOperation.RightOperand
-            );
+                infixOperation.RightOperand);
 
             if (leftOperandType != null &&
                 leftOperandType.GetInfixOperationResultType(infixOperation.Operator.Node) == null)
@@ -90,8 +122,7 @@ namespace WireC.MiddleEnd
                 _context.Error(
                     infixOperation.Operator.Span,
                     $"infix operation \"{infixOperation.Operator.Node}\" " +
-                    $"is not defined for types \"{leftOperandType}\" and \"{rightOperandType}\""
-                );
+                    $"is not defined for types \"{leftOperandType}\" and \"{rightOperandType}\"");
                 return false;
             }
 
@@ -100,8 +131,7 @@ namespace WireC.MiddleEnd
             _context.Error(
                 infixOperation.Operator.Span,
                 "type mismatch between operands of a infix expression; " +
-                $"left is \"{leftOperandType}\", but right is \"{rightOperandType}\""
-            );
+                $"left is \"{leftOperandType}\", but right is \"{rightOperandType}\"");
             return false;
         }
 

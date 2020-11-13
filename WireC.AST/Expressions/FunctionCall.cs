@@ -20,6 +20,7 @@ namespace WireC.AST.Expressions
 
         public IExpression Callee { get; }
         public List<IExpression> Arguments { get; }
+        public int Arity => Arguments.Count;
 
         public int NodeId { get; }
         public SourceSpan Span { get; }

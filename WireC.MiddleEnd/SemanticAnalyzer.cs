@@ -32,23 +32,20 @@ namespace WireC.MiddleEnd
             if (functionDefinition.Identifier.Lexeme == "main")
                 _astContext.AddMangledName(functionDefinition.NodeId, "wiz_main__");
 
-            var returnType = functionDefinition.ReturnTypeSignature != null
-                ? TypeSignatureParser.ParseTypeSignature(
-                    _context,
-                    functionDefinition.ReturnTypeSignature
-                )
-                : new VoidType();
+            var (parameterTypes, allParamsOk) = GetFunctionParameterTypes(functionDefinition);
+            if (!allParamsOk) return;
+
+            var returnType = GetFunctionReturnType(functionDefinition);
             if (returnType != null)
             {
-                var functionType = new FunctionType(returnType);
+                var functionType = new FunctionType(parameterTypes, returnType);
                 _astContext.AddNodeType(functionDefinition.NodeId, functionType);
                 var wasRedefined = !_currentScope.DefineSymbol(functionDefinition, functionType);
                 if (wasRedefined)
                 {
                     _context.Error(
                         functionDefinition.Identifier.Span,
-                        $"redefinition of function \"{functionDefinition.Identifier}\""
-                    );
+                        $"redefinition of function \"{functionDefinition.Identifier}\"");
                 }
             }
 
@@ -57,10 +54,7 @@ namespace WireC.MiddleEnd
 
             foreach (var parameter in functionDefinition.Parameters)
             {
-                var parameterType =
-                    TypeSignatureParser.ParseTypeSignature(_context, parameter.Node.TypeSignature);
-                if (parameterType != null)
-                    _astContext.AddNodeType(parameter.Node.NodeId, parameterType);
+                var parameterType = _astContext.GetNodeType(parameter.Node.NodeId);
                 _currentScope.DefineSymbol(parameter.Node, parameterType);
             }
 
@@ -68,6 +62,32 @@ namespace WireC.MiddleEnd
 
             _currentScope = _currentScope.Outer;
             _functionContext = null;
+        }
+
+        private IType GetFunctionReturnType(FunctionDefinition function)
+        {
+            return function.ReturnTypeSignature != null
+                ? TypeSignatureParser.ParseTypeSignature(
+                    _context,
+                    function.ReturnTypeSignature)
+                : new VoidType();
+        }
+
+        private (List<IType>, bool) GetFunctionParameterTypes(FunctionDefinition function)
+        {
+            var parameterTypes = new List<IType>();
+            var success = true;
+            foreach (var parameter in function.Parameters)
+            {
+                var parameterType = TypeSignatureParser.ParseTypeSignature(
+                    _context,
+                    parameter.Node.TypeSignature);
+                if (parameterType == null) success = false;
+                _astContext.AddNodeType(parameter.Node.NodeId, parameterType);
+                parameterTypes.Add(parameterType);
+            }
+
+            return (parameterTypes, success);
         }
 
         public void VisitReturnStatement(ReturnStatement returnStatement)
@@ -78,8 +98,7 @@ namespace WireC.MiddleEnd
             ExpressionAnalyzer.IsExpressionValid(
                 _context,
                 _currentScope,
-                returnStatement.Expression
-            );
+                returnStatement.Expression);
         }
 
         public void VisitVariableDefinition(VariableDefinition variableDefinition)
@@ -88,21 +107,18 @@ namespace WireC.MiddleEnd
             {
                 var variableType = TypeSignatureParser.ParseTypeSignature(
                     _context,
-                    variableDefinition.TypeSignature
-                );
+                    variableDefinition.TypeSignature);
 
                 if (!ExpressionAnalyzer.IsExpressionValid(
                     _context,
                     _currentScope,
-                    variableDefinition.Initializer
-                ))
+                    variableDefinition.Initializer))
                     return;
 
                 var initializerType = Typer.GetExpressionType(
                     _context,
                     _currentScope,
-                    variableDefinition.Initializer
-                );
+                    variableDefinition.Initializer);
 
                 if (variableType != null && !variableType.IsSame(initializerType))
                 {
@@ -111,8 +127,7 @@ namespace WireC.MiddleEnd
                     Debug.Assert(variableDefinition.Initializer != null);
                     _context.Error(
                         variableDefinition.Initializer.Span,
-                        $"expected type \"{variableType}\", but found \"{initializerType}\""
-                    );
+                        $"expected type \"{variableType}\", but found \"{initializerType}\"");
                 }
 
                 _astContext.AddNodeType(variableDefinition.NodeId, variableType);
@@ -123,8 +138,7 @@ namespace WireC.MiddleEnd
                 var variableType =
                     TypeSignatureParser.ParseTypeSignature(
                         _context,
-                        variableDefinition.TypeSignature
-                    );
+                        variableDefinition.TypeSignature);
 
                 _astContext.AddNodeType(variableDefinition.NodeId, variableType);
             }
@@ -133,15 +147,13 @@ namespace WireC.MiddleEnd
                 if (!ExpressionAnalyzer.IsExpressionValid(
                     _context,
                     _currentScope,
-                    variableDefinition.Initializer
-                ))
+                    variableDefinition.Initializer))
                     return;
 
                 var initializerType = Typer.GetExpressionType(
                     _context,
                     _currentScope,
-                    variableDefinition.Initializer
-                );
+                    variableDefinition.Initializer);
                 switch (initializerType)
                 {
                     case VoidType _:
@@ -150,8 +162,7 @@ namespace WireC.MiddleEnd
                         Debug.Assert(variableDefinition.Initializer != null);
                         _context.Error(
                             variableDefinition.Initializer.Span,
-                            "type \"void\" cannot be assigned to a variable"
-                        );
+                            "type \"void\" cannot be assigned to a variable");
                         break;
                     case null:
                         return;
@@ -163,13 +174,11 @@ namespace WireC.MiddleEnd
 
             if (!_currentScope.DefineSymbol(
                 variableDefinition,
-                _astContext.GetNodeType(variableDefinition.NodeId)
-            ))
+                _astContext.GetNodeType(variableDefinition.NodeId)))
             {
                 _context.Error(
                     variableDefinition.Span,
-                    $"redefined previously defined symbol \"{variableDefinition.Identifier}\""
-                );
+                    $"redefined previously defined symbol \"{variableDefinition.Identifier}\"");
             }
         }
 
@@ -178,21 +187,18 @@ namespace WireC.MiddleEnd
             if (!ExpressionAnalyzer.IsExpressionValid(
                 _context,
                 _currentScope,
-                assertStatement.Condition
-            ))
+                assertStatement.Condition))
                 return;
 
             var conditionType = Typer.GetExpressionType(
                 _context,
                 _currentScope,
-                assertStatement.Condition
-            );
+                assertStatement.Condition);
             if (conditionType != null && conditionType is not BooleanType)
             {
                 _context.Error(
                     assertStatement.Condition.Span,
-                    $"type mismatch; expected \"bool\", but found \"{conditionType}\""
-                );
+                    $"type mismatch; expected \"bool\", but found \"{conditionType}\"");
             }
         }
 
@@ -201,21 +207,18 @@ namespace WireC.MiddleEnd
             if (!ExpressionAnalyzer.IsExpressionValid(
                 _context,
                 _currentScope,
-                ifStatement.Condition
-            ))
+                ifStatement.Condition))
                 return;
 
             var conditionType = Typer.GetExpressionType(
                 _context,
                 _currentScope,
-                ifStatement.Condition
-            );
+                ifStatement.Condition);
             if (conditionType != null && conditionType is not BooleanType)
             {
                 _context.Error(
                     ifStatement.Condition.Span,
-                    "condition does not evaluate to \"bool\" type"
-                );
+                    "condition does not evaluate to \"bool\" type");
             }
 
             AnalyzeBlock(ifStatement.ThenBody);
