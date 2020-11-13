@@ -1,4 +1,6 @@
-﻿using WireC.Common;
+﻿using System.Collections.Generic;
+
+using WireC.Common;
 
 namespace WireC.AST.Statements
 {
@@ -7,18 +9,21 @@ namespace WireC.AST.Statements
         public FunctionDefinition(
             int nodeId,
             SourceSpan span,
-            Token name,
+            Token identifier,
+            List<Spanned<FunctionParameter>> parameters,
             Block body,
             ITypeSignature returnTypeSignature)
         {
             NodeId = nodeId;
             Span = span;
-            Name = name;
+            Identifier = identifier;
+            Parameters = parameters;
             ReturnTypeSignature = returnTypeSignature;
             Body = body;
         }
 
-        public Token Name { get; }
+        public Token Identifier { get; }
+        public List<Spanned<FunctionParameter>> Parameters { get; }
         public ITypeSignature ReturnTypeSignature { get; }
         public Block Body { get; }
 
@@ -26,5 +31,19 @@ namespace WireC.AST.Statements
         public SourceSpan Span { get; }
 
         public void Accept(IStatementVisitor visitor) => visitor.VisitFunctionDefinition(this);
+    }
+
+    public class FunctionParameter
+    {
+        public FunctionParameter(int nodeId, Token identifier, ITypeSignature typeSignature)
+        {
+            NodeId = nodeId;
+            Identifier = identifier;
+            TypeSignature = typeSignature;
+        }
+
+        public int NodeId { get; }
+        public Token Identifier { get; }
+        public ITypeSignature TypeSignature { get; }
     }
 }

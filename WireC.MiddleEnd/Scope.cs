@@ -35,12 +35,25 @@ namespace WireC.MiddleEnd
         {
             Debug.Assert(functionType is FunctionType);
 
-            if (IsSymbolDefinedLocally(function.Name.Lexeme)) return false;
+            if (IsSymbolDefinedLocally(function.Identifier.Lexeme)) return false;
             _symbols.Add(
                 new Symbol
                 {
-                    Name = function.Name,
+                    Name = function.Identifier,
                     Type = functionType,
+                }
+            );
+            return true;
+        }
+
+        public bool DefineSymbol(FunctionParameter parameter, IType parameterType)
+        {
+            if (IsSymbolDefinedLocally(parameter.Identifier.Lexeme)) return false;
+            _symbols.Add(
+                new Symbol
+                {
+                    Name = parameter.Identifier,
+                    Type = parameterType,
                 }
             );
             return true;

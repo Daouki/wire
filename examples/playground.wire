@@ -1,14 +1,20 @@
 fn truthy(): bool { return true; }
 
+fn fib(n: i64): i64 {
+    if n == 0 { return 0; }
+    if n == 1 { return 1; }
+    return fib(n - 1) + fib(n - 2);
+}
+
 fn main(): i64 {
+    assert(fib(11) == 89);
+
     var x = 20;
     if x <> 70 {
-        assert(false);
     } else {
-        assert(false);
     }
 
-    assert((42 + 7) == 49);
     assert(truthy());
+
     return 0;
 }

@@ -29,7 +29,7 @@ namespace WireC.MiddleEnd
 
         public void VisitFunctionDefinition(FunctionDefinition functionDefinition)
         {
-            if (functionDefinition.Name.Lexeme == "main")
+            if (functionDefinition.Identifier.Lexeme == "main")
                 _astContext.AddMangledName(functionDefinition.NodeId, "wiz_main__");
 
             var returnType = functionDefinition.ReturnTypeSignature != null
@@ -46,14 +46,27 @@ namespace WireC.MiddleEnd
                 if (wasRedefined)
                 {
                     _context.Error(
-                        functionDefinition.Name.Span,
-                        $"redefinition of function \"{functionDefinition.Name}\""
+                        functionDefinition.Identifier.Span,
+                        $"redefinition of function \"{functionDefinition.Identifier}\""
                     );
                 }
             }
 
             _functionContext = functionDefinition;
+            _currentScope = new Scope(_currentScope);
+
+            foreach (var parameter in functionDefinition.Parameters)
+            {
+                var parameterType =
+                    TypeSignatureParser.ParseTypeSignature(_context, parameter.Node.TypeSignature);
+                if (parameterType != null)
+                    _astContext.AddNodeType(parameter.Node.NodeId, parameterType);
+                _currentScope.DefineSymbol(parameter.Node, parameterType);
+            }
+
             AnalyzeBlock(functionDefinition.Body);
+
+            _currentScope = _currentScope.Outer;
             _functionContext = null;
         }
 
@@ -190,9 +203,7 @@ namespace WireC.MiddleEnd
                 _currentScope,
                 ifStatement.Condition
             ))
-            {
                 return;
-            }
 
             var conditionType = Typer.GetExpressionType(
                 _context,
@@ -203,12 +214,12 @@ namespace WireC.MiddleEnd
             {
                 _context.Error(
                     ifStatement.Condition.Span,
-                    $"condition does not evaluate to \"bool\" type"
+                    "condition does not evaluate to \"bool\" type"
                 );
             }
 
             AnalyzeBlock(ifStatement.ThenBody);
-            AnalyzeBlock(ifStatement.ElseBody);
+            if (ifStatement.ElseBody != null) AnalyzeBlock(ifStatement.ElseBody);
         }
 
         public void Analyze()

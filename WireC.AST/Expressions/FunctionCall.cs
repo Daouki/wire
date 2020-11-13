@@ -1,17 +1,26 @@
-﻿using WireC.Common;
+﻿using System.Collections.Generic;
+
+using WireC.Common;
 
 namespace WireC.AST.Expressions
 {
     public class FunctionCall : IExpression
     {
-        public FunctionCall(int nodeId, SourceSpan span, IExpression callee)
+        public FunctionCall(
+            int nodeId,
+            SourceSpan span,
+            IExpression callee,
+            List<IExpression> arguments)
         {
             NodeId = nodeId;
             Callee = callee;
             Span = span;
+            Arguments = arguments;
         }
 
         public IExpression Callee { get; }
+        public List<IExpression> Arguments { get; }
+
         public int NodeId { get; }
         public SourceSpan Span { get; }
 

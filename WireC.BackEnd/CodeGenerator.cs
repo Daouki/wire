@@ -68,8 +68,26 @@ return (int)wiz_main__();
                     )
                 )
                 .Append(' ')
-                .Append(_astContext.GetNodeMangledName(nodeId) ?? functionDefinition.Name.Lexeme)
-                .Append("() ");
+                .Append(
+                    _astContext.GetNodeMangledName(nodeId) ?? functionDefinition.Identifier.Lexeme
+                )
+                .Append('(');
+
+            for (var i = 0; i < functionDefinition.Parameters.Count; i++)
+            {
+                var parameter = functionDefinition.Parameters[i];
+                _generatedCode
+                    .Append(
+                        TypeSignatureGenerator.GenerateTypeSignature(
+                            _astContext.GetNodeType(parameter.Node.NodeId)
+                        )
+                    )
+                    .Append(' ')
+                    .Append(parameter.Node.Identifier);
+                if (i < functionDefinition.Parameters.Count - 1) _generatedCode.Append(", ");
+            }
+
+            _generatedCode.Append(") ");
             GenerateBlockCode(functionDefinition.Body);
         }
 

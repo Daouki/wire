@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 using WireC.AST;
 using WireC.AST.Expressions;
@@ -19,7 +20,15 @@ namespace WireC.BackEnd
         public string VisitFunctionCall(FunctionCall functionCall)
         {
             var callee = GenerateExpression(functionCall.Callee);
-            return $"{callee}()";
+
+            var arguments = new StringBuilder();
+            for (var i = 0; i < functionCall.Arguments.Count; i++)
+            {
+                arguments.Append(GenerateExpression(functionCall.Arguments[i]));
+                if (i < functionCall.Arguments.Count - 1) arguments.Append(", ");
+            }
+
+            return $"{callee}({arguments})";
         }
 
         public string VisitPrefixOperation(PrefixOperation prefixOperation)

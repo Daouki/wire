@@ -146,9 +146,8 @@ namespace WireC.FrontEnd
         private static IStatement ParseFunctionDefinition(Context context, ParserState state)
         {
             var startSpan = state.Previous().Span;
-            var name = state.ConsumeOrError(TokenKind.Identifier);
-            state.ConsumeOrError(TokenKind.LeftParenthesis);
-            state.ConsumeOrError(TokenKind.RightParenthesis);
+            var identifier = state.ConsumeOrError(TokenKind.Identifier);
+            var parameters = ParseFunctionParameters(context, state);
             var returnTypeSignature = state.Consume(TokenKind.Colon)
                 ? TypeSignatureParser.ParseTypeSignature(state)
                 : null;
@@ -158,10 +157,43 @@ namespace WireC.FrontEnd
             return new FunctionDefinition(
                 state.NodeIdGenerator.GetNextId(),
                 span,
-                name,
+                identifier,
+                parameters,
                 body,
                 returnTypeSignature
             );
+        }
+
+        private static List<Spanned<FunctionParameter>> ParseFunctionParameters(
+            Context context,
+            ParserState state)
+        {
+            var parameters = new List<Spanned<FunctionParameter>>();
+
+            state.ConsumeOrError(TokenKind.LeftParenthesis);
+            if (state.Consume(TokenKind.RightParenthesis)) return parameters;
+
+            do
+            {
+                var identifier = state.ConsumeOrError(TokenKind.Identifier);
+                state.ConsumeOrError(TokenKind.Colon);
+                var typeSignature = TypeSignatureParser.ParseTypeSignature(state);
+                var span = SourceSpan.Merge(identifier.Span, typeSignature.Span);
+                parameters.Add(
+                    new Spanned<FunctionParameter>(
+                        new FunctionParameter(
+                            state.NodeIdGenerator.GetNextId(),
+                            identifier,
+                            typeSignature
+                        ),
+                        span
+                    )
+                );
+            } while (!state.IsAtEnd() && state.Consume(TokenKind.Comma));
+
+            state.ConsumeOrError(TokenKind.RightParenthesis);
+
+            return parameters;
         }
 
         private static IStatement ParseReturnStatement(Context context, ParserState state)

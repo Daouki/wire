@@ -1,4 +1,6 @@
-﻿using WireC.AST;
+﻿using System.Collections.Generic;
+
+using WireC.AST;
 using WireC.AST.Expressions;
 using WireC.Common;
 
@@ -65,9 +67,25 @@ namespace WireC.FrontEnd
 
         private static IExpression ParseFunctionCall(ParserState state, IExpression callee)
         {
+            var arguments = new List<IExpression>();
+            if (state.Consume(TokenKind.RightParenthesis))
+            {
+                return new FunctionCall(
+                    state.NodeIdGenerator.GetNextId(),
+                    SourceSpan.Merge(callee.Span, state.Previous().Span),
+                    callee,
+                    arguments
+                );
+            }
+
+            do
+            {
+                arguments.Add(ParseExpression(state));
+            } while (!state.IsAtEnd() && state.Consume(TokenKind.Comma));
+
             state.ConsumeOrError(TokenKind.RightParenthesis);
             var span = SourceSpan.Merge(callee.Span, state.Previous().Span);
-            return new FunctionCall(state.NodeIdGenerator.GetNextId(), span, callee);
+            return new FunctionCall(state.NodeIdGenerator.GetNextId(), span, callee, arguments);
         }
 
         private static IExpression ParsePrimaryExpression(ParserState state)
