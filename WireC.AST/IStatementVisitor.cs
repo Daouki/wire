@@ -9,5 +9,6 @@ namespace WireC.AST
         void VisitVariableDefinition(VariableDefinition variableDefinition);
         void VisitAssertStatement(AssertStatement assertStatement);
         void VisitIfStatement(IfStatement ifStatement);
+        void VisitExpressionStatement(ExpressionStatement expressionStatement);
     }
 }

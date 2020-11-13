@@ -64,32 +64,6 @@ namespace WireC.MiddleEnd
             _functionContext = null;
         }
 
-        private IType GetFunctionReturnType(FunctionDefinition function)
-        {
-            return function.ReturnTypeSignature != null
-                ? TypeSignatureParser.ParseTypeSignature(
-                    _context,
-                    function.ReturnTypeSignature)
-                : new VoidType();
-        }
-
-        private (List<IType>, bool) GetFunctionParameterTypes(FunctionDefinition function)
-        {
-            var parameterTypes = new List<IType>();
-            var success = true;
-            foreach (var parameter in function.Parameters)
-            {
-                var parameterType = TypeSignatureParser.ParseTypeSignature(
-                    _context,
-                    parameter.Node.TypeSignature);
-                if (parameterType == null) success = false;
-                _astContext.AddNodeType(parameter.Node.NodeId, parameterType);
-                parameterTypes.Add(parameterType);
-            }
-
-            return (parameterTypes, success);
-        }
-
         public void VisitReturnStatement(ReturnStatement returnStatement)
         {
             if (_functionContext == null)
@@ -223,6 +197,36 @@ namespace WireC.MiddleEnd
 
             AnalyzeBlock(ifStatement.ThenBody);
             if (ifStatement.ElseBody != null) AnalyzeBlock(ifStatement.ElseBody);
+        }
+
+        public void VisitExpressionStatement(ExpressionStatement expressionStatement) =>
+            ExpressionAnalyzer.IsExpressionValid(
+                _context,
+                _currentScope,
+                expressionStatement.Expression);
+
+        private IType GetFunctionReturnType(FunctionDefinition function) =>
+            function.ReturnTypeSignature != null
+                ? TypeSignatureParser.ParseTypeSignature(
+                    _context,
+                    function.ReturnTypeSignature)
+                : new VoidType();
+
+        private (List<IType>, bool) GetFunctionParameterTypes(FunctionDefinition function)
+        {
+            var parameterTypes = new List<IType>();
+            var success = true;
+            foreach (var parameter in function.Parameters)
+            {
+                var parameterType = TypeSignatureParser.ParseTypeSignature(
+                    _context,
+                    parameter.Node.TypeSignature);
+                if (parameterType == null) success = false;
+                _astContext.AddNodeType(parameter.Node.NodeId, parameterType);
+                parameterTypes.Add(parameterType);
+            }
+
+            return (parameterTypes, success);
         }
 
         public void Analyze()

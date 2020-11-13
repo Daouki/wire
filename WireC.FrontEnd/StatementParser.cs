@@ -68,8 +68,7 @@ namespace WireC.FrontEnd
                 SourceSpan.Merge(startSpan, elseBlock != null ? elseBlock.Span : thenBlock.Span),
                 condition,
                 thenBlock,
-                elseBlock
-            );
+                elseBlock);
         }
 
         private static IStatement ParseAssertStatement(Context context, ParserState state)
@@ -82,8 +81,7 @@ namespace WireC.FrontEnd
             return new AssertStatement(
                 state.NodeIdGenerator.GetNextId(),
                 SourceSpan.Merge(startSpan, endSpan),
-                condition
-            );
+                condition);
         }
 
         private static IStatement ParseVariableDefinition(Context context, ParserState state)
@@ -107,8 +105,7 @@ namespace WireC.FrontEnd
                     span,
                     identifier,
                     typeSignature,
-                    initializer
-                );
+                    initializer);
             }
 
             if (typeSignature == null)
@@ -121,24 +118,27 @@ namespace WireC.FrontEnd
                 span,
                 identifier,
                 typeSignature,
-                null
-            );
+                null);
         }
 
         private static IStatement ParseStatement(Context context, ParserState state)
         {
-            if (!_parseRules.TryGetValue(state.Current().Kind, out var parseRule))
+            IStatement statement;
+            if (_parseRules.TryGetValue(state.Current().Kind, out var parseRule))
             {
-                var current = state.Current();
-                throw new ParseException(
-                    current.Span,
-                    $"expected a beginning of a statement, but found {current}"
-                );
+                state.Advance();
+                statement = parseRule.ParserFunction.Invoke(context, state);
+                if (parseRule.EndsWithSemicolon) state.ConsumeOrError(TokenKind.Semicolon);
+                ConsumeUnnecessarySemicolons(context, state);
+                return statement;
             }
 
-            state.Advance();
-            var statement = parseRule.ParserFunction.Invoke(context, state);
-            if (parseRule.EndsWithSemicolon) state.ConsumeOrError(TokenKind.Semicolon);
+            var expression = ExpressionParser.ParseExpression(state);
+            statement = new ExpressionStatement(
+                state.NodeIdGenerator.GetNextId(),
+                expression.Span,
+                expression);
+            state.ConsumeOrError(TokenKind.Semicolon);
             ConsumeUnnecessarySemicolons(context, state);
             return statement;
         }
@@ -160,8 +160,7 @@ namespace WireC.FrontEnd
                 identifier,
                 parameters,
                 body,
-                returnTypeSignature
-            );
+                returnTypeSignature);
         }
 
         private static List<Spanned<FunctionParameter>> ParseFunctionParameters(
@@ -184,11 +183,8 @@ namespace WireC.FrontEnd
                         new FunctionParameter(
                             state.NodeIdGenerator.GetNextId(),
                             identifier,
-                            typeSignature
-                        ),
-                        span
-                    )
-                );
+                            typeSignature),
+                        span));
             } while (!state.IsAtEnd() && state.Consume(TokenKind.Comma));
 
             state.ConsumeOrError(TokenKind.RightParenthesis);

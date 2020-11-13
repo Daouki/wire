@@ -64,13 +64,10 @@ return (int)wiz_main__();
             _generatedCode
                 .Append(
                     TypeSignatureGenerator.GenerateTypeSignature(
-                        ((FunctionType) _astContext.GetNodeType(nodeId)).ReturnType
-                    )
-                )
+                        ((FunctionType) _astContext.GetNodeType(nodeId)).ReturnType))
                 .Append(' ')
                 .Append(
-                    _astContext.GetNodeMangledName(nodeId) ?? functionDefinition.Identifier.Lexeme
-                )
+                    _astContext.GetNodeMangledName(nodeId) ?? functionDefinition.Identifier.Lexeme)
                 .Append('(');
 
             for (var i = 0; i < functionDefinition.Parameters.Count; i++)
@@ -79,9 +76,7 @@ return (int)wiz_main__();
                 _generatedCode
                     .Append(
                         TypeSignatureGenerator.GenerateTypeSignature(
-                            _astContext.GetNodeType(parameter.Node.NodeId)
-                        )
-                    )
+                            _astContext.GetNodeType(parameter.Node.NodeId)))
                     .Append(' ')
                     .Append(parameter.Node.Identifier);
                 if (i < functionDefinition.Parameters.Count - 1) _generatedCode.Append(", ");
@@ -104,9 +99,7 @@ return (int)wiz_main__();
             _generatedCode
                 .Append(
                     TypeSignatureGenerator.GenerateTypeSignature(
-                        _astContext.GetNodeType(variableDefinition.NodeId)
-                    )
-                )
+                        _astContext.GetNodeType(variableDefinition.NodeId)))
                 .Append(' ')
                 .Append(variableDefinition.Identifier);
 
@@ -116,9 +109,7 @@ return (int)wiz_main__();
                     .Append(" = ")
                     .Append(
                         ExpressionCodeGenerator.GenerateExpressionCode(
-                            variableDefinition.Initializer
-                        )
-                    );
+                            variableDefinition.Initializer));
             }
 
             _generatedCode.Append(";\n");
@@ -151,6 +142,14 @@ return (int)wiz_main__();
             if (ifStatement.ElseBody == null) return;
             _generatedCode.Append("else ");
             GenerateBlockCode(ifStatement.ElseBody);
+        }
+
+        public void VisitExpressionStatement(ExpressionStatement expressionStatement)
+        {
+            _generatedCode
+                .Append(
+                    ExpressionCodeGenerator.GenerateExpressionCode(expressionStatement.Expression))
+                .Append(";\n");
         }
 
         public string GenerateCode()
