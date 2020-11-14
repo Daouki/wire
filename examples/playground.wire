@@ -8,6 +8,7 @@ fn fib(n: i64): i64 {
 
 fn main(): i64 {
     assert(fib(11) == 89);
+    assert((false ^ false) == false);
 
     var x = 20;
     if x <> 70 {
@@ -18,6 +19,12 @@ fn main(): i64 {
 
     20 + 42;
     truthy();
+
+    ~86;
+    40^20;
+    20&5;
+    32|3;
+    (true && false) || true;
 
     return 0;
 }

@@ -27,10 +27,10 @@ namespace WireC.AST.Expressions
                     TokenKind.Bang => PrefixOperator.Not,
                     TokenKind.Plus => PrefixOperator.Identity,
                     TokenKind.Minus => PrefixOperator.Negate,
+                    TokenKind.Tilde => PrefixOperator.BinaryNot,
                     _ => throw new ArgumentException(nameof(@operator)),
                 },
-                Span
-            );
+                Span);
             Operand = operand;
         }
 
@@ -51,6 +51,9 @@ namespace WireC.AST.Expressions
 
         [Description("\"!\"")]
         Not, // The "!" operator for logical inversion.
+
+        [Description("\"~\"")]
+        BinaryNot, // The "~" operator for bitwise inversion.
     }
 
     public static class PrefixOperatorExtensions

@@ -20,7 +20,10 @@ namespace WireC.AST.Expressions
             Operator = new Spanned<InfixOperator>(
                 @operator.Kind switch
                 {
+                    TokenKind.Ampersand => InfixOperator.BinaryAnd,
+                    TokenKind.AmpersandAmpersand => InfixOperator.LogicalAnd,
                     TokenKind.Asterisk => InfixOperator.Multiply,
+                    TokenKind.Caret => InfixOperator.BinaryXor,
                     TokenKind.Equal => InfixOperator.Equal,
                     TokenKind.EqualEqual => InfixOperator.Equal,
                     TokenKind.Greater => InfixOperator.Greater,
@@ -29,14 +32,14 @@ namespace WireC.AST.Expressions
                     TokenKind.LessEqual => InfixOperator.LessOrEqual,
                     TokenKind.LessGreater => InfixOperator.NotEqual,
                     TokenKind.Minus => InfixOperator.Subtract,
+                    TokenKind.Pipe => InfixOperator.BinaryOr,
+                    TokenKind.PipePipe => InfixOperator.LogicalOr,
                     TokenKind.Plus => InfixOperator.Add,
                     TokenKind.Slash => InfixOperator.Divide,
                     _ => throw new ArgumentException(
-                        $"Cannot create an infix operator from a token {@operator.Kind}"
-                    ),
+                        $"Cannot create an infix operator from a token {@operator.Kind}"),
                 },
-                @operator.Span
-            );
+                @operator.Span);
             LeftOperand = leftOperand;
             RightOperand = rightOperand;
         }
@@ -54,12 +57,17 @@ namespace WireC.AST.Expressions
     public enum InfixOperator
     {
         Add,
+        BinaryAnd,
+        BinaryOr,
+        BinaryXor,
         Divide,
         Equal,
         Greater,
         GreaterOrEqual,
         Less,
         LessOrEqual,
+        LogicalAnd,
+        LogicalOr,
         Multiply,
         NotEqual,
         Subtract,

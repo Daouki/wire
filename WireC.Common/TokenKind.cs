@@ -4,11 +4,15 @@ namespace WireC.Common
 {
     public enum TokenKind
     {
+        // Literals.
+
         [Description("identifier")]
         Identifier,
 
         [Description("integer")]
         Integer,
+
+        // Keywords.
 
         [Description("\"assert\"")]
         Assert,
@@ -34,11 +38,22 @@ namespace WireC.Common
         [Description("\"var\"")]
         Var,
 
+        // Operators.
+
+        [Description("\"&\"")]
+        Ampersand,
+
+        [Description("\"&&\"")]
+        AmpersandAmpersand,
+
         [Description("\"*\"")]
         Asterisk,
 
         [Description("\"!\"")]
         Bang,
+
+        [Description("\"^\"")]
+        Caret,
 
         [Description("\":\"")]
         Colon,
@@ -76,6 +91,12 @@ namespace WireC.Common
         [Description("\"-\"")]
         Minus,
 
+        [Description("\"|\"")]
+        Pipe,
+
+        [Description("\"||\"")]
+        PipePipe,
+
         [Description("\"+\"")]
         Plus,
 
@@ -90,6 +111,11 @@ namespace WireC.Common
 
         [Description("\"/\"")]
         Slash,
+
+        [Description("\"~\"")]
+        Tilde,
+
+        // Special.
 
         [Description("\"INVALID\"")]
         Invalid,

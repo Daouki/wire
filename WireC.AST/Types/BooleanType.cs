@@ -12,7 +12,12 @@ namespace WireC.AST.Types
 
         public IType GetInfixOperationResultType(InfixOperator @operator) => @operator switch
         {
+            InfixOperator.BinaryAnd => new BooleanType(),
+            InfixOperator.BinaryOr => new BooleanType(),
+            InfixOperator.BinaryXor => new BooleanType(),
             InfixOperator.Equal => new BooleanType(),
+            InfixOperator.LogicalAnd => new BooleanType(),
+            InfixOperator.LogicalOr => new BooleanType(),
             InfixOperator.NotEqual => new BooleanType(),
             _ => null,
         };

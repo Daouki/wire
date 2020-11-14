@@ -13,11 +13,15 @@ namespace WireC.FrontEnd
             TokenKind.Bang,
             TokenKind.Minus,
             TokenKind.Plus,
+            TokenKind.Tilde,
         };
 
         private static readonly TokenKind[] _infixOperators =
         {
+            TokenKind.Ampersand,
+            TokenKind.AmpersandAmpersand,
             TokenKind.Asterisk,
+            TokenKind.Caret,
             TokenKind.EqualEqual,
             TokenKind.Greater,
             TokenKind.GreaterEqual,
@@ -25,8 +29,11 @@ namespace WireC.FrontEnd
             TokenKind.LessEqual,
             TokenKind.LessGreater,
             TokenKind.Minus,
+            TokenKind.Pipe,
+            TokenKind.PipePipe,
             TokenKind.Plus,
             TokenKind.Slash,
+            TokenKind.Tilde,
         };
 
         public static IExpression ParseExpression(ParserState state) =>
@@ -43,8 +50,7 @@ namespace WireC.FrontEnd
                     state.NodeIdGenerator.GetNextId(),
                     @operator,
                     expression,
-                    rightOperand
-                );
+                    rightOperand);
             }
 
             return expression;
@@ -74,8 +80,7 @@ namespace WireC.FrontEnd
                     state.NodeIdGenerator.GetNextId(),
                     SourceSpan.Merge(callee.Span, state.Previous().Span),
                     callee,
-                    arguments
-                );
+                    arguments);
             }
 
             do
@@ -95,8 +100,7 @@ namespace WireC.FrontEnd
                 return new BooleanLiteral(
                     state.NodeIdGenerator.GetNextId(),
                     state.Previous().Span,
-                    false
-                );
+                    false);
             }
 
             if (state.Consume(TokenKind.Identifier))
@@ -110,8 +114,7 @@ namespace WireC.FrontEnd
                 return new BooleanLiteral(
                     state.NodeIdGenerator.GetNextId(),
                     state.Previous().Span,
-                    true
-                );
+                    true);
             }
 
             if (state.Consume(TokenKind.LeftParenthesis))
@@ -119,8 +122,7 @@ namespace WireC.FrontEnd
 
             throw new ParseException(
                 state.Current().Span,
-                $"expected primary expression, but found \"{state.Current().Lexeme}\""
-            );
+                $"expected primary expression, but found \"{state.Current().Lexeme}\"");
         }
 
         private static IExpression ParseParenthesizedExpression(ParserState state)
@@ -132,8 +134,7 @@ namespace WireC.FrontEnd
             return new ParenthesizedExpression(
                 state.NodeIdGenerator.GetNextId(),
                 SourceSpan.Merge(startSpan, endSpan),
-                expression
-            );
+                expression);
         }
     }
 }

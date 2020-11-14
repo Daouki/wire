@@ -23,8 +23,10 @@ namespace WireC.FrontEnd
         private static readonly Dictionary<string, TokenKind> _shortOperators =
             new Dictionary<string, TokenKind>
             {
+                {"&", TokenKind.Ampersand},
                 {"*", TokenKind.Asterisk},
                 {"!", TokenKind.Bang},
+                {"^", TokenKind.Caret},
                 {":", TokenKind.Colon},
                 {",", TokenKind.Comma},
                 {"=", TokenKind.Equal},
@@ -32,21 +34,25 @@ namespace WireC.FrontEnd
                 {"{", TokenKind.LeftBrace},
                 {"(", TokenKind.LeftParenthesis},
                 {"-", TokenKind.Minus},
+                {"|", TokenKind.Pipe},
                 {"+", TokenKind.Plus},
                 {"}", TokenKind.RightBrace},
                 {")", TokenKind.RightParenthesis},
                 {"<", TokenKind.Less},
                 {";", TokenKind.Semicolon},
                 {"/", TokenKind.Slash},
+                {"~", TokenKind.Tilde},
             };
 
         private static readonly Dictionary<string, TokenKind> _longOperators =
             new Dictionary<string, TokenKind>
             {
+                {"&&", TokenKind.AmpersandAmpersand},
                 {"==", TokenKind.EqualEqual},
                 {">=", TokenKind.GreaterEqual},
                 {"<=", TokenKind.LessEqual},
                 {"<>", TokenKind.LessGreater},
+                {"||", TokenKind.PipePipe},
             };
 
         private static readonly Regex _commentRegex = new Regex(

@@ -6,6 +6,7 @@ namespace WireC.AST.Types
     {
         public IType GetPrefixOperationResultType(PrefixOperator @operator) => @operator switch
         {
+            PrefixOperator.BinaryNot => new IntegerType(),
             PrefixOperator.Identity => new IntegerType(),
             PrefixOperator.Negate => new IntegerType(),
             _ => null,
@@ -14,6 +15,9 @@ namespace WireC.AST.Types
         public IType GetInfixOperationResultType(InfixOperator @operator) => @operator switch
         {
             InfixOperator.Add => new IntegerType(),
+            InfixOperator.BinaryAnd => new IntegerType(),
+            InfixOperator.BinaryOr => new IntegerType(),
+            InfixOperator.BinaryXor => new IntegerType(),
             InfixOperator.Divide => new IntegerType(),
             InfixOperator.Equal => new BooleanType(),
             InfixOperator.Greater => new BooleanType(),

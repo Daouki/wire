@@ -66,6 +66,7 @@ namespace WireC.BackEnd
         private static string GeneratePrefixOperator(PrefixOperator @operator) =>
             @operator switch
             {
+                PrefixOperator.BinaryNot => "~",
                 PrefixOperator.Not => "!",
                 PrefixOperator.Identity => "+",
                 PrefixOperator.Negate => "-",
@@ -76,12 +77,17 @@ namespace WireC.BackEnd
             @operator switch
             {
                 InfixOperator.Add => "+",
+                InfixOperator.BinaryAnd => "&",
+                InfixOperator.BinaryOr => "|",
+                InfixOperator.BinaryXor => "^",
                 InfixOperator.Divide => "/",
                 InfixOperator.Equal => "==",
                 InfixOperator.Greater => "==",
                 InfixOperator.GreaterOrEqual => ">=",
                 InfixOperator.Less => "<",
                 InfixOperator.LessOrEqual => "<=",
+                InfixOperator.LogicalAnd => "&&",
+                InfixOperator.LogicalOr => "||",
                 InfixOperator.Multiply => "*",
                 InfixOperator.NotEqual => "!=",
                 InfixOperator.Subtract => "-",
