@@ -2,6 +2,7 @@
 using System.Diagnostics;
 
 using WireC.AST;
+using WireC.AST.Expressions;
 using WireC.AST.Statements;
 using WireC.AST.Types;
 using WireC.Common;
@@ -226,6 +227,49 @@ namespace WireC.MiddleEnd
 
             AnalyzeBlock(whileStatement.Body);
         }
+
+        public void VisitAssignmentStatement(AssignmentStatement assignmentStatement)
+        {
+            if (!ExpressionAnalyzer.IsExpressionValid(
+                    _context,
+                    _currentScope,
+                    assignmentStatement.Target) ||
+                !ExpressionAnalyzer.IsExpressionValid(
+                    _context,
+                    _currentScope,
+                    assignmentStatement.Value))
+                return;
+
+            if (!IsLValue(assignmentStatement.Target))
+            {
+                _context.Error(
+                    assignmentStatement.Target.Span,
+                    "left-hand of the assignment is not assignable");
+                return;
+            }
+
+            var targetType = Typer.GetExpressionType(
+                _context,
+                _currentScope,
+                assignmentStatement.Target);
+            var valueType = Typer.GetExpressionType(
+                _context,
+                _currentScope,
+                assignmentStatement.Value);
+            if (targetType == null || valueType == null) return;
+            if (!targetType.IsSame(valueType))
+            {
+                _context.Error(
+                    assignmentStatement.Value.Span,
+                    $"type mismatch; expected \"{targetType}\", but found \"{valueType}\"");
+            }
+        }
+
+        private static bool IsLValue(IExpression expression) => expression switch
+        {
+            IdentifierLiteral _ => true,
+            _ => false,
+        };
 
         private IType GetFunctionReturnType(FunctionDefinition function) =>
             function.ReturnTypeSignature != null

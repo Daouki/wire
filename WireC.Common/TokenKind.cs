@@ -61,6 +61,9 @@ namespace WireC.Common
         [Description("\":\"")]
         Colon,
 
+        [Description(@""":=""")]
+        ColonEqual,
+
         [Description("\",\"")]
         Comma,
 

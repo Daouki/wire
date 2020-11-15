@@ -151,11 +151,18 @@ namespace WireC.FrontEnd
                 return statement;
             }
 
+            var nodeId = state.NodeIdGenerator.GetNextId();
             var expression = ExpressionParser.ParseExpression(state);
-            statement = new ExpressionStatement(
-                state.NodeIdGenerator.GetNextId(),
-                expression.Span,
-                expression);
+
+            if (state.Consume(TokenKind.ColonEqual))
+            {
+                var value = ExpressionParser.ParseExpression(state);
+                var span = SourceSpan.Merge(expression.Span, value.Span);
+                statement = new AssignmentStatement(nodeId, span, expression, value);
+            }
+            else
+                statement = new ExpressionStatement(nodeId, expression.Span, expression);
+
             state.ConsumeOrError(TokenKind.Semicolon);
             ConsumeUnnecessarySemicolons(context, state);
             return statement;

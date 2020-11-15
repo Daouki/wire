@@ -161,6 +161,15 @@ return (int)wiz_main__();
             GenerateBlockCode(whileStatement.Body);
         }
 
+        public void VisitAssignmentStatement(AssignmentStatement assignmentStatement)
+        {
+            _generatedCode
+                .Append(ExpressionCodeGenerator.GenerateExpressionCode(assignmentStatement.Target))
+                .Append(" = ")
+                .Append(ExpressionCodeGenerator.GenerateExpressionCode(assignmentStatement.Value))
+                .Append(";\n");
+        }
+
         public string GenerateCode()
         {
             foreach (var statement in _abstractSyntaxTree) GenerateStatementCode(statement);

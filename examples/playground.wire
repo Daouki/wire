@@ -26,9 +26,12 @@ fn main(): i64 {
     32|3;
     (true && false) || true;
 
-    while false {
-        var x = 20;
+    var i = 0;
+    while i < 10 {
+        i := i + 1;
     }
+    assert(i == 10);
+    i := false;
 
     return 0;
 }

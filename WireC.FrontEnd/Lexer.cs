@@ -49,6 +49,7 @@ namespace WireC.FrontEnd
             new Dictionary<string, TokenKind>
             {
                 {"&&", TokenKind.AmpersandAmpersand},
+                {":=", TokenKind.ColonEqual},
                 {"==", TokenKind.EqualEqual},
                 {">=", TokenKind.GreaterEqual},
                 {"<=", TokenKind.LessEqual},
