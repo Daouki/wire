@@ -31,7 +31,6 @@ fn main(): i64 {
         i := i + 1;
     }
     assert(i == 10);
-    i := false;
 
     return 0;
 }
