@@ -261,7 +261,9 @@ namespace WireC.MiddleEnd
 
         private void AnalyzeBlock(Block block)
         {
+            _currentScope = new Scope(_currentScope);
             foreach (var statement in block.Statements) Analyze(statement);
+            _currentScope = _currentScope.Outer;
         }
     }
 }

@@ -27,7 +27,7 @@ fn main(): i64 {
     (true && false) || true;
 
     while false {
-        var a = 20;
+        var x = 20;
     }
 
     return 0;
