@@ -38,6 +38,9 @@ namespace WireC.Common
         [Description("\"var\"")]
         Var,
 
+        [Description("\"while\"")]
+        While,
+
         // Operators.
 
         [Description("\"&\"")]

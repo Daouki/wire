@@ -205,6 +205,28 @@ namespace WireC.MiddleEnd
                 _currentScope,
                 expressionStatement.Expression);
 
+        public void VisitWhileStatement(WhileStatement whileStatement)
+        {
+            if (ExpressionAnalyzer.IsExpressionValid(
+                _context,
+                _currentScope,
+                whileStatement.Condition))
+            {
+                var conditionType = Typer.GetExpressionType(
+                    _context,
+                    _currentScope,
+                    whileStatement.Condition);
+                if (conditionType != null && !conditionType.IsSame(new BooleanType()))
+                {
+                    _context.Error(
+                        whileStatement.Condition.Span,
+                        "while loop condition does not evaluate to type \"bool\"");
+                }
+            }
+
+            AnalyzeBlock(whileStatement.Body);
+        }
+
         private IType GetFunctionReturnType(FunctionDefinition function) =>
             function.ReturnTypeSignature != null
                 ? TypeSignatureParser.ParseTypeSignature(

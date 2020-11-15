@@ -152,6 +152,15 @@ return (int)wiz_main__();
                 .Append(";\n");
         }
 
+        public void VisitWhileStatement(WhileStatement whileStatement)
+        {
+            _generatedCode
+                .Append("while (")
+                .Append(ExpressionCodeGenerator.GenerateExpressionCode(whileStatement.Condition))
+                .Append(") ");
+            GenerateBlockCode(whileStatement.Body);
+        }
+
         public string GenerateCode()
         {
             foreach (var statement in _abstractSyntaxTree) GenerateStatementCode(statement);

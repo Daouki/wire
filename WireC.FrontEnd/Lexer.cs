@@ -18,6 +18,7 @@ namespace WireC.FrontEnd
                 {"return", TokenKind.Return},
                 {"true", TokenKind.True},
                 {"var", TokenKind.Var},
+                {"while", TokenKind.While},
             };
 
         private static readonly Dictionary<string, TokenKind> _shortOperators =

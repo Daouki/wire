@@ -53,9 +53,27 @@ namespace WireC.FrontEnd
                         EndsWithSemicolon = true,
                     }
                 },
+                {
+                    TokenKind.While,
+                    new StatementParseRule
+                    {
+                        ParserFunction = ParseWhileStatement,
+                        EndsWithSemicolon = false,
+                    }
+                },
             };
 
         private static readonly IEnumerable<TokenKind> _synchronizationPoints = _parseRules.Keys;
+
+        private static IStatement ParseWhileStatement(Context context, ParserState state)
+        {
+            var startSpan = state.Previous().Span;
+            var condition = ExpressionParser.ParseExpression(state);
+            var body = ParseBlock(context, state);
+            var nodeId = state.NodeIdGenerator.GetNextId();
+            var span = SourceSpan.Merge(startSpan, body.Span);
+            return new WhileStatement(nodeId, span, condition, body);
+        }
 
         private static IStatement ParseIfStatement(Context context, ParserState state)
         {
