@@ -106,6 +106,9 @@ namespace WireC.FrontEnd
             if (state.Consume(TokenKind.Identifier))
                 return new IdentifierLiteral(state.NodeIdGenerator.GetNextId(), state.Previous());
 
+            if (state.Consume(TokenKind.Float))
+                return new FloatLiteral(state.NodeIdGenerator.GetNextId(), state.Previous());
+
             if (state.Consume(TokenKind.Integer))
                 return new IntegerLiteral(state.NodeIdGenerator.GetNextId(), state.Previous());
 

@@ -8,5 +8,6 @@ namespace WireC.AST
         T VisitFunctionType(FunctionType functionType);
         T VisitVoidType(VoidType voidType);
         T VisitBooleanType(BooleanType booleanType);
+        T VisitFloatType(FloatType floatType);
     }
 }

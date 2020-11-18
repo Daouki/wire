@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Text;
 
 using WireC.AST;
@@ -55,6 +56,9 @@ namespace WireC.BackEnd
         public string VisitParenthesizedExpression(
             ParenthesizedExpression parenthesizedExpression
         ) => GenerateExpression(parenthesizedExpression.Expression);
+
+        public string VisitFloatLiteral(FloatLiteral floatLiteral) =>
+            floatLiteral.Value.ToString("0.0##############", CultureInfo.InvariantCulture);
 
         public static string GenerateExpressionCode(IExpression expression)
         {

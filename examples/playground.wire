@@ -10,6 +10,12 @@ fn main(): i64 {
     assert(fib(11) == 89);
     assert((false ^ false) == false);
 
+    var a = 1.0;
+    var b: f64 = -12.56546;
+    var c: f64;
+    c := +.1;
+    var d = 0.;
+
     var x = 20;
     if x <> 70 {
     } else {

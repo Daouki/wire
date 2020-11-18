@@ -37,7 +37,7 @@ namespace WireC.MiddleEnd
         {
             var calleeType = Typer.GetExpressionType(_context, _environment, functionCall.Callee);
             if (calleeType == null) return false;
-            if (calleeType is not FunctionType)
+            if (!(calleeType is FunctionType))
             {
                 _context.Error(
                     functionCall.Span,
@@ -139,6 +139,8 @@ namespace WireC.MiddleEnd
 
         public bool VisitParenthesizedExpression(ParenthesizedExpression parenthesizedExpression) =>
             IsExpressionValid(parenthesizedExpression.Expression);
+
+        public bool VisitFloatLiteral(FloatLiteral floatLiteral) => true;
 
         public static bool IsExpressionValid(
             Context context,

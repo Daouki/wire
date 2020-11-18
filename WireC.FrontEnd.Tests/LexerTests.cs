@@ -83,6 +83,25 @@ namespace WireC.FrontEnd.Tests
             Assert.Equal(input.Trim(), result.Lexeme);
         }
 
+        [Theory]
+        [InlineData("1234.0")]
+        [InlineData("+1234.0")]
+        [InlineData("-1234.0")]
+        [InlineData("1234.")]
+        [InlineData("+1234.")]
+        [InlineData("-1234.")]
+        [InlineData(".1234")]
+        [InlineData("+.1234")]
+        [InlineData("-.1234")]
+        public void TokenizesFloat(string input)
+        {
+            var tokens = new Lexer(input).Tokenize();
+            var result = tokens[0];
+
+            Assert.Equal(TokenKind.Float, result.Kind);
+            Assert.Equal(input.Trim(), result.Lexeme);
+        }
+
         [Fact]
         public void TokenizesInvalid()
         {

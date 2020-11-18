@@ -13,6 +13,7 @@ namespace WireC.MiddleEnd
             new Dictionary<string, IType>
             {
                 {"bool", new BooleanType()},
+                {"f64", new FloatType()},
                 {"i64", new IntegerType()},
             };
 
@@ -29,8 +30,7 @@ namespace WireC.MiddleEnd
                 return primitiveType;
             _context.Error(
                 typeName.Span,
-                $"type \"{typeName.Name}\" was not defined in the current scope"
-            );
+                $"type \"{typeName.Name}\" was not defined in the current scope");
             return null;
         }
 

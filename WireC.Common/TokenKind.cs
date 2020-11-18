@@ -12,6 +12,9 @@ namespace WireC.Common
         [Description("integer")]
         Integer,
 
+        [Description("float")]
+        Float,
+
         // Keywords.
 
         [Description("\"assert\"")]

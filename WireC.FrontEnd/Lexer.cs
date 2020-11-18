@@ -61,6 +61,10 @@ namespace WireC.FrontEnd
             @"(?:--[^\n]*)",
             RegexOptions.Compiled);
 
+        private static readonly Regex _floatRegex = new Regex(
+            @"\G[-+]?(?:[0-9]+\.[0-9]+|[0-9]+\.|\.[0-9]+)",
+            RegexOptions.Compiled);
+
         private static readonly Regex _integerRegex = new Regex(
             @"\G[-+]?[0-9]+",
             RegexOptions.Compiled);
@@ -124,11 +128,13 @@ namespace WireC.FrontEnd
                     continue;
                 }
 
+                if (TryTokenizeFloat()) continue;
+
                 if (TryTokenizeInteger()) continue;
 
-                if (TryAddLongOperator()) continue;
+                if (TryTokenizeLongOperator()) continue;
 
-                if (TryParseShortOperator()) continue;
+                if (TryTokenizeShortOperator()) continue;
 
                 AddToken(TokenKind.Invalid);
             }
@@ -137,7 +143,17 @@ namespace WireC.FrontEnd
             return _tokens;
         }
 
-        private bool TryParseShortOperator()
+        private bool TryTokenizeFloat()
+        {
+            if (!TryMatchRegex(_floatRegex)) return false;
+            AddToken(TokenKind.Float);
+            return true;
+        }
+
+        /// <summary>
+        /// Tries to match at the current position and append a single character operator to the token list.
+        /// </summary>
+        private bool TryTokenizeShortOperator()
         {
             var maybeShortOperator = _sourceCode.Substring(_startPosition, 1);
             if (!_shortOperators.TryGetValue(maybeShortOperator, out var shortOp)) return false;
@@ -145,7 +161,10 @@ namespace WireC.FrontEnd
             return true;
         }
 
-        private bool TryAddLongOperator()
+        /// <summary>
+        /// Tries to match at the current position and append a two-characters operator to the token list.
+        /// </summary>
+        private bool TryTokenizeLongOperator()
         {
             if (_sourceCode.Length - _startPosition >= 2)
             {

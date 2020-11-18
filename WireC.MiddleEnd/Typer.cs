@@ -23,8 +23,7 @@ namespace WireC.MiddleEnd
             if (symbol != null) return symbol.Type;
             _context.Error(
                 identifierLiteral.Span,
-                $"symbol \"{identifierLiteral.Name}\" was not declared in the current scope"
-            );
+                $"symbol \"{identifierLiteral.Name}\" was not declared in the current scope");
             return null;
         }
 
@@ -37,8 +36,7 @@ namespace WireC.MiddleEnd
 
             _context.Error(
                 functionCall.Callee.Span,
-                "cannot call a non-callable type \"{calleType}\""
-            );
+                "cannot call a non-callable type \"{calleType}\"");
             return null;
         }
 
@@ -55,8 +53,7 @@ namespace WireC.MiddleEnd
             _context.Error(
                 infixOperation.Operator.Span,
                 "type mismatch between operands of infix operation; " +
-                $"left is \"{leftOperandType}\", but right is \"{rightOperandType}\""
-            );
+                $"left is \"{leftOperandType}\", but right is \"{rightOperandType}\"");
             return null;
         }
 
@@ -65,6 +62,8 @@ namespace WireC.MiddleEnd
         public IType VisitParenthesizedExpression(
             ParenthesizedExpression parenthesizedExpression) =>
             GetExpressionType(parenthesizedExpression.Expression);
+
+        public IType VisitFloatLiteral(FloatLiteral floatLiteral) => new FloatType();
 
         public static IType GetExpressionType(
             Context context,

@@ -169,7 +169,7 @@ namespace WireC.MiddleEnd
                 _context,
                 _currentScope,
                 assertStatement.Condition);
-            if (conditionType != null && conditionType is not BooleanType)
+            if (conditionType != null && !(conditionType is BooleanType))
             {
                 _context.Error(
                     assertStatement.Condition.Span,
@@ -189,7 +189,7 @@ namespace WireC.MiddleEnd
                 _context,
                 _currentScope,
                 ifStatement.Condition);
-            if (conditionType != null && conditionType is not BooleanType)
+            if (conditionType != null && !(conditionType is BooleanType))
             {
                 _context.Error(
                     ifStatement.Condition.Span,

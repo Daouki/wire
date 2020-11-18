@@ -18,6 +18,7 @@ namespace WireC.BackEnd
 
         public string VisitVoidType(VoidType voidType) => "void";
         public string VisitBooleanType(BooleanType booleanType) => "bool";
+        public string VisitFloatType(FloatType floatType) => "double";
 
         public static string GenerateTypeSignature(IType type)
         {
