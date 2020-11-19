@@ -35,6 +35,7 @@ namespace WireC.FrontEnd
                 {"{", TokenKind.LeftBrace},
                 {"(", TokenKind.LeftParenthesis},
                 {"-", TokenKind.Minus},
+                {"%", TokenKind.Percent},
                 {"|", TokenKind.Pipe},
                 {"+", TokenKind.Plus},
                 {"}", TokenKind.RightBrace},
@@ -52,8 +53,10 @@ namespace WireC.FrontEnd
                 {":=", TokenKind.ColonEqual},
                 {"==", TokenKind.EqualEqual},
                 {">=", TokenKind.GreaterEqual},
+                {">>", TokenKind.GreaterGreater},
                 {"<=", TokenKind.LessEqual},
                 {"<>", TokenKind.LessGreater},
+                {"<<", TokenKind.LessLess},
                 {"||", TokenKind.PipePipe},
             };
 

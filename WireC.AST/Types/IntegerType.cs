@@ -24,8 +24,11 @@ namespace WireC.AST.Types
             InfixOperator.GreaterOrEqual => new BooleanType(),
             InfixOperator.Less => new BooleanType(),
             InfixOperator.LessOrEqual => new BooleanType(),
+            InfixOperator.Modulo => new IntegerType(),
             InfixOperator.Multiply => new IntegerType(),
             InfixOperator.NotEqual => new BooleanType(),
+            InfixOperator.ShiftLeft => new IntegerType(),
+            InfixOperator.ShiftRight => new IntegerType(),
             InfixOperator.Subtract => new IntegerType(),
             _ => null,
         };

@@ -82,6 +82,9 @@ namespace WireC.Common
         [Description("\">=\"")]
         GreaterEqual,
 
+        [Description(@""">>""")]
+        GreaterGreater,
+
         [Description("\"}\"")]
         LeftBrace,
 
@@ -97,8 +100,14 @@ namespace WireC.Common
         [Description("\"<>\"")]
         LessGreater,
 
+        [Description(@"""<<""")]
+        LessLess,
+
         [Description("\"-\"")]
         Minus,
+
+        [Description("\"%\"")]
+        Percent,
 
         [Description("\"|\"")]
         Pipe,

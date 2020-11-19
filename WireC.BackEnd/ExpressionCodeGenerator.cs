@@ -91,8 +91,11 @@ namespace WireC.BackEnd
                 InfixOperator.LessOrEqual => "<=",
                 InfixOperator.LogicalAnd => "&&",
                 InfixOperator.LogicalOr => "||",
+                InfixOperator.Modulo => "%",
                 InfixOperator.Multiply => "*",
                 InfixOperator.NotEqual => "!=",
+                InfixOperator.ShiftLeft => "<<",
+                InfixOperator.ShiftRight => ">>",
                 InfixOperator.Subtract => "-",
                 _ => throw new ArgumentException(nameof(@operator)),
             };
