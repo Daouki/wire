@@ -85,6 +85,9 @@ namespace WireC.Common
         [Description(@""">>""")]
         GreaterGreater,
 
+        [Description(@"""[""")]
+        LeftBracket,
+
         [Description("\"}\"")]
         LeftBrace,
 
@@ -117,6 +120,9 @@ namespace WireC.Common
 
         [Description("\"+\"")]
         Plus,
+
+        [Description(@"""]""")]
+        RightBracket,
 
         [Description("\"}\"")]
         RightBrace,

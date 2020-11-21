@@ -17,6 +17,8 @@ namespace WireC.BackEnd
 #include <cstdlib>
 #include <cstdint>
 
+#include <array>
+
 #define WIRE_ASSERT__(File, Line, Column, CCond, WCond) do { if (!(CCond)) { \
         std::fprintf(stderr, ""%s:%d:%d\nassertion failed: %s\n"", File, Line, Column, WCond); \
         std::abort(); \

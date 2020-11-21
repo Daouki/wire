@@ -34,6 +34,14 @@ namespace WireC.MiddleEnd
             return null;
         }
 
+        public IType VisitArraySignature(ArraySignature arraySignature)
+        {
+            var underlyingType = ParseTypeSignature(_context, arraySignature.UnderlyingType);
+            return underlyingType != null
+                ? new ArrayType(underlyingType, arraySignature.Length)
+                : null;
+        }
+
         public static IType ParseTypeSignature(Context context, ITypeSignature typeSignature)
         {
             var self = new TypeSignatureParser(context);

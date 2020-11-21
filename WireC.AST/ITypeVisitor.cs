@@ -9,5 +9,6 @@ namespace WireC.AST
         T VisitVoidType(VoidType voidType);
         T VisitBooleanType(BooleanType booleanType);
         T VisitFloatType(FloatType floatType);
+        T VisitArrayType(ArrayType arrayType);
     }
 }
