@@ -31,8 +31,7 @@ namespace WireC.Driver
 
                     var context = new Context(options);
                     CompileFile(context);
-                }
-            );
+                });
         }
 
         private static void CompileFile(Context context)
@@ -56,8 +55,7 @@ namespace WireC.Driver
             var destinationCode = new CodeGenerator(
                     context,
                     abstractSyntaxTree,
-                    abstractSyntaxTreeContext
-                )
+                    abstractSyntaxTreeContext)
                 .GenerateCode();
 
             var cOutputFile = context.Options.OutputFile.EndsWith(".exe") &&
@@ -68,8 +66,7 @@ namespace WireC.Driver
 
             Process.Start(
                 context.Options.CCompiler,
-                $"{cOutputFile} -o {context.Options.OutputFile}"
-            );
+                $"{cOutputFile} -std=c++14 -o {context.Options.OutputFile}");
 
             TerminateCompilation(context, 0);
         }
@@ -79,8 +76,7 @@ namespace WireC.Driver
             Console.Error.WriteLine(
                 $"compilation finished with {context.ErrorCount} errors " +
                 $"and {context.WarningCount} warnings " +
-                $"in {(float) context.CompilationTime.Milliseconds / 1000}s"
-            );
+                $"in {(float) context.CompilationTime.Milliseconds / 1000}s");
             Environment.Exit(exitCode);
         }
     }

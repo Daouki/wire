@@ -25,7 +25,7 @@ namespace WireC.BackEnd
             .Append("std::array<")
             .Append(GenerateTypeSignature(arrayType.UnderlyingType))
             .Append(", ")
-            .Append(ExpressionCodeGenerator.GenerateExpressionCode(arrayType.Length))
+            .Append(arrayType.Length)
             .Append('>')
             .ToString();
 

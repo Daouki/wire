@@ -1,4 +1,6 @@
 fn main(): i64 {
-    var array: [i64; 4];
+    var array: [i64; 4] = [1, 2, 3, 4];
+    array := [5, 6, 7, 8];
+    --array := [10.];
     return 0;
 }

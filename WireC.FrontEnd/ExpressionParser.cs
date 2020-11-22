@@ -98,37 +98,59 @@ namespace WireC.FrontEnd
 
         private static IExpression ParsePrimaryExpression(ParserState state)
         {
+            var nodeId = state.NodeIdGenerator.GetNextId();
+
             if (state.Consume(TokenKind.False))
-            {
-                return new BooleanLiteral(
-                    state.NodeIdGenerator.GetNextId(),
-                    state.Previous().Span,
-                    false);
-            }
+                return new BooleanLiteral(nodeId, state.Previous().Span, false);
 
             if (state.Consume(TokenKind.Identifier))
-                return new IdentifierLiteral(state.NodeIdGenerator.GetNextId(), state.Previous());
+                return new IdentifierLiteral(nodeId, state.Previous());
 
             if (state.Consume(TokenKind.Float))
-                return new FloatLiteral(state.NodeIdGenerator.GetNextId(), state.Previous());
+                return new FloatLiteral(nodeId, state.Previous());
 
             if (state.Consume(TokenKind.Integer))
-                return new IntegerLiteral(state.NodeIdGenerator.GetNextId(), state.Previous());
+                return new IntegerLiteral(nodeId, state.Previous());
 
             if (state.Consume(TokenKind.True))
-            {
-                return new BooleanLiteral(
-                    state.NodeIdGenerator.GetNextId(),
-                    state.Previous().Span,
-                    true);
-            }
+                return new BooleanLiteral(nodeId, state.Previous().Span, true);
 
             if (state.Consume(TokenKind.LeftParenthesis))
                 return ParseParenthesizedExpression(state);
 
+            if (state.Consume(TokenKind.LeftBracket))
+                return ParseArrayLiteral(state);
+
             throw new ParseException(
                 state.Current().Span,
                 $"expected primary expression, but found \"{state.Current().Lexeme}\"");
+        }
+
+        private static IExpression ParseArrayLiteral(ParserState state)
+        {
+            var nodeId = state.NodeIdGenerator.GetNextId();
+            SourceSpan span;
+
+            var spanStart = state.Previous().Span;
+            var elements = new List<IExpression>();
+
+            if (state.Consume(TokenKind.RightBracket))
+            {
+                throw new ParseException(
+                    state.Previous().Span,
+                    "empty array literals are not allowed");
+            }
+
+            do
+            {
+                elements.Add(ParseExpression(state));
+            } while (state.Consume(TokenKind.Comma));
+
+            state.ConsumeOrError(TokenKind.RightBracket);
+
+            var spanEnd = state.Previous().Span;
+            span = SourceSpan.Merge(spanStart, spanEnd);
+            return new ArrayLiteral(nodeId, span, elements);
         }
 
         private static IExpression ParseParenthesizedExpression(ParserState state)

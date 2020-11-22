@@ -4,14 +4,14 @@ namespace WireC.AST.Types
 {
     public class ArrayType : IType
     {
-        public ArrayType(IType underlyingType, IExpression length)
+        public ArrayType(IType underlyingType, int length)
         {
             UnderlyingType = underlyingType;
             Length = length;
         }
 
         public IType UnderlyingType { get; }
-        public IExpression Length { get; }
+        public int Length { get; }
 
         public IType GetPrefixOperationResultType(PrefixOperator @operator) => null;
 

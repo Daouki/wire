@@ -17,7 +17,14 @@ namespace WireC.FrontEnd
             var spanStart = state.Previous().Span;
             var underlyingType = ParseTypeSignature(state);
             state.ConsumeOrError(TokenKind.Semicolon);
-            var length = ExpressionParser.ParseExpression(state);
+            var length = int.Parse(state.ConsumeOrError(TokenKind.Integer).Lexeme);
+            if (length <= 0)
+            {
+                throw new ParseException(
+                    state.Previous().Span,
+                    "array length must be a positive integer");
+            }
+
             state.ConsumeOrError(TokenKind.RightBracket);
             var spanEnd = state.Previous().Span;
             var span = SourceSpan.Merge(spanStart, spanEnd);

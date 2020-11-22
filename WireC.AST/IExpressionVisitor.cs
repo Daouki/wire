@@ -12,5 +12,6 @@ namespace WireC.AST
         T VisitBooleanLiteral(BooleanLiteral booleanLiteral);
         T VisitParenthesizedExpression(ParenthesizedExpression parenthesizedExpression);
         T VisitFloatLiteral(FloatLiteral floatLiteral);
+        T VisitArrayLiteral(ArrayLiteral arrayLiteral);
     }
 }

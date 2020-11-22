@@ -65,6 +65,30 @@ namespace WireC.MiddleEnd
 
         public IType VisitFloatLiteral(FloatLiteral floatLiteral) => new FloatType();
 
+        public IType VisitArrayLiteral(ArrayLiteral arrayLiteral)
+        {
+            var firstElementType = GetExpressionType(arrayLiteral.Elements[0]);
+            if (firstElementType == null) return null;
+
+            if (arrayLiteral.Length == 1) return new ArrayType(firstElementType, 1);
+
+            for (var i = 1; i < arrayLiteral.Length; i++)
+            {
+                var element = arrayLiteral.Elements[i];
+                var elementType = GetExpressionType(element);
+                if (elementType != null && !elementType.IsSame(firstElementType))
+                {
+                    _context.Error(
+                        element.Span,
+                        "type mismatch in array literal; " +
+                        $"expected \"{firstElementType}\", but found \"{elementType}\"");
+                    return null;
+                }
+            }
+
+            return new ArrayType(firstElementType, arrayLiteral.Length);
+        }
+
         public static IType GetExpressionType(
             Context context,
             Scope environment,

@@ -60,10 +60,23 @@ namespace WireC.BackEnd
         public string VisitFloatLiteral(FloatLiteral floatLiteral) =>
             floatLiteral.Value.ToString("0.0##############", CultureInfo.InvariantCulture);
 
+        public string VisitArrayLiteral(ArrayLiteral arrayLiteral)
+        {
+            var code = new StringBuilder("{");
+            for (var i = 0; i < arrayLiteral.Length; i++)
+            {
+                code.Append(GenerateExpression(arrayLiteral.Elements[i]));
+                if (i < arrayLiteral.Length - 1) code.Append(", ");
+            }
+
+            code.Append("}");
+            return code.ToString();
+        }
+
         public static string GenerateExpressionCode(IExpression expression)
         {
             var self = new ExpressionCodeGenerator();
-            return $"({expression.Accept(self)})";
+            return self.GenerateExpression(expression);
         }
 
         private static string GeneratePrefixOperator(PrefixOperator @operator) =>
@@ -100,6 +113,10 @@ namespace WireC.BackEnd
                 _ => throw new ArgumentException(nameof(@operator)),
             };
 
-        private string GenerateExpression(IExpression expression) => $"({expression.Accept(this)})";
+        private string GenerateExpression(IExpression expression)
+        {
+            var expressionCode = expression.Accept(this);
+            return expression is ArrayLiteral ? $"{expressionCode}" : $"({expressionCode})";
+        }
     }
 }

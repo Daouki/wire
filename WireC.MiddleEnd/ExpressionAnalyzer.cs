@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 using WireC.AST;
 using WireC.AST.Expressions;
@@ -141,6 +142,16 @@ namespace WireC.MiddleEnd
             IsExpressionValid(parenthesizedExpression.Expression);
 
         public bool VisitFloatLiteral(FloatLiteral floatLiteral) => true;
+
+        public bool VisitArrayLiteral(ArrayLiteral arrayLiteral)
+        {
+            var isValid = arrayLiteral.Elements.Aggregate(
+                true,
+                (current, element) => current & IsExpressionValid(element));
+            if (!isValid) return false;
+
+            return Typer.GetExpressionType(_context, _environment, arrayLiteral) != null;
+        }
 
         public static bool IsExpressionValid(
             Context context,

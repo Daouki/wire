@@ -4,7 +4,7 @@ namespace WireC.AST.TypeSignatures
 {
     public class ArraySignature : ITypeSignature
     {
-        public ArraySignature(SourceSpan span, ITypeSignature underlyingType, IExpression length)
+        public ArraySignature(SourceSpan span, ITypeSignature underlyingType, int length)
         {
             Span = span;
             UnderlyingType = underlyingType;
@@ -12,7 +12,7 @@ namespace WireC.AST.TypeSignatures
         }
 
         public ITypeSignature UnderlyingType { get; }
-        public IExpression Length { get; }
+        public int Length { get; }
 
         public SourceSpan Span { get; }
 
