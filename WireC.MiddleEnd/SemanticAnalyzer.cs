@@ -268,6 +268,7 @@ namespace WireC.MiddleEnd
         private static bool IsLValue(IExpression expression) => expression switch
         {
             IdentifierLiteral _ => true,
+            SubscriptExpression _ => true,
             _ => false,
         };
 

@@ -101,7 +101,7 @@ namespace WireC.BackEnd
                 InfixOperator.BinaryXor => "^",
                 InfixOperator.Divide => "/",
                 InfixOperator.Equal => "==",
-                InfixOperator.Greater => "==",
+                InfixOperator.Greater => ">",
                 InfixOperator.GreaterOrEqual => ">=",
                 InfixOperator.Less => "<",
                 InfixOperator.LessOrEqual => "<=",
