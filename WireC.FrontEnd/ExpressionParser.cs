@@ -63,15 +63,8 @@ namespace WireC.FrontEnd
         {
             var operand = ParsePrefixOperation(state);
             if (state.Consume(TokenKind.LeftParenthesis)) return ParseFunctionCall(state, operand);
+            if (state.Consume(TokenKind.LeftBracket)) return ParseSubscriptOperator(state, operand);
             return operand;
-        }
-
-        private static IExpression ParsePrefixOperation(ParserState state)
-        {
-            if (!state.Consume(_prefixOperators)) return ParsePrimaryExpression(state);
-            var @operator = state.Previous();
-            var operand = ParsePrefixOperation(state);
-            return new PrefixOperation(state.NodeIdGenerator.GetNextId(), @operator, operand);
         }
 
         private static IExpression ParseFunctionCall(ParserState state, IExpression callee)
@@ -94,6 +87,23 @@ namespace WireC.FrontEnd
             state.ConsumeOrError(TokenKind.RightParenthesis);
             var span = SourceSpan.Merge(callee.Span, state.Previous().Span);
             return new FunctionCall(state.NodeIdGenerator.GetNextId(), span, callee, arguments);
+        }
+
+        private static IExpression ParseSubscriptOperator(ParserState state, IExpression operand)
+        {
+            var index = ParseExpression(state);
+            state.ConsumeOrError(TokenKind.RightBracket);
+            var nodeId = state.NodeIdGenerator.GetNextId();
+            var span = SourceSpan.Merge(operand.Span, state.Previous().Span);
+            return new SubscriptExpression(nodeId, span, operand, index);
+        }
+
+        private static IExpression ParsePrefixOperation(ParserState state)
+        {
+            if (!state.Consume(_prefixOperators)) return ParsePrimaryExpression(state);
+            var @operator = state.Previous();
+            var operand = ParsePrefixOperation(state);
+            return new PrefixOperation(state.NodeIdGenerator.GetNextId(), @operator, operand);
         }
 
         private static IExpression ParsePrimaryExpression(ParserState state)

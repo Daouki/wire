@@ -153,6 +153,41 @@ namespace WireC.MiddleEnd
             return Typer.GetExpressionType(_context, _environment, arrayLiteral) != null;
         }
 
+        public bool VisitSubscriptExpression(SubscriptExpression subscriptExpression)
+        {
+            if (!IsExpressionValid(subscriptExpression.Operand) ||
+                !IsExpressionValid(subscriptExpression.Index))
+                return false;
+
+            var operandType = Typer.GetExpressionType(
+                _context,
+                _environment,
+                subscriptExpression.Operand);
+            if (operandType == null) return false;
+            if (!(operandType is ArrayType))
+            {
+                _context.Error(
+                    subscriptExpression.Span,
+                    $"cannot index into a non-array type \"{operandType}\"");
+                return false;
+            }
+
+            var indexType = Typer.GetExpressionType(
+                _context,
+                _environment,
+                subscriptExpression.Index);
+            if (indexType == null) return false;
+            if (!(indexType is IntegerType))
+            {
+                _context.Error(
+                    subscriptExpression.Span,
+                    $"type \"{operandType}\" cannot be indexed by type \"{indexType}\"");
+                return false;
+            }
+
+            return true;
+        }
+
         public static bool IsExpressionValid(
             Context context,
             Scope environment,

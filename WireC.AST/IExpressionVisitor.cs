@@ -13,5 +13,6 @@ namespace WireC.AST
         T VisitParenthesizedExpression(ParenthesizedExpression parenthesizedExpression);
         T VisitFloatLiteral(FloatLiteral floatLiteral);
         T VisitArrayLiteral(ArrayLiteral arrayLiteral);
+        T VisitSubscriptExpression(SubscriptExpression subscriptExpression);
     }
 }

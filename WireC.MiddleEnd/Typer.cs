@@ -8,7 +8,6 @@ namespace WireC.MiddleEnd
     public class Typer : IExpressionVisitor<IType>
     {
         private readonly Context _context;
-
         private readonly Scope _environment;
 
         private Typer(Context context, Scope environment)
@@ -76,17 +75,23 @@ namespace WireC.MiddleEnd
             {
                 var element = arrayLiteral.Elements[i];
                 var elementType = GetExpressionType(element);
-                if (elementType != null && !elementType.IsSame(firstElementType))
-                {
-                    _context.Error(
-                        element.Span,
-                        "type mismatch in array literal; " +
-                        $"expected \"{firstElementType}\", but found \"{elementType}\"");
-                    return null;
-                }
+                if (elementType == null || elementType.IsSame(firstElementType)) continue;
+
+                _context.Error(
+                    element.Span,
+                    "type mismatch in array literal; " +
+                    $"expected \"{firstElementType}\", but found \"{elementType}\"");
+                return null;
             }
 
             return new ArrayType(firstElementType, arrayLiteral.Length);
+        }
+
+        public IType VisitSubscriptExpression(SubscriptExpression subscriptExpression)
+        {
+            var maybeArrayType = GetExpressionType(subscriptExpression.Operand);
+            if (maybeArrayType is ArrayType arrayType) return arrayType.UnderlyingType;
+            return null;
         }
 
         public static IType GetExpressionType(
@@ -95,7 +100,7 @@ namespace WireC.MiddleEnd
             IExpression expression)
         {
             var self = new Typer(context, environment);
-            return expression.Accept(self);
+            return self.GetExpressionType(expression);
         }
 
         private IType GetExpressionType(IExpression expression) => expression.Accept(this);
