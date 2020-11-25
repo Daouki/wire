@@ -31,7 +31,7 @@ namespace WireC.BackEnd
         /// </summary>
         private const string _epilogue = @"
 int main() {
-return (int)wiz_main__();
+return (int)wire_main__();
 }
 ";
 

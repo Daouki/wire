@@ -32,8 +32,15 @@ namespace WireC.MiddleEnd
 
         public void VisitFunctionDefinition(FunctionDefinition functionDefinition)
         {
+            if (_functionContext != null)
+            {
+                _context.Error(
+                    functionDefinition.Identifier.Span,
+                    $"cannot define a function inside of another function");
+            }
+
             if (functionDefinition.Identifier.Lexeme == "main")
-                _astContext.AddMangledName(functionDefinition.NodeId, "wiz_main__");
+                _astContext.AddMangledName(functionDefinition.NodeId, "wire_main__");
 
             var (parameterTypes, allParamsOk) = GetFunctionParameterTypes(functionDefinition);
             if (!allParamsOk) return;

@@ -1,4 +1,6 @@
 fn main(): i64 {
+    fn other() {}
+
     var a = 0;
     while a < 10 {
         if a == 5 {
