@@ -172,6 +172,16 @@ return (int)wiz_main__();
                 .Append(";\n");
         }
 
+        public void VisitBreakStatement(BreakStatement breakStatement)
+        {
+            _generatedCode.Append("break;\n");
+        }
+
+        public void VisitContinueStatement(ContinueStatement continueStatement)
+        {
+            _generatedCode.Append("continue;\n");
+        }
+
         public string GenerateCode()
         {
             foreach (var statement in _abstractSyntaxTree) GenerateStatementCode(statement);

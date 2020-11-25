@@ -1,25 +1,11 @@
 fn main(): i64 {
-    var array = [3, 5, 1, 4, 2];
-
-    var i = 0;
-    while i < 4 {
-        var j = 0;
-        while j < (4 - i) {
-            if array[j] > array[j + 1] {
-                var temp = array[j];
-                array[j] := array[j + 1];
-                array[j + 1] := temp;
-            }
-            j := j + 1;
+    var a = 0;
+    while a < 10 {
+        if a == 5 {
+            break;
         }
-        i := i + 1;
+        a := a + 1;
     }
-
-    assert(array[0] == 1);
-    assert(array[1] == 2);
-    assert(array[2] == 3);
-    assert(array[3] == 4);
-    assert(array[4] == 5);
-
+    assert(a == 5);
     return 0;
 }

@@ -18,6 +18,8 @@ namespace WireC.MiddleEnd
         private Scope _currentScope;
         private FunctionDefinition _functionContext;
 
+        private int _loopNestLevel;
+
         public SemanticAnalyzer(
             Context context,
             List<IStatement> abstractSyntaxTree,
@@ -225,7 +227,9 @@ namespace WireC.MiddleEnd
                 }
             }
 
+            _loopNestLevel++;
             AnalyzeBlock(whileStatement.Body);
+            _loopNestLevel--;
         }
 
         public void VisitAssignmentStatement(AssignmentStatement assignmentStatement)
@@ -262,6 +266,22 @@ namespace WireC.MiddleEnd
                 _context.Error(
                     assignmentStatement.Value.Span,
                     $"type mismatch; expected \"{targetType}\", but found \"{valueType}\"");
+            }
+        }
+
+        public void VisitBreakStatement(BreakStatement breakStatement)
+        {
+            if (_loopNestLevel == 0)
+                _context.Error(breakStatement.Span, @"""break"" statement used outside of a loop");
+        }
+
+        public void VisitContinueStatement(ContinueStatement continueStatement)
+        {
+            if (_loopNestLevel == 0)
+            {
+                _context.Error(
+                    continueStatement.Span,
+                    @"""continue"" statement used outside of a loop");
             }
         }
 

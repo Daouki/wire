@@ -11,6 +11,8 @@ namespace WireC.FrontEnd
             new Dictionary<string, TokenKind>
             {
                 {"assert", TokenKind.Assert},
+                {"break", TokenKind.Break},
+                {"continue", TokenKind.Continue},
                 {"else", TokenKind.Else},
                 {"false", TokenKind.False},
                 {"fn", TokenKind.Fn},

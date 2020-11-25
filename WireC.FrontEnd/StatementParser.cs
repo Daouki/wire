@@ -22,6 +22,22 @@ namespace WireC.FrontEnd
                     }
                 },
                 {
+                    TokenKind.Break,
+                    new StatementParseRule
+                    {
+                        ParserFunction = ParseBreakStatement,
+                        EndsWithSemicolon = true,
+                    }
+                },
+                {
+                    TokenKind.Continue,
+                    new StatementParseRule
+                    {
+                        ParserFunction = ParseContinueStatement,
+                        EndsWithSemicolon = true,
+                    }
+                },
+                {
                     TokenKind.Fn,
                     new StatementParseRule
                     {
@@ -64,6 +80,20 @@ namespace WireC.FrontEnd
             };
 
         private static readonly IEnumerable<TokenKind> _synchronizationPoints = _parseRules.Keys;
+
+        private static IStatement ParseBreakStatement(Context context, ParserState state)
+        {
+            var nodeId = state.NodeIdGenerator.GetNextId();
+            var span = state.Previous().Span;
+            return new BreakStatement(nodeId, span);
+        }
+
+        private static IStatement ParseContinueStatement(Context context, ParserState state)
+        {
+            var nodeId = state.NodeIdGenerator.GetNextId();
+            var span = state.Previous().Span;
+            return new ContinueStatement(nodeId, span);
+        }
 
         private static IStatement ParseWhileStatement(Context context, ParserState state)
         {

@@ -12,5 +12,7 @@ namespace WireC.AST
         void VisitExpressionStatement(ExpressionStatement expressionStatement);
         void VisitWhileStatement(WhileStatement whileStatement);
         void VisitAssignmentStatement(AssignmentStatement assignmentStatement);
+        void VisitBreakStatement(BreakStatement breakStatement);
+        void VisitContinueStatement(ContinueStatement continueStatement);
     }
 }

@@ -20,6 +20,12 @@ namespace WireC.Common
         [Description("\"assert\"")]
         Assert,
 
+        [Description(@"""break""")]
+        Break,
+
+        [Description(@"""continue""")]
+        Continue,
+
         [Description("\"else\"")]
         Else,
 
