@@ -36,7 +36,7 @@ namespace WireC.MiddleEnd
             {
                 _context.Error(
                     functionDefinition.Identifier.Span,
-                    $"cannot define a function inside of another function");
+                    "cannot define a function inside o`f another function");
             }
 
             if (functionDefinition.Identifier.Lexeme == "main")
@@ -188,24 +188,8 @@ namespace WireC.MiddleEnd
 
         public void VisitIfStatement(IfStatement ifStatement)
         {
-            if (!ExpressionAnalyzer.IsExpressionValid(
-                _context,
-                _currentScope,
-                ifStatement.Condition))
-                return;
-
-            var conditionType = Typer.GetExpressionType(
-                _context,
-                _currentScope,
-                ifStatement.Condition);
-            if (conditionType != null && !(conditionType is BooleanType))
-            {
-                _context.Error(
-                    ifStatement.Condition.Span,
-                    "condition does not evaluate to \"bool\" type");
-            }
-
-            AnalyzeBlock(ifStatement.ThenBody);
+            CheckIfCase(ifStatement.Condition, ifStatement.ThenBody);
+            foreach (var elif in ifStatement.Elifs) CheckIfCase(elif.Condition, elif.Body);
             if (ifStatement.ElseBody != null) AnalyzeBlock(ifStatement.ElseBody);
         }
 
@@ -290,6 +274,22 @@ namespace WireC.MiddleEnd
                     continueStatement.Span,
                     @"""continue"" statement used outside of a loop");
             }
+        }
+
+        private void CheckIfCase(IExpression condition, Block body)
+        {
+            if (!ExpressionAnalyzer.IsExpressionValid(_context, _currentScope, condition))
+                return;
+
+            var conditionType = Typer.GetExpressionType(_context, _currentScope, condition);
+            if (conditionType != null && !(conditionType is BooleanType))
+            {
+                _context.Error(
+                    condition.Span,
+                    "condition does not evaluate to \"bool\" type");
+            }
+
+            AnalyzeBlock(body);
         }
 
         private static bool IsLValue(IExpression expression) => expression switch

@@ -26,6 +26,9 @@ namespace WireC.Common
         [Description(@"""continue""")]
         Continue,
 
+        [Description(@"""elif""")]
+        Elif,
+
         [Description("\"else\"")]
         Else,
 

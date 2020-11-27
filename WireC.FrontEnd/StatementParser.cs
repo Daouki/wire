@@ -110,13 +110,30 @@ namespace WireC.FrontEnd
             var startSpan = state.Previous().Span;
             var condition = ExpressionParser.ParseExpression(state);
             var thenBlock = ParseBlock(context, state);
+            var elifs = ParseElifs(context, state);
             var elseBlock = state.Consume(TokenKind.Else) ? ParseBlock(context, state) : null;
             return new IfStatement(
                 state.NodeIdGenerator.GetNextId(),
                 SourceSpan.Merge(startSpan, elseBlock != null ? elseBlock.Span : thenBlock.Span),
                 condition,
                 thenBlock,
+                elifs,
                 elseBlock);
+        }
+
+        private static List<Elif> ParseElifs(Context context, ParserState state)
+        {
+            var elifs = new List<Elif>();
+            if (!state.Consume(TokenKind.Elif)) return elifs;
+
+            do
+            {
+                var condition = ExpressionParser.ParseExpression(state);
+                var body = ParseBlock(context, state);
+                elifs.Add(new Elif(condition, body));
+            } while (state.Consume(TokenKind.Elif));
+
+            return elifs;
         }
 
         private static IStatement ParseAssertStatement(Context context, ParserState state)

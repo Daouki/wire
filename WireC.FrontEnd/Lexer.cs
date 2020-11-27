@@ -13,6 +13,7 @@ namespace WireC.FrontEnd
                 {"assert", TokenKind.Assert},
                 {"break", TokenKind.Break},
                 {"continue", TokenKind.Continue},
+                {"elif", TokenKind.Elif},
                 {"else", TokenKind.Else},
                 {"false", TokenKind.False},
                 {"fn", TokenKind.Fn},

@@ -141,6 +141,15 @@ return (int)wire_main__();
                 .Append(") ");
             GenerateBlockCode(ifStatement.ThenBody);
 
+            foreach (var elif in ifStatement.Elifs)
+            {
+                _generatedCode
+                    .Append("else if(")
+                    .Append(ExpressionCodeGenerator.GenerateExpressionCode(elif.Condition))
+                    .Append(") ");
+                GenerateBlockCode(elif.Body);
+            }
+
             if (ifStatement.ElseBody == null) return;
             _generatedCode.Append("else ");
             GenerateBlockCode(ifStatement.ElseBody);

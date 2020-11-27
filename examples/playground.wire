@@ -1,13 +1,10 @@
 fn main(): i64 {
-    fn other() {}
-
-    var a = 0;
-    while a < 10 {
-        if a == 5 {
-            break;
-        }
-        a := a + 1;
+    var x = 2;
+    if x == 0 {
+    } elif x == 1 {
+    } elif x == 2 {
+        assert(false);
+    } else {
     }
-    assert(a == 5);
     return 0;
 }
