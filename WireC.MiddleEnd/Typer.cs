@@ -1,6 +1,7 @@
 ﻿using WireC.AST;
 using WireC.AST.Expressions;
 using WireC.AST.Types;
+using WireC.AST.TypeSignatures;
 using WireC.Common;
 
 namespace WireC.MiddleEnd
@@ -91,6 +92,21 @@ namespace WireC.MiddleEnd
         {
             var maybeArrayType = GetExpressionType(subscriptExpression.Operand);
             if (maybeArrayType is ArrayType arrayType) return arrayType.UnderlyingType;
+            return null;
+        }
+
+        public IType VisitAddressOf(AddressOf addressOf) =>
+            new PointerType(GetExpressionType(addressOf.Expression));
+
+        public IType VisitDereference(Dereference dereference)
+        {
+            var expressionType = GetExpressionType(dereference.Expression);
+            if (expressionType is PointerType expressionPointerType)
+                return expressionPointerType.UnderlyingType;
+
+            _context.Error(
+                dereference.Span,
+                $"cannot dereference a non-pointer type \"{expressionType}\"");
             return null;
         }
 

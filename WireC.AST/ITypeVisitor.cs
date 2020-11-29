@@ -1,4 +1,5 @@
 ﻿using WireC.AST.Types;
+using WireC.AST.TypeSignatures;
 
 namespace WireC.AST
 {
@@ -10,5 +11,6 @@ namespace WireC.AST
         T VisitBooleanType(BooleanType booleanType);
         T VisitFloatType(FloatType floatType);
         T VisitArrayType(ArrayType arrayType);
+        T VisitPointerType(PointerType pointerType);
     }
 }

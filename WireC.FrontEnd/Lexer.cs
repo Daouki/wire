@@ -29,6 +29,7 @@ namespace WireC.FrontEnd
             {
                 {"&", TokenKind.Ampersand},
                 {"*", TokenKind.Asterisk},
+                {"@", TokenKind.At},
                 {"!", TokenKind.Bang},
                 {"^", TokenKind.Caret},
                 {":", TokenKind.Colon},

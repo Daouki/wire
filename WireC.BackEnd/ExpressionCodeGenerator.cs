@@ -76,6 +76,12 @@ namespace WireC.BackEnd
         public string VisitSubscriptExpression(SubscriptExpression subscriptExpression) =>
             $"{GenerateExpression(subscriptExpression.Operand)}[{GenerateExpression(subscriptExpression.Index)}]";
 
+        public string VisitAddressOf(AddressOf addressOf) =>
+            $"&{GenerateExpression(addressOf.Expression)}";
+
+        public string VisitDereference(Dereference dereference) =>
+            $"*{GenerateExpression(dereference.Expression)}";
+
         public static string GenerateExpressionCode(IExpression expression)
         {
             var self = new ExpressionCodeGenerator();

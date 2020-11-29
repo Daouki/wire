@@ -100,10 +100,30 @@ namespace WireC.FrontEnd
 
         private static IExpression ParsePrefixOperation(ParserState state)
         {
+            if (state.Consume(TokenKind.At)) return ParseAddressOfExpression(state);
+            if (state.Consume(TokenKind.Caret)) return ParseDereferenceExpression(state);
             if (!state.Consume(_prefixOperators)) return ParsePrimaryExpression(state);
             var @operator = state.Previous();
             var operand = ParsePrefixOperation(state);
             return new PrefixOperation(state.NodeIdGenerator.GetNextId(), @operator, operand);
+        }
+
+        private static IExpression ParseAddressOfExpression(ParserState state)
+        {
+            var startSpan = state.Previous().Span;
+            var expression = ParsePrefixOperation(state);
+            var nodeId = state.NodeIdGenerator.GetNextId();
+            var span = SourceSpan.Merge(startSpan, expression.Span);
+            return new AddressOf(nodeId, span, expression);
+        }
+
+        private static IExpression ParseDereferenceExpression(ParserState state)
+        {
+            var startSpan = state.Previous().Span;
+            var expression = ParsePrefixOperation(state);
+            var nodeId = state.NodeIdGenerator.GetNextId();
+            var span = SourceSpan.Merge(startSpan, expression.Span);
+            return new Dereference(nodeId, span, expression);
         }
 
         private static IExpression ParsePrimaryExpression(ParserState state)

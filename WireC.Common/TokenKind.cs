@@ -64,6 +64,9 @@ namespace WireC.Common
         [Description("\"*\"")]
         Asterisk,
 
+        [Description(@"""@""")]
+        At,
+
         [Description("\"!\"")]
         Bang,
 

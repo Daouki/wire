@@ -188,6 +188,25 @@ namespace WireC.MiddleEnd
             return true;
         }
 
+        public bool VisitAddressOf(AddressOf addressOf)
+        {
+            if (!IsExpressionValid(addressOf.Expression)) return false;
+
+            if (!SemanticAnalyzer.IsLValue(addressOf.Expression))
+            {
+                _context.Error(addressOf.Span, "cannot get the address of a temporary value");
+                return false;
+            }
+
+            return Typer.GetExpressionType(_context, _environment, addressOf.Expression) != null;
+        }
+
+        public bool VisitDereference(Dereference dereference)
+        {
+            if (!IsExpressionValid(dereference.Expression)) return false;
+            return Typer.GetExpressionType(_context, _environment, dereference.Expression) != null;
+        }
+
         public static bool IsExpressionValid(
             Context context,
             Scope environment,

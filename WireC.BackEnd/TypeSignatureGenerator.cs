@@ -3,6 +3,7 @@ using System.Text;
 
 using WireC.AST;
 using WireC.AST.Types;
+using WireC.AST.TypeSignatures;
 
 namespace WireC.BackEnd
 {
@@ -28,6 +29,9 @@ namespace WireC.BackEnd
             .Append(arrayType.Length)
             .Append('>')
             .ToString();
+
+        public string VisitPointerType(PointerType pointerType) =>
+            $"{GenerateTypeSignature(pointerType.UnderlyingType)}*";
 
         public static string GenerateTypeSignature(IType type)
         {

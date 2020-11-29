@@ -292,10 +292,11 @@ namespace WireC.MiddleEnd
             AnalyzeBlock(body);
         }
 
-        private static bool IsLValue(IExpression expression) => expression switch
+        public static bool IsLValue(IExpression expression) => expression switch
         {
             IdentifierLiteral _ => true,
             SubscriptExpression _ => true,
+            Dereference _ => true,
             _ => false,
         };
 

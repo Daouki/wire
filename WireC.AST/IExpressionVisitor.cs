@@ -14,5 +14,7 @@ namespace WireC.AST
         T VisitFloatLiteral(FloatLiteral floatLiteral);
         T VisitArrayLiteral(ArrayLiteral arrayLiteral);
         T VisitSubscriptExpression(SubscriptExpression subscriptExpression);
+        T VisitAddressOf(AddressOf addressOf);
+        T VisitDereference(Dereference dereference);
     }
 }
