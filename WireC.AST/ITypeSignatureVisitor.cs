@@ -6,5 +6,6 @@ namespace WireC.AST
     {
         T VisitTypeName(TypeName typeName);
         T VisitArraySignature(ArraySignature arraySignature);
+        T VisitPointerSignature(PointerSignature pointerSignature);
     }
 }

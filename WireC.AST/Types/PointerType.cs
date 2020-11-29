@@ -1,6 +1,6 @@
 ﻿using WireC.AST.Expressions;
 
-namespace WireC.AST.TypeSignatures
+namespace WireC.AST.Types
 {
     public class PointerType : IType
     {

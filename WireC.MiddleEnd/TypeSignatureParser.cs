@@ -42,6 +42,14 @@ namespace WireC.MiddleEnd
                 : null;
         }
 
+        public IType VisitPointerSignature(PointerSignature pointerSignature)
+        {
+            var underlyingType = ParseTypeSignature(_context, pointerSignature.UnderlyingType);
+            return underlyingType != null
+                ? new PointerType(underlyingType)
+                : null;
+        }
+
         public static IType ParseTypeSignature(Context context, ITypeSignature typeSignature)
         {
             var self = new TypeSignatureParser(context);

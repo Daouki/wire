@@ -8,8 +8,17 @@ namespace WireC.FrontEnd
     {
         public static ITypeSignature ParseTypeSignature(ParserState state)
         {
+            if (state.Consume(TokenKind.Caret)) return ParsePointerSignature(state);
             if (state.Consume(TokenKind.LeftBracket)) return ParseArraySignature(state);
             return ParseTypeName(state);
+        }
+
+        private static ITypeSignature ParsePointerSignature(ParserState state)
+        {
+            var spanStart = state.Previous().Span;
+            var underlyingType = ParseTypeSignature(state);
+            var span = SourceSpan.Merge(spanStart, underlyingType.Span);
+            return new PointerSignature(span, underlyingType);
         }
 
         private static ITypeSignature ParseArraySignature(ParserState state)
