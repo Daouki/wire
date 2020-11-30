@@ -22,12 +22,12 @@ namespace WireC.Common
         /// <summary>
         /// Number of reported errors.
         /// </summary>
-        public int ErrorCount { get; private set; }
+        public uint ErrorCount { get; private set; }
 
         /// <summary>
         /// Number of reported warnings.
         /// </summary>
-        public int WarningCount { get; private set; }
+        public uint WarningCount { get; private set; }
 
         public DateTime StartTime { get; }
 
@@ -38,12 +38,14 @@ namespace WireC.Common
 
         public void Error(SourceSpan span, string message)
         {
+            if (Options.FirstErrorOnly && ErrorCount != 0) return;
             ErrorCount++;
             Report(span, "error", ConsoleColor.Red, message);
         }
 
         public void Warning(SourceSpan span, string message)
         {
+            if (Options.NoWarnings || (Options.FirstErrorOnly && ErrorCount != 0)) return;
             WarningCount++;
             Report(span, "warning", ConsoleColor.Yellow, message);
         }

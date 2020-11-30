@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-
-using CommandLine;
+﻿using CommandLine;
 
 namespace WireC.Common
 {
@@ -9,11 +7,25 @@ namespace WireC.Common
         [Value(0, Required = true, MetaName = "INPUT", HelpText = "The file to be compiled")]
         public string InputFile { get; set; }
 
-        [Option('o', HelpText = "Name of the output file")]
-        public string OutputFile { get; set; } =
-            RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "out.exe" : "out";
+        [Option(
+            'o',
+            Default = "out",
+            HelpText = "Name of the output file")]
+        public string OutputFile { get; set; }
 
-        [Option('c', "c-compiler", HelpText = "The C++ compiler to use")]
-        public string CCompiler { get; set; } = "g++";
+        [Option('c', "c-compiler", Default = "g++", HelpText = "The C++ compiler to use")]
+        public string CCompiler { get; set; }
+
+        [Option(
+            "first-error-only",
+            Default = false,
+            HelpText = "Print only the first encountered error message")]
+        public bool FirstErrorOnly { get; set; }
+
+        [Option(
+            "no-warnings",
+            Default = false,
+            HelpText = "Do not emit any warning messages")]
+        public bool NoWarnings { get; set; }
     }
 }
